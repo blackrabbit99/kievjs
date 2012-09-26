@@ -40,7 +40,7 @@ body {
 #header #navi li {
     display: inline;
     font-family: agencyfb;
-    font-size: 24px;
+    font-size: 20px;
     margin-left: 20px;
     padding: 4px 7px 5px;
     text-transform: uppercase;
@@ -71,6 +71,14 @@ body {
     font-weight: normal;
     text-align: center;
 }
+
+#tagline h2 {
+    font-weight:normal;
+    letter-spacing:-2px;
+    font-size:3em !important;
+    margin-bottom:40px;
+}
+
 #tagline #above {
     bottom: 43px;
     color: #303030;
@@ -106,6 +114,7 @@ body {
     height: 15px;
     margin-bottom: 60px;
     text-align: center;
+    margin-top:50px;
 }
 .sect_title h3 {
     background-image: url("../img/quilt.png");
@@ -154,10 +163,7 @@ body {
     font-size: 13px;
     font-style: italic;
     position: relative;
-}
-#services .description {
-    bottom: 10px;
-    position: relative;
+    clear:both;
 }
 #recent_work li {
     border: 1px solid white;
@@ -211,9 +217,12 @@ footer {
     margin-bottom: 10px;
     min-height: 100px;
     padding: 10px 0;
+    padding-top:30px;
 }
 footer a {
     color: #EDD900;
+    display:inline-block;
+    padding-bottom:0.3em;
 }
 footer a:hover {
     color: #ffffff;
@@ -221,7 +230,10 @@ footer a:hover {
 }
 footer .title {
     font-family: 'league gothic';
-    font-size: 26px;
+    font-size: 36px !important;
+}
+.row {
+    padding-bottom:50px;
 }
 .form-horizontal {
     margin-top: 10px;
@@ -252,4 +264,56 @@ html[xmlns] .clearfix {
 .links a {
     color: #498809;
     font-size: 16px;
+}
+
+.clean {
+    clear:both;
+}
+
+.center p {
+    margin:0 auto;
+    text-align:center;
+    text-align:center;
+}
+
+
+.row p {
+    font-size:1.5em;
+    line-height:1em;
+    margin-bottom:1em;
+}
+
+h4.title {
+    font-size:2em;
+    margin-bottom:0.3em;
+}
+
+p.subheading  {
+    margin-bottom:0.3em;
+    padding-bottom:0;
+}
+p.subheading a {
+    font-size:0.8em;
+}
+#about .description {
+    padding-bottom:1em !important;
+}
+#services .description {
+    bottom: 10px;
+    position: relative;
+    margin-top:0;
+    padding:0;
+    clear:both;
+}
+
+.team p {
+    line-height:1.5em !important;
+}
+
+.news {
+    display:inline;
+    position:relative;
+    top:-30px;
+    left:10px;
+    font-size:1.2em !important;
 }

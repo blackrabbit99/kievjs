@@ -2,10 +2,10 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<title>Home | Freshfolio</title>
-		<link rel="stylesheet" type="text/css" href="css/bootstrap.css"/> 		
+		<title>Kyiv.JS - Конференция по Front-End разработке</title>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
 		<link rel="stylesheet" type="text/css" href="css/style.css"/>
-		<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>		
+		<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
 		<script type="text/javascript" src="js/jquery.lightbox-0.5.js"></script>
 		<link rel="stylesheet" type="text/css" href="css/jquery.lightbox-0.5.css" media="screen" />
 		<script type="text/javascript">
@@ -13,47 +13,57 @@
 		    $('#gallery a').lightBox();
 		});
 		</script>
+		<link rel="image_src" href="img/logo-big.png" />
+		<link rel="image" href="img/logo-big.png" />
 	</head>
 	<body>
+		<style type="text/css">.facebook-hack { display:none; }</style>
+		<img src="img/logo-big.png" class="facebook-hack" />
 		<header>
 			<div id="header" >
 			<div class="container relative">
 				<div class="row">
 					<div class="span12">
+						<p class="news">
+							<span class="label label-important">Важно!</span> Скоро будет регистрация,
+							следите за новостями в Twitter и Facebook
+						</p>
 						<div id="social">
-							<a href=""><img src="img/twitter.png" alt="" width="20" height="20"/></a>
-							<a href=""><img src="img/facebook.png" alt="" width="20" height="20"/></a>
-							<a href=""><img src="img/gplus.png" alt="" width="20" height="20"/></a>
-							<a href=""><img src="img/rss.png" alt="" width="20" height="20"/></a>
+							<a href="https://twitter.com/KyivJS"><img src="img/twitter.png" alt="" width="20" height="20"/></a>
+							<a href="http://www.facebook.com/events/356322134454709/"><img src="img/facebook.png" alt="" width="20" height="20"/></a>
+							<a href="https://plus.google.com/b/113283633389591347846/113283633389591347846/posts"><img src="img/gplus.png" alt="" width="20" height="20"/></a>
+							<!--<a href=""><img src="img/rss.png" alt="" width="20" height="20"/></a>-->
 						</div>
 						<h1 id="logo">Fresh ~ Design</h1>
 						<nav>
 							<ul id="navi" >
-								<li class="selected"><a href="index.html">Home</a></li>
-								<li><a href="about.html">About</a></li>
-								<li><a href="portfolio.html">Portfolio</a></li>
-								<li><a href="contact.html">Contact</a></li>
+								<li><a href="#about">Доклады</a></li>
+								<li><a href="#sponsor">Партнеры</a></li>
+								<li><a href="#location">Место</a></li>
+								<li><a href="#team">Организаторы</a></li>
 							</ul>
-						</nav>	
+						</nav>
 					</div>
 				</div>
 			</div>
-		</div>	
+		</div>
 		</header>
-
 		<div class="container">
 			<section>
 				<div class="row">
 					<div class="span12">
-						<div id="tagline" class="center">
-							<h1 id="below">JS KIEV conf.</h1>	
-							<h1 id="above">JS KIEV conf.</h1>
+						<div id="tagline" class="center tagline">
+							<h1 id="below">Front-end developers conference</h1>
+							<h1 id="above">Front-end developers conference</h1>
+							<h2>17 ноября 2012</h2>
 							<img class="curly" src="img/curly.png" alt="" width="71" height="16"/>
 							<p id="sub_tagline" >
-							Fresh Design is an Australian based studio and we strive to create beautiful 
-							looking products, you can view our <a href="portfolio.html"><b>past work</b></a> here or you can <a href="contact.html"><b>contact us</b></a>.
-							</p>					
-						</div>	
+								Конференция для front-end разработчиков: тут можно узнать о JavaScript, CoffeeScript,
+								Backbone.js, Chaplin, ClojureScript etc.
+							</p>
+						</div>
+
+						<!--
 						<div id="featured_slider">
 							<div id="myCarousel" class="carousel slide">
 					            <div class="carousel-inner">
@@ -69,97 +79,194 @@
 					            </div>
 					            <a class="left carousel-control" href="#myCarousel" data-slide="prev">‹</a>
 					            <a class="right carousel-control" href="#myCarousel" data-slide="next">›</a>
-					        </div>						
+					        </div>
 						</div>
+						-->
+
 						<section>
-							<div id="services">
+							<div id="about">
 							<div  class="sect_title"><h3>Доклады</h3></div>
 							<div class="row">
 								<div class="span4">
-									
-									<p class="title"> web design</p>
-									<p class="subheading">subheading goes here</p>
-									<p class="description">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+
+									<h4 class="title">Paul Miller</h4>
+									<p class="subheading"><a href="">Read more</a></p>
+									<p class="description">Superior service-based web apps with Chaplin (Backbone) and Brunch</p>
 								</div>
 								<div  class="span4">
-									
-									<p class="title">seo services</p>
-									<p class="subheading">subheading goes here</p>
-									<p class="description">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>								
+
+									<h4 class="title">Vladimir Agafonkin</h4>
+									<p class="subheading"><a href="">Read more</a></p>
+									<p class="description">Geo-apps with Leaflet</p>
 								</div>
 								<div class="span4">
-								 	
-									<p class="title">web development</p>
-									<p class="subheading">subheading goes here</p>
-									<p class="description">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.,</p>								
-								</div>	
+
+									<h4 class="title">Egor Nazarkin</h4>
+									<p class="subheading"><a href="">Read more</a></p>
+									<p class="description">Chaplin in real life and (probably) canvas, CoffeeScript vs JS</p>
+								</div>
+						</div>
+						<div class="row">
 								<div class="span4">
-								 	
-									<p class="title">web development</p>
-									<p class="subheading">subheading goes here</p>
-									<p class="description">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.,</p>								
-								</div>	
+
+									<h4 class="title">Artem Zakharchenko</h4>
+									<p class="subheading"><a href="">Read more</a></p>
+									<p class="description">Javascript memory managment</p>
+								</div>
+
 								<div class="span4">
-								 	
-									<p class="title">web development</p>
-									<p class="subheading">subheading goes here</p>
-									<p class="description">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.,</p>								
-								</div>		
+
+									<h4 class="title">Alexander Solovyov</h4>
+									<p class="subheading"><a href="">Read more</a></p>
+									<p class="description">ClojureScript</p>
+								</div>
 								<div class="span4">
-								 	
-									<p class="title">web development</p>
-									<p class="subheading">subheading goes here</p>
-									<p class="description">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.,</p>								
-								</div>										
-							</div>	
-						</div>										
+									<p>And more...</p>
+								</div>
+							</div>
+						</div>
 						</section>
-												
+
+						<section>
+							<div id="sponsor">
+							<div  class="sect_title"><h3>Партнеры</h3></div>
+							<div class="row">
+								<div class="center">
+									<p>Партнер <strong>KyivJS</strong> компания
+										<a href="http://www.ciklum.com/">Ciklum</a>
+									</p>
+									<p>
+										<img src="img/sponsors/ciklum.jpg" alt="Ciklum" />
+									</p>
+								</div>
+								<div class="clean"></div>
+							</div>
+						</div>
+						</section>
+
+						<section>
+							<div id="location">
+							<div  class="sect_title"><h3>Место проведения</h3></div>
+							<div class="row">
+								<div class="span3">
+									<p>
+										Mykoly Amosova St, 12,<br />
+										Kyiv, Ukraine
+
+
+									</p>
+								</div>
+								<div class="span8">
+									<iframe width="625" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=ciklum+%D0%BA%D0%B8%D0%B5%D0%B2&amp;aq=&amp;sll=37.0625,-95.677068&amp;sspn=47.215051,87.1875&amp;ie=UTF8&amp;hq=ciklum&amp;hnear=Kiev,+Kyiv+city,+Ukraine&amp;ll=50.422641,30.505063&amp;spn=0.018672,0.042572&amp;t=m&amp;z=14&amp;iwloc=A&amp;cid=12510346322489928835&amp;output=embed"></iframe><br /><small><a href="https://maps.google.com/maps?f=q&amp;source=embed&amp;hl=en&amp;geocode=&amp;q=ciklum+%D0%BA%D0%B8%D0%B5%D0%B2&amp;aq=&amp;sll=37.0625,-95.677068&amp;sspn=47.215051,87.1875&amp;ie=UTF8&amp;hq=ciklum&amp;hnear=Kiev,+Kyiv+city,+Ukraine&amp;ll=50.422641,30.505063&amp;spn=0.018672,0.042572&amp;t=m&amp;z=14&amp;iwloc=A&amp;cid=12510346322489928835" style="color:#0000FF;text-align:left">View Larger Map</a></small>
+								</div>
+								<div class="clean"></div>
+							</div>
+						</div>
+						</section>
+
+						<section>
+							<div id="team">
+							<div  class="sect_title"><h3>Организаторы</h3></div>
+							<div class="row team">
+								<script type="text/javascript">
+									var contacts = function (name) {
+										var team = {
+											"max": {
+												"id": "klymyshyn",
+												"domain": "gmail.com",
+												"phone": "+380667357523"
+											},
+											"eldar": {
+												"id": "djkojb",
+												"domain": "gmail.com",
+												"phone": "+380506445356"
+											},
+											"kira": {
+												"id": "yulia.puchnina",
+												"domain": "gmail.com",
+												"phone": "+380983861482"
+											}
+										};
+										var user = team[name];
+										document.write('Email: <a href="mailto:' + user.id + '@' + user.domain + '">');
+										document.write(user.id + '@' + user.domain);
+										document.write('</a><br />');
+										document.write('Phone: ' + user.phone);
+									};
+								</script>
+								<div class="span4">
+									<p>
+										<strong>Yulia Puchnina</strong><br />
+										<script type="text/javascript">contacts('kira');</script>
+									</p>
+								</div>
+								<div class="span4">
+									<p>
+										<strong>Maksym Klymyshyn</strong><br />
+										<script type="text/javascript">contacts('max');</script>
+									</p>
+								</div>
+								<div class="span4">
+									<p>
+										<strong>Eldar Djafarov</strong><br />
+										<script type="text/javascript">contacts('eldar');</script>
+									</p>
+								</div>
+								<div class="clean"></div>
+							</div>
+						</div>
+						</section>
 
 					</div>
 				</div>
 			</section>
-		</div>	
+		</div>
 		<footer>
 			<div class="container">
 				<div class="row">
-					<div class="span4">
+					<div class="span6">
 						<p class="title">Friends</p>
 						<p><a href="http://jsgroup.com.ua">JS group</a><br/>
-						<a href="">Pyconf.</a><br/>
-						<a href="">PyKiev</a><br/>
-						 
-						</p>
-					</div>
-					<div class="span3">
-						<p class="title">Map</p>
-						<p><a href="">Home</a><br/>
-						<a href="">About</a><br/>
-						<a href="">Portfolio</a><br/>
-						<a href="">Contact us</a><br/>
-						<a href="">FAQ</a><br/>
+						<a href="http://ua.pycon.org">PyCon Ukraine</a><br/>
+						<a href="http://kyivpy.org.ua">KyivPy</a><br/>
 
 						</p>
 					</div>
-					<div class="span3">
+					<div class="span6">
 						<p class="title">Social </p>
-						<p><a href="">Twitter</a><br/>
-						<a href="">Facebook</a><br/>
+						<p>
+							<a href="https://twitter.com/KyivJS">Twitter</a><br/>
+							<a href="http://www.facebook.com/events/356322134454709/">Facebook</a><br/>
+							<a href="https://plus.google.com/b/113283633389591347846/113283633389591347846/posts">Google+</a><br/>
 						</p>
-					</div>					
-					 
+					</div>
+
 
 				</div>
 			</div>
-		</footer>	
+		</footer>
 		<div class="container">
-			<p>Coypright &copy; 2012 | jsKiev conf.</p>
-		</div>	
+			<p>Coypright &copy; 2012 | KyivJs Conference</p>
+		</div>
 		<script src="js/bootstrap.js"></script>
 		<script src="js/bootstrap-tab.js"></script>
 		<script src="js/bootstrap-tooltip.js"></script>
 		<script src="js/bootstrap-popover.js"></script>
 		<script src="js/bootstrap-carousel.js"></script>
 		<script src="js/custom.js"></script>
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-33538181-3']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
 	</body>
 </html>
