@@ -312,8 +312,8 @@ p.subheading a {
 
 .news {
     display:inline;
-    position:relative;
+    position:absolute;
     top:-30px;
-    left:10px;
+    left:150px;
     font-size:1.2em !important;
 }
