@@ -31,7 +31,9 @@ body {
     height: 128px;
     position: relative;
     text-indent: -99999px;
-    width: 126px;
+    width: 128px;
+    background-width:128px;
+    background-height:128px;
 }
 #header #navi {
     float: right;
