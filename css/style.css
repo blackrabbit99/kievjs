@@ -317,3 +317,11 @@ p.subheading a {
     left:150px;
     font-size:1.2em !important;
 }
+
+.registration {
+    margin-top:10px;
+    margin-bottom:10px;
+    font-size:2em;
+    text-transform:uppercase;
+    font-weight:bold;
+}
