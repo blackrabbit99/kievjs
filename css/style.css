@@ -327,3 +327,8 @@ p.subheading a {
     text-transform:uppercase;
     font-weight:bold;
 }
+
+.copyright {
+    font-size:1.2em;
+    padding-bottom:1em;
+}
