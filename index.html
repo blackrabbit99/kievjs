@@ -7,6 +7,8 @@
         <link rel="stylesheet" type="text/css" href="css/style.css"/>
         <link rel="image_src" href="img/logo-big.png" />
         <link rel="image" href="img/logo-big.png" />
+
+        <meta name="description" content="Киевский слет front-end разработчиков. Все самое интересное о JavaScript, CoffeeScript и прочие технологии связанные с UX">
     </head>
     <body>
         <style type="text/css">.facebook-hack { display:none; }</style>
@@ -18,7 +20,7 @@
                     <div class="span12">
                         <p class="news">
                             <span class="label label-important">Важно!</span>
-                            В пуле еще один докладчик, тема уточняется
+                            Регистрация закрывается <strong>3-го октября</strong>
                         </p>
                         <div id="social">
                             <a href="https://twitter.com/KyivJS"><img src="img/twitter.png" alt="" width="20" height="20"/></a>
@@ -129,7 +131,25 @@
                                     <p class="description">HTTP push in a cross-domain environment</p>
                                 </div>
                                 <div class="span4">
-                                    <p>А еще второй поток...</p>
+                                    <h4 class="title">Юлия Пучнина</h4>
+                                    <!--<p class="subheading"><a href="http://webapp.org.ua/">Подробнее</a></p>-->
+                                    <p class="description">
+                                        Game development: do anything with the help of JavaScript &amp; Canvas</p>
+                                </div>
+                                <div class="span4">
+                                    <h4 class="title">Юрий Сильвестров</h4>
+                                    <h4 class="title">Михаил Валков</h4>
+                                    <!-- <p class="subheading"><a href="http://webapp.org.ua/">Подробнее</a></p> -->
+                                    <p class="description">
+                                        Prototyping app using JS and HTML5</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="span4">
+                                    <h4 class="title">Евгений Жарков</h4>
+                                    <!-- <p class="subheading"><a href="http://webapp.org.ua/">Подробнее</a></p> -->
+                                    <p class="description">
+                                        Windows 8 Applications: the Immaculate Conception of JavaScript</p>
                                 </div>
                             </div>
                         </div>
@@ -182,12 +202,14 @@
                                             "max": {
                                                 "id": "klymyshyn",
                                                 "domain": "gmail.com",
-                                                "phone": "+380667357523"
+                                                "phone": "+380667357523",
+                                                "skype": "max.klymyshyn"
                                             },
                                             "eldar": {
                                                 "id": "djkojb",
                                                 "domain": "gmail.com",
-                                                "phone": "+380506445356"
+                                                "phone": "+380506445356",
+                                                "skype": "ka_djko"
                                             },
                                             "kira": {
                                                 "id": "yulia.puchnina",
@@ -200,28 +222,41 @@
                                         document.write(user.id + '@' + user.domain);
                                         document.write('</a><br />');
                                         document.write('Phone: ' + user.phone);
+                                        if (user.skype) {
+                                            document.write("<br />Skype: <strong>" + user.skype + "</strong>");
+                                        }
+
                                     };
                                 </script>
                                 <div class="span4">
                                     <p>
-                                        <strong>Юлия Пучнина</strong><br />
+                                        <strong><a class="organizer" href="http://www.linkedin.com/pub/yulia-puchnina/36/73a/174">Юлия Пучнина</a></strong><br />
                                         <script type="text/javascript">contacts('kira');</script>
                                     </p>
                                 </div>
                                 <div class="span4">
                                     <p>
-                                        <strong>Максим Климишин</strong><br />
+                                        <strong><a class="organizer" href="http://www.linkedin.com/in/klymyshyn">Максим Климишин</a></strong><br />
                                         <script type="text/javascript">contacts('max');</script>
                                     </p>
                                 </div>
                                 <div class="span4">
                                     <p>
-                                        <strong>Эльдар Джафаров</strong><br />
+                                        <strong><a href="http://www.linkedin.com/in/edjafarov" class="organizer">Эльдар Джафаров</a></strong><br />
                                         <script type="text/javascript">contacts('eldar');</script>
                                     </p>
                                 </div>
                                 <div class="clean"></div>
+
                             </div>
+                            <h4 class="title">Комманда</h4>
+                            <ul class="team">
+                                <li>Юлия Савьюк</li>
+                                <li>Пол Миллер</li>
+                                <li>Егор Назаркин</li>
+                                <li>Артем Захарченко</li>
+                                <li>Владимир Агафонкин</li>
+                            </ul>
                         </div>
                         </section>
                     </div>

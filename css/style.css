@@ -286,6 +286,7 @@ html[xmlns] .clearfix {
 }
 
 h4.title {
+    margin-top:0;
     font-size:2em;
     margin-bottom:0.3em;
 }
@@ -298,7 +299,11 @@ p.subheading a {
     font-size:0.8em;
 }
 #about .description {
-    padding-bottom:1em !important;
+    padding-bottom:0.5em !important;
+}
+
+#about .row p {
+    margin-bottom:0 !important;
 }
 #services .description {
     bottom: 10px;
@@ -331,4 +336,26 @@ p.subheading a {
 .copyright {
     font-size:1.2em;
     padding-bottom:1em;
+}
+
+.team {
+    margin-top:3em;
+}
+.team li {
+    display:inline-block;
+    font-size:1.6em;
+    margin-right:1em;
+    margin-bottom:1em;
+    width:170pt;
+}
+
+.organizer {
+    color:#000;
+    border-bottom:2px dashed #000;
+}
+
+.organizer:hover {
+    text-decoration:none;
+    border-bottom:2px solid #000;
+    color:#000;
 }
