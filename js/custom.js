@@ -18,6 +18,7 @@ $.router(/\w+/, function(section) {
 });
 
 if (!window.location.hash) {
-    window.location.hash = 'about';
+    $('section.content').hide();
+    $('#about').parent().show();
 }
 });//]]>  

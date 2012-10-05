@@ -360,10 +360,3 @@ p.subheading a {
     color:#000;
 }
 
-#sponsor .row {
-    margin: 0 20px;
-    min-height: 300px;
-    float: left;
-    display: inline-block;
-    padding-bottom: 0px;
-}
