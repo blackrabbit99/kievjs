@@ -1,6 +1,6 @@
 //<![CDATA[ 
 $(window).load(function(){
-$("body").tooltip({
+/*$("body").tooltip({
 selector: "a[rel=tooltip]",
 placement: "top"
 });
@@ -11,5 +11,14 @@ placement: "right"
 $('.myCarousel').carousel({
   interval: 2000
 })
+*/
+$.router(/\w+/, function(section) {
+    $("section.content").hide();
+    $("#" + section).parent().show();
+});
 
+if (!window.location.hash) {
+    $('section.content').hide();
+    $('#about').parent().show();
+}
 });//]]>  
