@@ -21,4 +21,10 @@ if (!window.location.hash) {
     $('section.content').hide();
     $('#about').parent().show();
 }
+
+$('#sponsor .row').masonry({
+  itemSelector: 'div.span6'
+});
+
+
 });//]]>  
