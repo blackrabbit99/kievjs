@@ -22,9 +22,10 @@ if (!window.location.hash) {
     $('#about').parent().show();
 }
 
-$('#sponsor .row').masonry({
+/*$('#sponsor .row').masonry({
   itemSelector: 'div.span6'
 });
+*/
 
 
 });//]]>  
