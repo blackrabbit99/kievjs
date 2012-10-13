@@ -77,8 +77,8 @@ body {
 #tagline h2 {
     font-weight:normal;
     letter-spacing:-2px;
-    font-size:3em !important;
-    margin-bottom:40px;
+    font-size:2em !important;
+    margin-bottom:20px;
 }
 
 #tagline #above {
@@ -374,4 +374,24 @@ p.subheading a {
 
 .middle {
     font-size:1.2em;
+}
+
+.important {
+    font-size:1em;
+}
+
+.languages a {
+    display:inline-block;
+    margin-left:15pt;
+    font-size:1.2em;
+    border-bottom:2px dashed #08C;
+}
+.languages a:hover {
+    text-decoration:none;
+    border-bottom:2px solid #08C;
+}
+.languages a.current {
+    font-weight:bold;
+    text-decoration:none;
+    border:0;
 }
