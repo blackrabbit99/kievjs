@@ -367,3 +367,11 @@ p.subheading a {
 .partner {
     margin-bottom:5em;
 }
+
+.large {
+    font-size:1.5em;
+}
+
+.middle {
+    font-size:1.2em;
+}
