@@ -1,0 +1,6 @@
+Jinja2==2.6
+gdata==2.0.17
+ipdb==0.7
+ipython==0.13
+pycrypto==2.6
+wsgiref==0.1.2
