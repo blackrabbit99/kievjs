@@ -7,6 +7,9 @@ import json
 import os
 import smtplib
 
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+
 from jinja2 import Template
 
 from Crypto.Cipher import ARC4
@@ -197,8 +200,6 @@ def send_mail(db, context, template=None):
     """
     Send HTML/Text mail using templates and GMail SMTP
     """
-    from email.mime.multipart import MIMEMultipart
-    from email.mime.text import MIMEText
 
     html_template = u"{}.html".format(template)
     text_template = u"{}.txt".format(template)
@@ -209,7 +210,7 @@ def send_mail(db, context, template=None):
     body_html = html_template.render(**context)
     body_text = text_template.render(**context)
 
-    name, email = context["name"], context["email"]
+    name, email = context["name"].strip(), context["email"].strip()
     company, position = context["company"], context["position"]
 
     # preparing
@@ -260,13 +261,19 @@ def send_registrations(args):
 
     sheet, wsheet = get_worksheet(client, doc_id=REGISTRATION_DOC_ID)
     rows = client.get_list_feed(ID(sheet), ID(wsheet.entry[0]))
+    sent_mails = set()
 
     for num, row in enumerate(rows.entry):
         # TODO: parse timestamp
         info = row.to_dict()
-        name = info["name"]
-        email = info["email"]
+        name = info["name"].strip()
+        email = info["email"].strip()
         status = info["notification"]
+
+        # avoid duplicates
+        if email in sent_mails:
+            print u"User with email: {} already notified".format(email)
+            continue
 
         if email not in users:
             print u"User with email {} skipped "\
@@ -290,6 +297,7 @@ def send_registrations(args):
         client.update(row)
 
         print u"Sent {} of {}.".format(sent, total)
+        sent_mails.add(email)
         sent += 1
 
 
