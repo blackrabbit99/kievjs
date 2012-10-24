@@ -219,7 +219,12 @@ def send_mail(db, context, template=None):
     msg["Subject"] = u"{} Registration Confirmation".format(
         DEFAULT_EMAIL_PREFIX)
     msg["From"] = EMAIL_DEFAULT_FROM_FULL
-    msg["To"] = "{} <{}>".format(name, email)
+    try:
+        msg["To"] = u"{} <{}>".format(
+            name.encode("utf-8"), email.encode("utf-8"))
+    except UnicodeDecodeError:
+        msg["To"] = email
+
     # msg["To"] = EMAIL_DEFAULT_FROM  ## testing only
 
     part1 = MIMEText(body_text.encode("utf-8"), "plain", "UTF-8")
@@ -236,7 +241,12 @@ def send_mail(db, context, template=None):
     smtp.starttls()
     smtp.ehlo()
     smtp.login(login, pwd)
-    smtp.sendmail(EMAIL_DEFAULT_FROM, email, msg.as_string())
+    #
+    try:
+        smtp.sendmail(EMAIL_DEFAULT_FROM, email, msg.as_string())
+    except smtplib.SMTPRecipientsRefused:
+        print "Can't send to {}".format(email)
+
     smtp.quit()
 
 
