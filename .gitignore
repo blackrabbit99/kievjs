@@ -2,3 +2,4 @@ Makefile
 *.DS_Store
 */.kjsdb
 tools/ve
+*.pyc

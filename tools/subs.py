@@ -1,18 +1,16 @@
 # -*- coding: utf-8 -*-
 
 import argparse
-import base64
 import getpass
-import json
-import os
 import smtplib
+import uuid
 
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 from jinja2 import Template
 
-from Crypto.Cipher import ARC4
+from db import DB, DB_FILE
 
 import gdata.spreadsheet
 import gdata.spreadsheets.client
@@ -27,48 +25,11 @@ EMAIL_DEFAULT_FROM = "klymyshyn@gmail.com"
 EMAIL_DEFAULT_FROM_FULL = "KyivJS Team <klymyshyn@gmail.com>"
 
 SCOPE = "https://spreadsheets.google.com/feeds/"
-DB_FILE = ".kjsdb"
+
 #REGISTRATION_DOC_ID = "KyivJs Registration: November 17, 2012"
 
 
 ID = lambda o: o.id.text.rsplit("/", 1)[1]
-
-
-class DB(object):
-    """
-    Deadly simple database
-    """
-    def __init__(self, token, path=DB_FILE):
-        self.data = {}
-        self.token = token[:8].zfill(8)
-        arc = ARC4.new(self.token)
-
-        if os.path.exists(DB_FILE):
-            data = arc.decrypt(open(DB_FILE).read())
-            self.data = json.loads(base64.b64decode(data))
-
-    def update(self, key, value):
-        # make sure object is serializable!
-        json.dumps({key: value})
-
-        self.data[key] = value
-
-    def __getattr__(self, name):
-        if name in self.data:
-            return self.data[name]
-
-        return None
-
-    def save(self):
-        arc = ARC4.new(self.token)
-
-        data = base64.b64encode(json.dumps(self.data))
-
-        fh = open(DB_FILE, "w")
-        fh.write(arc.encrypt(data))
-        fh.close()
-
-        return True
 
 
 def authenticate(args):
@@ -301,6 +262,46 @@ def send_registrations(args):
         sent += 1
 
 
+def generate_reg_ids(args):
+    """
+    Generate unique registration ids
+    """
+    db = DB(args.token)
+    client = get_auth(db)
+
+    sheet, wsheet = get_worksheet(client, doc_id=REGISTRATION_DOC_ID)
+    rows = client.get_list_feed(ID(sheet), ID(wsheet.entry[0]))
+
+    regid = lambda: "-".join(str(uuid.uuid4()).split("-")[:2])
+
+    for num, row in enumerate(rows.entry):
+        info = row.to_dict()
+
+        # update only
+        if info.get("registrationid") is None:
+            info["registrationid"] = regid()
+            row.from_dict(info)
+            client.update(row)
+
+        print "Generated `{registrationid}` for {email}".format(**info)
+
+
+def sync_to_local_db(args):
+    """
+    Synchronize remote document with local mongo db
+    """
+    db = DB(args.token)
+    client = get_auth(db)
+
+    sheet, wsheet = get_worksheet(client, doc_id=REGISTRATION_DOC_ID)
+    rows = client.get_list_feed(ID(sheet), ID(wsheet.entry[0]))
+
+    for num, row in enumerate(rows.entry):
+        info = row.to_dict()
+
+        print "User {email} synced".format(**info)
+
+
 parser = argparse.ArgumentParser(
     description="Manipulate subscription"
 )
@@ -323,6 +324,11 @@ parser.add_argument(
     "--send", action="store_true", default=False,
     help="Send registration confirmation")
 
+parser.add_argument(
+    "--generate", action="store_true", default=False,
+    help="Generate registrations ID")
+
+
 args = parser.parse_args()
 
 
@@ -332,3 +338,5 @@ elif args.list:
     display_registrations(args)
 elif args.send:
     send_registrations(args)
+elif args.generate:
+    generate_reg_ids(args)
