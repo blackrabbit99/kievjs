@@ -10,7 +10,7 @@ from email.mime.text import MIMEText
 
 from jinja2 import Template
 
-from db import DB, DB_FILE
+from db import DB, DB_FILE, mongo_init
 
 import gdata.spreadsheet
 import gdata.spreadsheets.client
@@ -290,6 +290,7 @@ def sync_to_local_db(args):
     """
     Synchronize remote document with local mongo db
     """
+    users = mongo_init().users
     db = DB(args.token)
     client = get_auth(db)
 
@@ -299,7 +300,11 @@ def sync_to_local_db(args):
     for num, row in enumerate(rows.entry):
         info = row.to_dict()
 
-        print "User {email} synced".format(**info)
+        if not users.find_one({"email": info["email"]}):
+            users.insert(info)
+            #print "User {email} synced".format(**info)
+        else:
+            print "Skipping {email}".format(**info)
 
 
 parser = argparse.ArgumentParser(
@@ -328,6 +333,10 @@ parser.add_argument(
     "--generate", action="store_true", default=False,
     help="Generate registrations ID")
 
+parser.add_argument(
+    "--sync_to", action="store_true", default=False,
+    help="Sync data to local mongo server")
+
 
 args = parser.parse_args()
 
@@ -340,3 +349,5 @@ elif args.send:
     send_registrations(args)
 elif args.generate:
     generate_reg_ids(args)
+elif args.sync_to:
+    sync_to_local_db(args)

@@ -1,10 +1,12 @@
 import base64
 import json
 import os
+import pymongo
 
 from Crypto.Cipher import ARC4
 
 DB_FILE = ".kjsdb"
+MONGO_DATABASE = "kjs_conference"
 
 
 class DB(object):
@@ -42,3 +44,11 @@ class DB(object):
         fh.close()
 
         return True
+
+
+def mongo_init():
+    """
+    Create connection to mongo database and return it
+    """
+    connection = pymongo.Connection()
+    return connection[MONGO_DATABASE]
