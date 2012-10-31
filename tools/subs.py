@@ -16,17 +16,17 @@ import gdata.spreadsheet
 import gdata.spreadsheets.client
 import gdata.gauth
 
+import settings
 
-APP_ID = "KyivJS"
-REGISTRATION_DOC_ID = "KyivJs Registration: November 17, 2012"
 
-DEFAULT_EMAIL_PREFIX = "KyivJS Conference: "
-EMAIL_DEFAULT_FROM = "klymyshyn@gmail.com"
-EMAIL_DEFAULT_FROM_FULL = "KyivJS Team <klymyshyn@gmail.com>"
+# getting configuration from settings
+APP_ID = getattr(settings, "APP_ID", None)
+REGISTRATION_DOC_ID = getattr(settings, "REGISTRATION_DOC_ID", None)
+DEFAULT_EMAIL_PREFIX = getattr(settings, "DEFAULT_EMAIL_PREFIX", None)
+EMAIL_DEFAULT_FROM = getattr(settings, "EMAIL_DEFAULT_FROM", None)
+EMAIL_DEFAULT_FROM_FULL = getattr(settings, "EMAIL_DEFAULT_FROM_FULL", None)
 
 SCOPE = "https://spreadsheets.google.com/feeds/"
-
-#REGISTRATION_DOC_ID = "KyivJs Registration: November 17, 2012"
 
 
 ID = lambda o: o.id.text.rsplit("/", 1)[1]

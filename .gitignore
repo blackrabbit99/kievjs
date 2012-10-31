@@ -3,3 +3,4 @@ Makefile
 */.kjsdb
 tools/ve
 *.pyc
+tools/settings.py
