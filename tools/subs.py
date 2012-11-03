@@ -2,13 +2,15 @@
 
 import argparse
 import getpass
+import pymongo
+import os
 import smtplib
 import uuid
 
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-from jinja2 import Template
+from jinja2 import Template, Environment, FileSystemLoader
 
 from db import DB, DB_FILE, mongo_init
 
@@ -25,11 +27,17 @@ REGISTRATION_DOC_ID = getattr(settings, "REGISTRATION_DOC_ID", None)
 DEFAULT_EMAIL_PREFIX = getattr(settings, "DEFAULT_EMAIL_PREFIX", None)
 EMAIL_DEFAULT_FROM = getattr(settings, "EMAIL_DEFAULT_FROM", None)
 EMAIL_DEFAULT_FROM_FULL = getattr(settings, "EMAIL_DEFAULT_FROM_FULL", None)
+CAMPAIGNS = getattr(settings, "CAMPAIGNS", {})
+DEBUG = getattr(settings, "DEBUG", False)
 
 SCOPE = "https://spreadsheets.google.com/feeds/"
 
 
 ID = lambda o: o.id.text.rsplit("/", 1)[1]
+
+
+jinja_env = Environment(loader=FileSystemLoader(
+    os.path.join(os.path.dirname(__file__), "templates"), "utf-8"))
 
 
 def authenticate(args):
@@ -165,8 +173,8 @@ def send_mail(db, context, template=None):
     html_template = u"{}.html".format(template)
     text_template = u"{}.txt".format(template)
 
-    html_template = Template(open(html_template).read().decode("utf-8"))
-    text_template = Template(open(text_template).read().decode("utf-8"))
+    html_template = jinja_env.get_template(html_template)
+    text_template = jinja_env.get_template(text_template)
 
     body_html = html_template.render(**context)
     body_text = text_template.render(**context)
@@ -187,7 +195,9 @@ def send_mail(db, context, template=None):
     except UnicodeDecodeError:
         msg["To"] = email
 
-    # msg["To"] = EMAIL_DEFAULT_FROM  ## testing only
+    if DEBUG:
+        del msg["To"]
+        msg["To"] = EMAIL_DEFAULT_FROM  # testing only
 
     part1 = MIMEText(body_text.encode("utf-8"), "plain", "UTF-8")
     part2 = MIMEText(body_html.encode("utf-8"), "html", "UTF-8")
@@ -250,12 +260,62 @@ def send_registrations(args):
         # company = info["company"]
         # position = info["position"]
         print u"Sending email to: {} ...".format(name)
-        send_mail(db, info, template="templates/registration")
+        send_mail(db, info, template="registration")
 
         # updating status
         info["notification"] = "sent"
         row.from_dict(info)
         client.update(row)
+
+        print u"Sent {} of {}.".format(sent, total)
+        sent_mails.add(email)
+        sent += 1
+
+
+def send_confirmation(args):
+    db = DB(args.token)
+
+    if not args.campaign:
+        raise ValueError(
+            u"Please, provide --campaign argument value."
+            u"Available campaigns: {}".format(", ".join(CAMPAIGNS.values())))
+
+    confirmation_shake = args.campaign
+    collection = mongo_init().users
+    users = collection.find({}).sort("order", pymongo.ASCENDING)
+
+    total = users.count()
+    sent = 1
+    sent_mails = set()
+
+    for num, user in enumerate(users):
+        name = user["name"].strip()
+        email = user["email"].strip()
+        status = user["notification"]
+
+        # avoid duplicates
+        if email in sent_mails:
+            print u"User with email: {} already notified".format(email)
+            continue
+
+        if status and status == confirmation_shake:
+            print u"Confirmation request to {} already sent".format(email)
+            sent_mails.add(email)
+            sent += 1
+            continue
+
+        # timestamp = info["timestamp"]
+        # company = info["company"]
+        # position = info["position"]
+        print u"Sending Confirmation `{}` to: {} ...".format(
+            name, confirmation_shake)
+
+        return
+        send_mail(db, user, template="confirmation")
+
+        # updating status
+        user["notification"] = confirmation_shake
+        collection.save(user)
 
         print u"Sent {} of {}.".format(sent, total)
         sent_mails.add(email)
@@ -301,10 +361,44 @@ def sync_to_local_db(args):
         info = row.to_dict()
 
         if not users.find_one({"email": info["email"]}):
+            info["order"] = num
+
+            if not info["internalid"]:
+                info["internalid"] = str(uuid.uuid4())
+
             users.insert(info)
             #print "User {email} synced".format(**info)
         else:
             print "Skipping {email}".format(**info)
+
+
+def sync_from_local_db(args):
+    """
+    Synchronize local db with remote document
+    """
+    users = mongo_init().users
+    db = DB(args.token)
+    client = get_auth(db)
+
+    sheet, wsheet = get_worksheet(client, doc_id=REGISTRATION_DOC_ID)
+    rows = client.get_list_feed(ID(sheet), ID(wsheet.entry[0]))
+    last = len(rows.entry)
+    found_users = users.find({}).sort("order", pymongo.ASCENDING)
+
+    for num, user in enumerate(found_users):
+        row = dict([(key, val)
+                    for key, val in user.iteritems()
+                    if key != "_id"])
+
+        order = row.pop("order", last)
+
+        rows.entry[order].from_dict(row)
+        client.update(rows.entry[order])
+
+        if order >= last:
+            last += 1
+
+        print "Synced {}".format(row.get(u"email"))
 
 
 parser = argparse.ArgumentParser(
@@ -330,13 +424,24 @@ parser.add_argument(
     help="Send registration confirmation")
 
 parser.add_argument(
+    "--confirmation", action="store_true", default=False,
+    help="Send confirmation request")
+
+parser.add_argument(
+    "--campaign", default=None,
+    help="Name of the campaign for confirmation (simple map)")
+
+parser.add_argument(
     "--generate", action="store_true", default=False,
     help="Generate registrations ID")
 
 parser.add_argument(
-    "--sync_to", action="store_true", default=False,
+    "--sync_to_local", action="store_true", default=False,
     help="Sync data to local mongo server")
 
+parser.add_argument(
+    "--sync_from_local", action="store_true", default=False,
+    help="Sync data from local mongo server to document")
 
 args = parser.parse_args()
 
@@ -349,5 +454,9 @@ elif args.send:
     send_registrations(args)
 elif args.generate:
     generate_reg_ids(args)
-elif args.sync_to:
+elif args.sync_to_local:
     sync_to_local_db(args)
+elif args.sync_from_local:
+    sync_from_local_db(args)
+elif args.confirmation:
+    send_confirmation(args)

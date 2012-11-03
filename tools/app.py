@@ -1,5 +1,7 @@
 from flask import Flask, redirect, url_for, flash, render_template
 
+from db import mongo_init
+
 import settings
 
 app = Flask(__name__)
@@ -19,8 +21,17 @@ def confirm(campaign, code):
         flash("Sorry, campaign not found", "alert-error")
         return redirect(url_for("index"))
 
-    # TODO: read user from mongo
-    # TODO: mark as confirmed in provided campaign
+    users = mongo_init().users
+    campaign = CAMPAIGNS.get(campaign)
+
+    user = users.find_one({"internalid": code})
+
+    if not user:
+        flash("Sorry, can't find such user", "alert-error")
+        return redirect(url_for("index"))
+
+    user[campaign] = "confirmed"
+    users.save(user)
 
     flash(
         "You're successfully confirmed in current campaign",
