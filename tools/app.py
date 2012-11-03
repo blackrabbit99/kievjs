@@ -1,4 +1,5 @@
 from flask import Flask, redirect, url_for, flash, render_template
+from werkzeug.contrib.fixers import ProxyFix
 
 from db import mongo_init
 
@@ -37,6 +38,10 @@ def confirm(campaign, code):
         "You're successfully confirmed in current campaign",
         "alert-success")
     return redirect(url_for("index"))
+
+
+# fix for nginx proxy
+app.wsgi_app = ProxyFix(app.wsgi_app)
 
 
 def main():
