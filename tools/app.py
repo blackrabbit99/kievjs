@@ -43,6 +43,15 @@ def confirm(campaign, code):
 # fix for nginx proxy
 app.wsgi_app = ProxyFix(app.wsgi_app)
 
+if not app.debug:
+    import logging
+    from logging.handlers import SMTPHandler
+    mail_handler = SMTPHandler('127.0.0.1',
+                               'server-error@kyivjs.org.ua',
+                               settings.ADMINS, 'KyivJS API Failed')
+    mail_handler.setLevel(logging.ERROR)
+    app.logger.addHandler(mail_handler)
+
 
 def main():
     app.run()
