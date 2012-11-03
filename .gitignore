@@ -4,3 +4,6 @@ Makefile
 tools/ve
 *.pyc
 tools/settings.py
+tools/build/*.pdf
+tools/build/codes/*.png
+tools/testing/*

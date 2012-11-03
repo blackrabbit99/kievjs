@@ -3,16 +3,12 @@
 import argparse
 import getpass
 import pymongo
-import os
-import smtplib
+
 import uuid
 
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-
-from jinja2 import Template, Environment, FileSystemLoader
-
+from codes import generate_code, generate_badge
 from db import DB, DB_FILE, mongo_init
+from mail import send_mail
 
 import gdata.spreadsheet
 import gdata.spreadsheets.client
@@ -24,20 +20,15 @@ import settings
 # getting configuration from settings
 APP_ID = getattr(settings, "APP_ID", None)
 REGISTRATION_DOC_ID = getattr(settings, "REGISTRATION_DOC_ID", None)
-DEFAULT_EMAIL_PREFIX = getattr(settings, "DEFAULT_EMAIL_PREFIX", None)
-EMAIL_DEFAULT_FROM = getattr(settings, "EMAIL_DEFAULT_FROM", None)
-EMAIL_DEFAULT_FROM_FULL = getattr(settings, "EMAIL_DEFAULT_FROM_FULL", None)
 CAMPAIGNS = getattr(settings, "CAMPAIGNS", {})
 DEBUG = getattr(settings, "DEBUG", False)
-
+CONFIRMATION_URL = getattr(settings, "CONFIRMATION_URL", "")
+REGISTRATION_URL = getattr(settings, "REGISTRATION_URL", "")
+BADGE_TITLE = getattr(settings, "BADGE_TITLE", "")
 SCOPE = "https://spreadsheets.google.com/feeds/"
 
 
 ID = lambda o: o.id.text.rsplit("/", 1)[1]
-
-
-jinja_env = Environment(loader=FileSystemLoader(
-    os.path.join(os.path.dirname(__file__), "templates"), "utf-8"))
 
 
 def authenticate(args):
@@ -103,24 +94,6 @@ def get_auth(db):
     return client
 
 
-def smtp_connection_details(db):
-    """
-    Get SMTP connection details
-    """
-    if db.smtp_host is None:
-        db.update("smtp_host", raw_input("SMTP Host: "))
-
-    if db.smtp_login is None:
-        db.update("smtp_login", raw_input("Email login: "))
-
-    if db.smtp_password is None:
-        db.update("smtp_password", getpass.getpass("SMTP Password: "))
-
-    db.save()
-
-    return db.smtp_host, db.smtp_login, db.smtp_password
-
-
 def get_worksheet(client, doc_id=None):
     try:
         sheet = [entry for entry in client.GetSpreadsheets().entry
@@ -163,63 +136,6 @@ def display_registrations(args):
     users_map = get_users(client)
 
     print "\nTotal registered users: {0}".format(len(users_map))
-
-
-def send_mail(db, context, template=None):
-    """
-    Send HTML/Text mail using templates and GMail SMTP
-    """
-
-    html_template = u"{}.html".format(template)
-    text_template = u"{}.txt".format(template)
-
-    html_template = jinja_env.get_template(html_template)
-    text_template = jinja_env.get_template(text_template)
-
-    body_html = html_template.render(**context)
-    body_text = text_template.render(**context)
-
-    name, email = context["name"].strip(), context["email"].strip()
-    company, position = context["company"], context["position"]
-
-    # preparing
-    msg = MIMEMultipart("alternative")
-    msg.set_charset("utf-8")
-
-    msg["Subject"] = u"{} Registration Confirmation".format(
-        DEFAULT_EMAIL_PREFIX)
-    msg["From"] = EMAIL_DEFAULT_FROM_FULL
-    try:
-        msg["To"] = u"{} <{}>".format(
-            name.encode("utf-8"), email.encode("utf-8"))
-    except UnicodeDecodeError:
-        msg["To"] = email
-
-    if DEBUG:
-        del msg["To"]
-        msg["To"] = EMAIL_DEFAULT_FROM  # testing only
-
-    part1 = MIMEText(body_text.encode("utf-8"), "plain", "UTF-8")
-    part2 = MIMEText(body_html.encode("utf-8"), "html", "UTF-8")
-
-    msg.attach(part1)
-    msg.attach(part2)
-
-    # sending via SMTP, working ONLY with Gmail
-    host, login, pwd = smtp_connection_details(db)
-
-    smtp = smtplib.SMTP(host, 587)
-    smtp.ehlo()
-    smtp.starttls()
-    smtp.ehlo()
-    smtp.login(login, pwd)
-    #
-    try:
-        smtp.sendmail(EMAIL_DEFAULT_FROM, email, msg.as_string())
-    except smtplib.SMTPRecipientsRefused:
-        print "Can't send to {}".format(email)
-
-    smtp.quit()
 
 
 def send_registrations(args):
@@ -281,6 +197,9 @@ def send_confirmation(args):
             u"Available campaigns: {}".format(", ".join(CAMPAIGNS.values())))
 
     confirmation_shake = args.campaign
+    external_id = [key for key, val in CAMPAIGNS.iteritems()
+                   if val == confirmation_shake][0]
+
     collection = mongo_init().users
     users = collection.find({}).sort("order", pymongo.ASCENDING)
 
@@ -292,6 +211,7 @@ def send_confirmation(args):
         name = user["name"].strip()
         email = user["email"].strip()
         status = user["notification"]
+        user_id = user["internalid"]
 
         # avoid duplicates
         if email in sent_mails:
@@ -310,8 +230,27 @@ def send_confirmation(args):
         print u"Sending Confirmation `{}` to: {} ...".format(
             name, confirmation_shake)
 
-        return
-        send_mail(db, user, template="confirmation")
+        # prepare context
+        link = CONFIRMATION_URL.format(external_id, user_id)
+        registration_link = REGISTRATION_URL.format(user["registrationid"])
+
+        code = generate_code(
+            registration_link,
+            output="build/codes/{}.png".format(user_id))
+
+        badge = generate_badge(
+            title=BADGE_TITLE,
+            name=user.get("name", "").strip(),
+            company=user.get("company", "").strip(),
+            position=user.get("position", "").strip(),
+            qr_code=code,
+            output="build/{}.pdf".format(user_id))
+
+        context = dict([(key, val) for key, val in user.iteritems()])
+        context["link"] = link
+
+        # send mail
+        send_mail(db, context, template="confirmation", files=[badge])
 
         # updating status
         user["notification"] = confirmation_shake
