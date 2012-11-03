@@ -10,4 +10,4 @@ pycrypto==2.6
 pymongo==2.3
 qrcode==2.4.2
 reportlab==2.6
-wsgiref==0.1.2
+
