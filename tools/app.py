@@ -11,12 +11,12 @@ app.config.from_object(settings)
 CAMPAIGNS = getattr(settings, "CAMPAIGNS", {})
 
 
-@app.route('/')
+@app.route('/api/')
 def index():
     return render_template("home.html")
 
 
-@app.route('/confirm/<campaign>/<code>/')
+@app.route('/api/confirm/<campaign>/<code>/')
 def confirm(campaign, code):
     if CAMPAIGNS.get(campaign) is None:
         flash("Sorry, campaign not found", "alert-error")
