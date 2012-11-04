@@ -11,6 +11,21 @@ KyivJS
 
 Также к письму приаттачено приглашение на конференци
 
+Программа конференции доступна по ссылке:
+http://kyivjs.org.ua/agenda.html
+
+Отдельно спасибо спонсорам конференции:
+ - GlobalLogic
+ - Ciklum
+ - Cogniance
+ - SysIQ
+ - PROM.UA
+ - Kitapps
+ - Softheme
+ - 42coffeecups
+ - Djangostars
+ - Insollo
+ - Pieoneers
 
 Конференция пройдет в гостинице Братислава (http://bratislava.com.ua),
 стм. Дарница (http://maps.yandex.ua/-/CVq3YPMF)
