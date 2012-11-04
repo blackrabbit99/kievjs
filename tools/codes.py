@@ -39,7 +39,7 @@ def draw_text(canvas, x, y, text, font="FreeSans", size=12):
 
 
 def generate_badge(title=None, name=None, company=None, position=None,
-                   qr_code=None, output="test.pdf"):
+                   qr_code=None, reg_id=None, output="test.pdf"):
 
     page = canvas.Canvas(output)
     pdfmetrics.registerFont(TTFont("FreeSans", "fonts/FreeSans.ttf"))
@@ -60,6 +60,12 @@ def generate_badge(title=None, name=None, company=None, position=None,
 
     if company:
         draw_text(page, 150, 90, company, size=14)
+
+    if reg_id:
+        draw_text(
+            page, 50, 700,
+            u"Registration ID: {}".format(reg_id),
+            size=16)
 
     # draw lines
     page.setDash(4, 2)
@@ -87,5 +93,6 @@ if __name__ == "__main__":
         name="Maksym Klymyshyn",
         company="KyivJS, GVMachines",
         position="Organizers team, CTO",
+        reg_id="xxxxxxxx-xxx",
         qr_code=generate_code("xxx", output="testing/test.png"),
         output="testing/test.pdf")
