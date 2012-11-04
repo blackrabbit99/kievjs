@@ -237,13 +237,19 @@ def send_confirmation(args):
         code = generate_code(
             registration_link,
             output="build/codes/{}.png".format(user_id))
+        value_or_empty = lambda key: user.get(key, "") or ""
+
+        if not user.get("registrationid", None):
+            print "Skipping user {}, no registration ID".format(email)
+            continue
 
         badge = generate_badge(
             title=BADGE_TITLE,
-            name=user.get("name", "").strip(),
-            company=user.get("company", "").strip(),
-            position=user.get("position", "").strip(),
+            name=value_or_empty("name").strip(),
+            company=value_or_empty("company").strip(),
+            position=value_or_empty("position").strip(),
             qr_code=code,
+            reg_id=user.get("registrationid"),
             output="build/{}.pdf".format(user_id))
 
         context = dict([(key, val) for key, val in user.iteritems()])
