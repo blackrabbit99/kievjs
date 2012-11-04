@@ -40,6 +40,12 @@ def confirm(campaign, code):
     return redirect(url_for("index"))
 
 
+@app.route("/api/pass/<reg_id>/")
+def pass_registration(reg_id):
+    flash("This url only for registration desk at the conference")
+    return redirect(url_for("index"))
+
+
 # fix for nginx proxy
 app.wsgi_app = ProxyFix(app.wsgi_app)
 
