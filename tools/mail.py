@@ -104,7 +104,7 @@ def send_mail(db, context, template=None, files=[]):
     smtp.login(login, pwd)
     #
     try:
-        smtp.sendmail(EMAIL_DEFAULT_FROM, email, msg.as_string())
+        smtp.sendmail(EMAIL_DEFAULT_FROM, [email], msg.as_string())
     except smtplib.SMTPRecipientsRefused:
         print "Can't send to {}".format(email)
 

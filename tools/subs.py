@@ -304,17 +304,21 @@ def sync_to_local_db(args):
 
     for num, row in enumerate(rows.entry):
         info = row.to_dict()
+        avail_user = users.find_one({"email": info["email"]})
 
-        if not users.find_one({"email": info["email"]}):
+        if not info["internalid"]:
+            info["internalid"] = str(uuid.uuid4())
+
+        if not avail_user:
             info["order"] = num
-
-            if not info["internalid"]:
-                info["internalid"] = str(uuid.uuid4())
-
             users.insert(info)
-            #print "User {email} synced".format(**info)
+            print "User {email} synced".format(**info)
         else:
-            print "Skipping {email}".format(**info)
+            print "Updating {email}".format(**info)
+            for key, val in info.iteritems():
+                avail_user[key] = val
+            print "User {email} updated".format(**info)
+            users.save(avail_user)
 
 
 def sync_from_local_db(args):
