@@ -1,0 +1,30 @@
+{% extends "home.html" %}
+{% import '_forms.html' as forms %}
+
+{% block title %}
+    Registration Deck: New user
+{% endblock title %}
+
+{% block section %}
+    New User
+{% endblock section %}
+{% block content %}
+
+
+<form method="post" class="form regform" action="{{ url_for("add_new") }}">
+<fieldset>
+    <legend>Add user details please</legend>
+
+    {{ forms.render_field(form.name) }}
+    {{ forms.render_field(form.email) }}
+
+    {{ forms.render_field(form.position) }}
+    {{ forms.render_field(form.company) }}
+
+    {{ forms.render_field(form.comments) }}
+    <button type="submit" class="btn btn-success">Add new user</button>
+</fieldset>
+</form>
+
+
+{% endblock content %}

@@ -1,0 +1,65 @@
+{% extends "home.html" %}
+
+{% block title %}
+    Registration Deck
+{% endblock title %}
+
+{% block section %}
+    Registration Deck
+{% endblock section %}
+{% block content %}
+
+<p class="stats">Stats: <strong class="passed">{{ stats.passed }}</strong> passed,
+    <strong>{{ stats.total }}</strong> total,
+    <strong>{{ stats.confirmed_shake1 }}</strong> confirmation #1,
+    <strong>{{ stats.confirmed_shake2 }}</strong> confirmation #2</p>
+
+<form method="get" class="form" action="{{ url_for("registration_deck") }}">
+    <input type="text" id="query" class="seach-input" placeholder="Enter code, email or name" value="{{ query }}" name="query" />
+    <button type="submit" class="btn btn-large btn-primary">Search</button>
+
+    <a href="{{ url_for("add_new") }}" class="left-margin btn btn-large btn-primary btn-success">New</a>
+</form>
+{% if users %}
+<table class="table table-striped table-bordered table-hover">
+<tr>
+    <th width="30%">Name</th>
+    <th width="30%">Email</th>
+    <th width="20%">Company</th>
+    <th>Action</th>
+</tr>
+{% for user in users %}
+<tr>
+    <td><a href="{{ url_for("details", reg_id=user.registrationid) }}">{{ user.name }}</a></td>
+    <td>{{ user.email }}</td>
+    <td>{% if user.company %}{{ user.company }}{% endif %}</td>
+    <td>
+        {% if user.passed %}
+            <span class="label label-success">Passed</span>
+            <a href="{{ url_for("confirm_pass", action="cancel", reg_id=user.registrationid) }}?query={{ query }}" class="btn btn-small btn-warning">Cancel</a>
+        {% else %}
+            <a href="{{ url_for("confirm_pass", action="confirm", reg_id=user.registrationid) }}?query={{ query }}" class="btn btn-primary">Confirm</a>
+        {% endif %}
+    </td>
+</tr>
+{% endfor %}
+
+</table>
+{% else %}
+<div class="alert alert-block">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  <h4>Attention!</h4>
+  <br>
+  Please, enter name, email, registration code or
+  company first
+</div>
+{% endif %}
+
+<script type="text/javascript">
+window.onload = function () {
+    // set focus to search input by default
+    var search = document.getElementById("query");
+    search.focus();
+}
+</script>
+{% endblock content %}

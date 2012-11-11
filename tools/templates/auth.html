@@ -1,0 +1,24 @@
+{% extends "home.html" %}
+{% import '_forms.html' as forms %}
+
+{% block title %}
+    Authorization
+{% endblock title %}
+
+
+
+
+
+{% block content %}
+
+<form method="post" class="form" action="{{ url_for("sign_in") }}">
+<fieldset>
+    <legend>Authorize please</legend>
+
+    {{ forms.render_field(form.username) }}
+    {{ forms.render_field(form.password) }}
+
+    <button type="submit" class="btn btn-success">Sign In</button>
+</fieldset>
+</form>
+{% endblock content %}

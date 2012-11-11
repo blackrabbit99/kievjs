@@ -1,0 +1,55 @@
+.form input[type="text"],
+.form input[type="password"] {
+    height:30pt !important;
+    font-size:25pt !important;
+}
+
+
+body,
+label {
+    font-size:20pt;
+}
+
+label {
+    font-size:20pt;
+}
+
+.form input[type="text"].seach-input {
+    height:33pt !important;
+    margin-top:7pt;
+    width:60%;
+    line-height:30pt;
+}
+
+.label {
+    font-size:14pt;
+    height:20pt;
+    line-height:20pt;
+}
+
+p.stats {
+    font-size:15pt !important;
+    margin:0; padding:0;
+    padding-bottom:10pt;
+}
+
+.passed {
+    font-size:20pt;
+    color:#ff0000;
+}
+
+.left-margin {
+    margin-left:50pt;
+}
+h1 {
+    line-height:30px;
+}
+
+.regform label,
+.regform {
+    font-size:15pt;
+}
+.regform input,
+.regform textarea {
+    width:400px;
+}

@@ -11,8 +11,11 @@ from db import DB, DB_FILE, mongo_init
 from mail import send_mail
 
 import gdata.spreadsheet
+import gdata.spreadsheets
 import gdata.spreadsheets.client
 import gdata.gauth
+
+from api import REGID
 
 import settings
 
@@ -277,14 +280,12 @@ def generate_reg_ids(args):
     sheet, wsheet = get_worksheet(client, doc_id=REGISTRATION_DOC_ID)
     rows = client.get_list_feed(ID(sheet), ID(wsheet.entry[0]))
 
-    regid = lambda: "-".join(str(uuid.uuid4()).split("-")[:2])
-
     for num, row in enumerate(rows.entry):
         info = row.to_dict()
 
         # update only
         if info.get("registrationid") is None:
-            info["registrationid"] = regid()
+            info["registrationid"] = REGID()
             row.from_dict(info)
             client.update(row)
 
@@ -334,6 +335,8 @@ def sync_from_local_db(args):
     last = len(rows.entry)
     found_users = users.find({}).sort("order", pymongo.ASCENDING)
 
+    #batch = gdata.spreadsheet.SpreadsheetsCellsFeed()
+
     for num, user in enumerate(found_users):
         row = dict([(key, val)
                     for key, val in user.iteritems()
@@ -342,7 +345,9 @@ def sync_from_local_db(args):
         order = row.pop("order", last)
 
         rows.entry[order].from_dict(row)
+        #rows.entry[order].batch_id = BatchId('update-request')
         client.update(rows.entry[order])
+        #batch.AddUpdate(rows.entry[order])
 
         if order >= last:
             last += 1
