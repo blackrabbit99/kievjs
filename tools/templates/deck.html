@@ -21,7 +21,7 @@
     <a href="{{ url_for("add_new") }}" class="left-margin btn btn-large btn-primary btn-success">New</a>
 </form>
 {% if users %}
-<table class="table table-striped table-bordered table-hover">
+<table class="table deck-table table-striped table-bordered table-hover">
 <tr>
     <th width="30%">Name</th>
     <th width="30%">Email</th>
@@ -30,15 +30,15 @@
 </tr>
 {% for user in users %}
 <tr>
-    <td><a href="{{ url_for("details", reg_id=user.registrationid) }}">{{ user.name }}</a></td>
+    <td><big><a href="{{ url_for("details", reg_id=user.registrationid) }}">{{ user.name }}</a></big></td>
     <td>{{ user.email }}</td>
     <td>{% if user.company %}{{ user.company }}{% endif %}</td>
     <td>
         {% if user.passed %}
             <span class="label label-success">Passed</span>
-            <a href="{{ url_for("confirm_pass", action="cancel", reg_id=user.registrationid) }}?query={{ query }}" class="btn btn-small btn-warning">Cancel</a>
+            <a href="{{ url_for("confirm_pass", action="cancel", reg_id=user.registrationid) }}?query={{ query }}" class="btn btn-small btn-large btn-warning">Cancel</a>
         {% else %}
-            <a href="{{ url_for("confirm_pass", action="confirm", reg_id=user.registrationid) }}?query={{ query }}" class="btn btn-primary">Confirm</a>
+            <a href="{{ url_for("confirm_pass", action="confirm", reg_id=user.registrationid) }}?query={{ query }}" class="btn btn-primary btn-large">Confirm</a>
         {% endif %}
     </td>
 </tr>

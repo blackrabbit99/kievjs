@@ -53,3 +53,7 @@ h1 {
 .regform textarea {
     width:400px;
 }
+
+.deck-table td {
+    font-size:15pt;
+}
