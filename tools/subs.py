@@ -15,7 +15,7 @@ import gdata.spreadsheets
 import gdata.spreadsheets.client
 import gdata.gauth
 
-from api import REGID
+from api import REGID, generate_confirmation
 
 import settings
 
@@ -227,33 +227,16 @@ def send_confirmation(args):
             sent += 1
             continue
 
-        # timestamp = info["timestamp"]
-        # company = info["company"]
-        # position = info["position"]
         print u"Sending Confirmation `{}` to: {} ...".format(
             name, confirmation_shake)
 
         # prepare context
         link = CONFIRMATION_URL.format(external_id, user_id)
-        registration_link = REGISTRATION_URL.format(user["registrationid"])
+        badge = generate_confirmation(external_id)
 
-        code = generate_code(
-            registration_link,
-            output="build/codes/{}.png".format(user_id))
-        value_or_empty = lambda key: user.get(key, "") or ""
-
-        if not user.get("registrationid", None):
-            print "Skipping user {}, no registration ID".format(email)
+        if badge is None:
+            print u"Can't generate PDF for {}".format(user_id)
             continue
-
-        badge = generate_badge(
-            title=BADGE_TITLE,
-            name=value_or_empty("name").strip(),
-            company=value_or_empty("company").strip(),
-            position=value_or_empty("position").strip(),
-            qr_code=code,
-            reg_id=user.get("registrationid"),
-            output="build/{}.pdf".format(user_id))
 
         context = dict([(key, val) for key, val in user.iteritems()])
         context["link"] = link

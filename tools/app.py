@@ -55,14 +55,14 @@ def confirm(campaign, code):
     users.save(user)
 
     flash(
-        "You're successfully confirmed in current campaign",
+        u"You're successfully confirmed in current campaign",
         "alert-success")
     return redirect(url_for("index"))
 
 
 @app.route("/api/pass/<reg_id>/")
 def pass_registration(reg_id):
-    flash("This url only for registration desk at the conference")
+    flash(u"This url only for registration desk at the conference")
     return redirect("{}?query={}".format(
         url_for("registration_deck"), reg_id))
 
@@ -77,7 +77,7 @@ def sign_in():
 
         if not user:
             flash(
-                "Sorry, user {username} not found".format(**form.data),
+                u"Sorry, user {username} not found".format(**form.data),
                 "alert-error")
             return redirect(url_for("sign_in"))
 
@@ -155,7 +155,7 @@ def confirm_pass(action, reg_id):
             "when": datetime.datetime.now(),
             "query": query})
 
-        flash("Registration successfully confirmed", "alert-success")
+        flash(u"Registration successfully confirmed", "alert-success")
 
     elif action == "cancel":
         history.insert({
@@ -165,7 +165,7 @@ def confirm_pass(action, reg_id):
             "when": datetime.datetime.now(),
             "query": query})
         user["passed"] = None
-        flash("Registration for {} cancelled".format(reg_id),
+        flash(u"Registration for {} cancelled".format(reg_id),
               "alert-error")
 
     users.save(user)
@@ -185,7 +185,7 @@ def details(reg_id):
         "registrationid": reg_id}).sort("when", pymongo.DESCENDING)
 
     if not details:
-        flash("Sorry, can't find user {}".format(reg_id))
+        flash(u"Sorry, can't find user {}".format(reg_id))
         return redirect("{}?query={}".format(
             url_for("registration_deck"), query))
 
@@ -215,7 +215,7 @@ def add_new():
             "query": None}
         mongo_init().history.insert(history)
 
-        flash("User {name} ({email}) successfully registered".format(
+        flash(u"User {name} ({email}) successfully registered".format(
             **user))
 
         return redirect("{}?query={}".format(
@@ -235,7 +235,7 @@ def generate_pdf(internal_id):
 
     if badge is None:
         flash(
-            "Skipping user {}, no registration ID".format(internal_id),
+            u"Skipping user {}, no registration ID".format(internal_id),
             "alert-error")
 
         return redirect(url_for("registration_deck"))
