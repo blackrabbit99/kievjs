@@ -66,7 +66,8 @@ def generate_confirmation(internal_id):
     users = mongo_init().users
     user = users.find_one({"internalid": internal_id})
 
-    registration_link = REGISTRATION_URL.format(user["registrationid"])
+    registration_link = REGISTRATION_URL.format(
+        user["registrationid"])
 
     code = generate_code(
         registration_link,

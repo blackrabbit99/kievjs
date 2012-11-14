@@ -232,7 +232,7 @@ def send_confirmation(args):
 
         # prepare context
         link = CONFIRMATION_URL.format(external_id, user_id)
-        badge = generate_confirmation(external_id)
+        badge = generate_confirmation(user_id)
 
         if badge is None:
             print u"Can't generate PDF for {}".format(user_id)
