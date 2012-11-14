@@ -1,15 +1,17 @@
 import datetime
 import hashlib
+import os
 import pymongo
 
 from flask import Flask, redirect, url_for, flash, render_template, \
-    request, session, g
+    request, session, g, make_response
 from werkzeug.contrib.fixers import ProxyFix
 
 from api import add_user
 from decorators import auth_only
 from db import mongo_init
 from forms import AuthForm, UserForm
+from codes import generate_code, generate_badge
 
 import settings
 
@@ -17,6 +19,20 @@ app = Flask(__name__)
 app.config.from_object(settings)
 
 CAMPAIGNS = getattr(settings, "CAMPAIGNS", {})
+CONFIRMATION_URL = getattr(settings, "CONFIRMATION_URL", "")
+REGISTRATION_URL = getattr(settings, "REGISTRATION_URL", "")
+BADGE_TITLE = getattr(settings, "BADGE_TITLE", "")
+
+
+def bytes_from_file(filename, chunksize=8192):
+    with open(filename, "rb") as f:
+        while True:
+            chunk = f.read(chunksize)
+            if chunk:
+                for b in chunk:
+                    yield b
+            else:
+                break
 
 
 @app.route('/api/')
@@ -213,6 +229,48 @@ def add_new():
 
     return render_template(
         "add_new.html", form=form)
+
+
+@app.route("/api/pdf/<internal_id>.pdf")
+@auth_only
+def generate_pdf(internal_id):
+    # prepare context
+    users = mongo_init().users
+    user = users.find_one({"internalid": internal_id})
+
+    registration_link = REGISTRATION_URL.format(user["registrationid"])
+
+    code = generate_code(
+        registration_link,
+        output="build/codes/{}.png".format(internal_id))
+    value_or_empty = lambda key: user.get(key, "") or ""
+
+    if not user.get("registrationid", None):
+        flash(
+            "Skipping user {}, no registration ID".format(user["email"]),
+            "alert-error")
+
+        return redirect(url_for("registration_deck"))
+
+    badge = generate_badge(
+        title=BADGE_TITLE,
+        name=value_or_empty("name").strip(),
+        company=value_or_empty("company").strip(),
+        position=value_or_empty("position").strip(),
+        qr_code=code,
+        reg_id=user.get("registrationid"),
+        output="build/{}.pdf".format(internal_id))
+
+    response = make_response()
+    response.headers['Cache-Control'] = "no-cache"
+    response.headers['Content-Type'] = "application/pdf"
+
+    for bytes in bytes_from_file(badge):
+        response.stream.write(bytes)
+    #response.headers['X-Accel-Redirect'] = "/api/download/{}".format(
+    #    os.path.basename(badge))
+
+    return response
 
 
 # fix for nginx proxy

@@ -17,6 +17,10 @@
     <th>Registraton ID</th>
     <td><strong><big>{{ details.registrationid }}</big></strong></td>
 </tr>
+<tr>
+    <th>Internal ID</th>
+    <td><strong><big>{{ details.internalid }}</big></strong></td>
+</tr>
 
 <tr>
     <th>Email</th>
@@ -46,6 +50,8 @@
     <td>{{ details.confirmationshake2 }}</td>
 </tr>
 </table>
+
+<a href="{{ url_for("generate_pdf", internal_id=details.internalid) }}" class="btn btn-primary btn-large">Download</a>
 
 <hr>
 <h2>History</h2>
