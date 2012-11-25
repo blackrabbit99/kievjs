@@ -25,6 +25,7 @@ class FlatPage(Document):
 class Speaker(Document):
     structure = t.Dict({
         'name': t.String,
+        'speech': t.String,
         'intro': t.String
     })
 

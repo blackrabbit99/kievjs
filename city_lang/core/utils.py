@@ -2,7 +2,7 @@ import re
 from bson import ObjectId
 # -*- encoding: utf-8 -*-
 from datetime import datetime
-from flask import json
+from flask import json, current_app
 from os.path import abspath, dirname, join
 
 
@@ -20,6 +20,13 @@ class CustomEncoder(json.JSONEncoder):
 
 def json_dumps(data):
     return json.dumps(data, indent=2, cls=CustomEncoder)
+
+
+def jsonify_status_code(data=None, status=200):
+    data = data or {}
+
+    return current_app.response_class(json_dumps(data),
+        status=status, mimetype='application/json')
 
 
 def rules(language):

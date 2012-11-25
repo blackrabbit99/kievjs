@@ -1,5 +1,5 @@
 # -- Flask-specific settings
-DEBUG = False
+DEBUG = True
 SECRET_KEY = "9798s7fdamd90saf8sodfjk4qjhg43jfgjq43gfqpw97f[as09duf"
 USE_X_SENDFILE = False
 CSRF_ENABLED = True
@@ -51,6 +51,7 @@ SOCIAL_FACEBOOK = {
 
 # Site specific settings
 CURRENT_SITE = 'kharkivjs'
+CURRENT_SITE_NAME = 'JSKharkiv'
 # Users with email adresses listed here will be created as administrators
 ADMINS = ('admin@example.com', )
 # role name constants

@@ -16,26 +16,27 @@
 
 {% block content %}
 <div class="row">
-  <div class="span12">
-    <table class="table-striped">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Speech</th>
-          <th>Intro text</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  {% for speaker in speakers %}
+    <div class="span6">
+      <h4>{{speaker.name}}</h4>
+      <p>{{speaker.speech}}</p>
+      <p><small>{{speaker.intro}}</small></p>
+      <p>
+        {% if speaker.is_hidden %}
+          <span class="label">hidden</span>
+        {% else %}
+          <span class="label label-success">active</span>
+        {% endif %}
+<!--             <a href="#">{% if speaker.is_hidden %}show{% else %}hide{% endif %}</a> -->
+        <span class="label label-important"
+              data-href="{{ url_for('.remove_speaker', id=speaker.id) }}"
+              data-action='remove-speaker'
+              style="cursor: pointer;">remove</span>
+      </p>
+    </div>
+  {% else %}
+    <h3>You should add someone to talk at your conference</h3>
+  {% endfor %}
 </div>
 <!-- Modal  -->
 <div class="modal hide fade" id="addSpeaker">
@@ -44,15 +45,18 @@
     <h3>Add speaker</h3>
   </div>
   <form class="form-horizontal" method="POST" action=".">
-    {{ form.hidden_tag() }}
     <div class="modal-body">
       {% for field in form %}
-      <div class="control-group">
-        {{ field.label(class='control-label') }}
-        <div class="controls">
-          {{ field(class='input-xlarge', placeholder=field.description) }}
+        {% if field.type in ['HiddenField', 'CSRFTokenField'] -%}
+          {{ field }}
+        {% else %}
+        <div class="control-group">
+          {{ field.label(class='control-label') }}
+          <div class="controls">
+            {{ field(class='input-xlarge', placeholder=field.description) }}
+          </div>
         </div>
-      </div>
+      {% endif %}
       {% endfor %}
     </div>
     <div class="modal-footer">
@@ -62,3 +66,20 @@
   </form>
 </div>
 {% endblock content %}
+{% block extra_js %}
+<script type="text/javascript">
+(function($) {
+  $('[data-action=remove-speaker]').on('click', function(event) {
+    event.preventDefault();
+    deffered = $.ajax({
+      type: 'DELETE',
+      url: $(event.currentTarget).data('href')
+    }).then(function(data, status, jqXhr) {
+      if(jqXhr.status == 204) {
+        window.location = "{{ url_for('.speakers') }}";
+      }
+    });
+  });
+})(jQuery);
+</script>
+{% endblock %}
