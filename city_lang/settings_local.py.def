@@ -1,0 +1,2 @@
+DEBUG = True
+USE_X_SENDFILE = False
