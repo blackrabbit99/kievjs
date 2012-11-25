@@ -1,1 +1,64 @@
 {% extends 'admin/base.html' %}
+{% set page_title = "Speakers list" %}
+
+{% block top_content %}
+  <div class="row">
+    <div class="span12">
+      <h1>
+        {{ page_title }}
+        <small>
+          <a class="pull-right" href="#addSpeaker" data-toggle="modal">Add speaker</a>
+        </small>
+      </h1>
+    </div>
+  </div>
+{% endblock top_content %}
+
+{% block content %}
+<div class="row">
+  <div class="span12">
+    <table class="table-striped">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Speech</th>
+          <th>Intro text</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<!-- Modal  -->
+<div class="modal hide fade" id="addSpeaker">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3>Add speaker</h3>
+  </div>
+  <form class="form-horizontal" method="POST" action=".">
+    {{ form.hidden_tag() }}
+    <div class="modal-body">
+      {% for field in form %}
+      <div class="control-group">
+        {{ field.label(class='control-label') }}
+        <div class="controls">
+          {{ field(class='input-xlarge', placeholder=field.description) }}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="modal-footer">
+      <button class="btn" data-dismiss="modal">Close</button>
+      <button type="submit" href="#" class="btn btn-primary">Save changes</button>
+    </div>
+  </form>
+</div>
+{% endblock content %}

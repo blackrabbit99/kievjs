@@ -21,14 +21,13 @@ MAIL_FAIL_SILENTLY = True
 # Flask-Security settings for default email sender
 SECURITY_EMAIL_SENDER = DEFAULT_EMAIL_FROM
 # either user should confirm email after registration or no
-SECURITY_CONFIRMABLE = True
 SECURITY_RECOVERABLE = True
 SECURITY_TRACKABLE = True
 
-SECURITY_CONFIRM_URL = '/account/activate/'
-SECURITY_LOGOUT_URL = '/account/signout'
-SECURITY_POST_LOGIN_VIEW = '/account/'
-SECURITY_POST_CONFIRM_VIEW = '/account/'
+SECURITY_LOGIN_URL = '/admin/login/'
+SECURITY_LOGOUT_URL = '/admin/logout/'
+
+SECURITY_POST_LOGIN_VIEW = '/admin/'
 
 SECURITY_PASSWORD_HASH = 'sha512_crypt'
 SECURITY_PASSWORD_SALT = ')(*ENB%WOI3j3kf'

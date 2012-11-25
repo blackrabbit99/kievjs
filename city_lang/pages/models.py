@@ -1,6 +1,11 @@
 # encoding: utf-8
 import trafaret as t
+
+from city_lang.core.datastore import MongoSetUserDatastore
 from city_lang.core.models import Document
+
+from flask import current_app
+from flask.ext.security import Security, RoleMixin, UserMixin
 
 from . import mongo
 
@@ -34,3 +39,12 @@ class User(Document):
         'first_name': t.String,
         'last_name': t.String
     })
+
+
+@mongo.register
+class Role(Document):
+    structure = t.Dict({'name': t.String})
+
+
+user_datastore = MongoSetUserDatastore(mongo, User, Role)
+security = Security(current_app, user_datastore)
