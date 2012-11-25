@@ -5,7 +5,7 @@ USE_X_SENDFILE = True
 CSRF_ENABLED = True
 
 # MongoSet configuration ----------------
-MONGODB_DATABASE = ''
+MONGODB_DATABASE = 'kharkivjs'
 MONGODB_HOST = 'localhost'
 MONGODB_PORT = 27017
 # should we unroll DBRef links to objects
