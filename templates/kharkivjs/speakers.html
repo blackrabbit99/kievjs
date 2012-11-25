@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<ul class="partaker-list">
+  {% for i in range(4) %}
+  <li>
+    <section>
+      <h2><a href="#" class="opener">Paul Miller &amp; Egor Nazarkin</a></h2>
+      <figure class="visual">
+        <img width="122" height="122" src="{{url_for('static', filename='img/img-pt0.jpg')}}" alt="some image" />
+      </figure>
+      <strong class="info">Superior service-based web apps with Chaplin (Backbone) and Brunch</strong>
+      <div class="slide">
+        <p>Сhaplin.js is meta-frameword based on backbone.js. Architectural features. Why should you use it?</p>
+      </div>
+    </section>
+  </li>
+  {% endfor %}
+</ul>
+{% endblock content %}

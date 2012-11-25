@@ -34,16 +34,16 @@ function initOpenClose() {
 			effect:'fade',
 			event:'click'
 		},o);
-		
+
 		var self = $(this);
-		
+
 		return this.each(function(){
 			// options
 			var holder = $(this), animating;
 			var opener = $(options.opener, holder);
 			var slider = $(options.slider, holder);
 			if(slider.length) {
-				opener.bind(options.event,function(){
+				opener.bind(options.event, function(){
 					if(!animating) {
 						animating = true;
 						if(typeof options.animStart === 'function') options.animStart();
@@ -68,11 +68,11 @@ function initOpenClose() {
 									 $(this).find(options.opener).trigger('click');
 								}
 							});
-							
+
 							if(options.addClassBeforeAnimation) {
 								holder.addClass(options.activeClass);
 							}
-							
+
 							toggleEffects[options.effect].show({
 								speed: options.animSpeed,
 								box: slider,
@@ -97,7 +97,7 @@ function initOpenClose() {
 			}
 		});
 	}
-	
+
 	// animation effects
 	var toggleEffects = {
 		slide: {

@@ -1,7 +1,7 @@
 # -- Flask-specific settings
-DEBUG = False
+DEBUG = True
 SECRET_KEY = "<your secret key>"
-USE_X_SENDFILE = True
+USE_X_SENDFILE = False
 CSRF_ENABLED = True
 
 # MongoSet configuration ----------------

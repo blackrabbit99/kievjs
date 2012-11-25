@@ -1,0 +1,3 @@
+{% macro menu_item(url, title) -%}
+<li {% if request.path == url %} class="active"{% endif %}><a href="{{url}}">{{title}}</a></li>
+{%- endmacro %}
