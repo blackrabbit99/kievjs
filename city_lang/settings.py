@@ -1,9 +1,10 @@
 # -- Flask-specific settings
-DEBUG = True
-SECRET_KEY = "<your secret key>"
+DEBUG = False
+SECRET_KEY = "9798s7fdamd90saf8sodfjk4qjhg43jfgjq43gfqpw97f[as09duf"
 USE_X_SENDFILE = False
 CSRF_ENABLED = True
-
+# SERVER_NAME = 'localhost'
+# SESSION_COOKIE_SECURE = True
 # MongoSet configuration ----------------
 MONGODB_DATABASE = 'kharkivjs'
 MONGODB_HOST = 'localhost'
@@ -22,7 +23,7 @@ MAIL_FAIL_SILENTLY = True
 SECURITY_EMAIL_SENDER = DEFAULT_EMAIL_FROM
 # either user should confirm email after registration or no
 SECURITY_RECOVERABLE = True
-SECURITY_TRACKABLE = True
+# SECURITY_TRACKABLE = True
 
 SECURITY_LOGIN_URL = '/admin/login/'
 SECURITY_LOGOUT_URL = '/admin/logout/'

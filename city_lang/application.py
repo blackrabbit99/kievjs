@@ -4,7 +4,6 @@ from flask import Flask, g
 
 from flask.ext.mail import Mail
 from flask.ext.mongoset import MongoSet
-from flask.ext.security import current_user
 
 from .settings import CURRENT_SITE
 
@@ -16,11 +15,14 @@ def create_app(conf_module):
     app.config.from_object(conf_module)
 
     # Cache(app)
+
     Mail(app)
     MongoSet(app)
+
     # SQLAlchemy(app)
 
     with app.app_context():
+
         from city_lang.admin import bp as admin
         from city_lang.pages import bp as pages
 
@@ -34,7 +36,6 @@ def add_processing(app):
 
     @app.before_request
     def setup_session():
-        g.user = current_user
         g.is_registerable = True
         # g.now = time.mktime(datetime.utcnow().timetuple())
 

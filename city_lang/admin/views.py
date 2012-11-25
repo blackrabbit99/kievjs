@@ -1,7 +1,8 @@
 # -*- encoding: utf-8 -*-
-from flask.ext.security import login_required
-from flask import render_template, g, request
+from flask import render_template, g, request, session
+# from flask.ext.login import login_user
 
+from flask.ext.login import login_required
 from city_lang.pages.models import Speaker, User
 from city_lang.pages.forms import SpeakerForm
 
@@ -11,7 +12,6 @@ from . import bp
 @bp.route('/')
 @login_required
 def index():
-    print request.url, request.path
     return render_template('admin/index.html')
 
 

@@ -1,12 +1,9 @@
 # encoding: utf-8
 import trafaret as t
 
-from city_lang.core.datastore import MongoSetUserDatastore
 from city_lang.core.models import Document
 
-from flask import current_app
-from flask.ext.security import Security, RoleMixin, UserMixin
-from flask.ext.security.utils import encrypt_password
+from flask.ext.security import RoleMixin, UserMixin
 
 from . import mongo
 
@@ -33,24 +30,17 @@ class Speaker(Document):
 
 
 @mongo.register
-class Role(Document):
+class Role(Document, RoleMixin):
     structure = t.Dict({'name': t.String})
 
 
 @mongo.register
-class User(Document):
+class User(Document, UserMixin):
     structure = t.Dict({
         'email': t.Email,
         'password': t.String,
         'first_name': t.String,
         'last_name': t.String,
-        'active': t.Bool,
-        'roles': t.List[t.Type(Role)]
+        'roles': t.List[t.Type(Role)],
+        t.Key('active', default=True): t.Bool,
     })
-
-    def __init__(self, **kwargs):
-        kwargs['password'] = encrypt_password(kwargs['password'])
-        super(User, self).__init__(**kwargs)
-
-user_datastore = MongoSetUserDatastore(mongo, User, Role)
-security = Security(current_app, user_datastore)

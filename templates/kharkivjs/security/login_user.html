@@ -1,13 +1,11 @@
 {% extends "admin/base.html" %}
-
+{% set page_title = "Login"%}
 {# {% block navbar %}{% endblock navbar %} #}
 {% block content %}
   {% include "security/_messages.html" %}
   <div class="row">
-    <div class="span8 offset4"><h1>Login</h1></div>
-  </div>
-  <div class="row">
     <div class="span8 offset2">
+      {{login_user_form.errors}}
       <form action="{{ url_for_security('login') }}" method="POST" name="login_user_form" class="form-horizontal">
         {% for field in login_user_form -%}
           {% if field.type in ['HiddenField', 'CSRFTokenField'] -%}
@@ -35,3 +33,28 @@
     </div>
   </div>
 {% endblock content %}
+{#% block extra_js %}
+  <script type="text/javascript">
+  (function($){
+    $('form[name=login_user_form]').on('submit', function(event) {
+      event.preventDefault();
+      var data = $(this).serializeArray(),
+          preparedData = {};
+      for (idx in data) { preparedData[data[idx].name] = data[idx].value; }
+      var deffered = $.ajax({
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(preparedData),
+        processData: false
+      });
+      deffered.then(function(data, status, jqXhr) {
+        if(status == 'success' && data.meta.code == 200) {
+          console.log(data);
+          // window.location = "{{ url_for('admin.index') }}";
+        }
+      });
+      console.log(preparedData);
+    });
+  })(jQuery);
+  </script>
+{% endblock %#}
