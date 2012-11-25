@@ -20,7 +20,9 @@
             <div class="holder">
 
               <p>First Kharkiv JS will present talks and workshops about Html5 and JavaScript, the languages of the web. You'd get a chance to pick up with hipster's JS technology and proven solutions. </p>
-              <!-- <a href="#" class="btn"><span class="r">Регистрация</span><span class="l"></span></a> -->
+              {% if g.is_registerable %}
+              <a href="{{ url_for('pages.registration') }}" class="btn"><span class="r">Registration</span><span class="l"></span></a>
+              {% endif %}
               <p>Technology stack: JavaScript, CoffeeScript, Backbone.js, Chaplin, HTML5, Sencha JS</p>
             </div>
           </section>

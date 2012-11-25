@@ -35,6 +35,7 @@ def add_processing(app):
     @app.before_request
     def setup_session():
         g.user = current_user
+        g.is_registerable = True
         # g.now = time.mktime(datetime.utcnow().timetuple())
 
     @app.errorhandler(404)

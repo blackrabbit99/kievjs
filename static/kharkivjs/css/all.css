@@ -131,8 +131,8 @@ figure{
 .header-content .btn .l{
 	float:left;
 	width:56px;
-	height:58px;
-	background:url(../img/btn-orange.png) no-repeat 100% -58px;
+	height:57px;
+	background:url(../img/btn-orange.png) no-repeat 100% -57px;
 }
 .header-content .btn:hover,
 .header-content .btn:hover .r{text-decoration:underline;}

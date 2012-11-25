@@ -18,17 +18,23 @@ def speakers():
 
 @bp.route("/partners/")
 def partners():
-    return ''
+    print 'partners'
+    return render_template('partners.html', **{})
 
 
 @bp.route("/venue/")
 def venue():
-    return ''
+    return render_template('venue.html', **{})
 
 
 @bp.route("/organizers/")
 def organizers():
-    return ''
+    return render_template('organizers.html', **{})
+
+
+@bp.route("/registration/")
+def registration():
+    return render_template('registration.html', **{})
 
 
 def flatpage():
