@@ -13,6 +13,6 @@ class SpeakerForm(Form):
 class SponsorForm(Form):
     name = fields.TextField(u'Name', [validators.Required()],
                 description=u"Company title")
-    description = fields.TextField(u'Description',
+    description = fields.TextAreaField(u'Description',
                 description=u"A few words to describe (optional)")
     logo = fields.FileField(u'Logo')

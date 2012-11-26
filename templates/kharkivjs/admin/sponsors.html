@@ -18,7 +18,8 @@
 <div class="row">
   {% for sponsor in models %}
     <div class="span6">
-      <h4>{{sponsor.name}}</h4>
+      <h4>{{ sponsor.name }}</h4>
+      <p>{{ sponsor.description|safe }}</p>
       <p>
         <span class="label label-important"
               data-href="{{ url_for('.SponsorView', id=sponsor.id) }}"
