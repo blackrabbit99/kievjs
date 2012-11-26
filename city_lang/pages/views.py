@@ -39,10 +39,9 @@ def registration():
     form = RegistrationForm(request.form or None)
 
     if request.form and form.validate():
-        print form.data
         visitor = Visitor()
         form.populate_obj(visitor)
-        visitor.save()
+        visitor.save_registered()
         return redirect('/thank-you/')
 
     context = {

@@ -1,5 +1,5 @@
 {% extends 'admin/base.html' %}
-{% set page_title = "Speakers list" %}
+{% set page_title = "Visitors – {}".format(visitors.count()) %}
 
 {% block content %}
   <div class="row">
@@ -12,6 +12,7 @@
           <td>{{ visitor.email }}</td>
           <td>{{ visitor.position }}</td>
           <td>{{ visitor.company }}</td>
+          <td>{{ visitor.created_at }}</td>
         </tr>
       {% endfor %}
     </tbody>

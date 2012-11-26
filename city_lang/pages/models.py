@@ -22,8 +22,13 @@ class Visitor(Document):
         'email': t.Email,
         'position': t.String,
         'company': t.String,
-        t.Key('created_at', default=datetime.utcnow): t.Type(datetime),
+        'created_at': t.Type(datetime),
     })
+
+    def save_registered(self):
+        if self.query.find_one({'email': self.email}) is None:
+            self.created_at = datetime.utcnow()
+            return self.save()
 
 
 @mongo.register

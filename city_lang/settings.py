@@ -15,12 +15,21 @@ MONGODB_AUTOINCREMENT = False
 MONGODB_FALLBACK_LANG = 'en'
 
 # Flask-Mail sender for default email sender
-DEFAULT_EMAIL_FROM = '<info@kharkivjs.com>'
-DEFAULT_MAIL_SENDER = DEFAULT_EMAIL_FROM
+DEFAULT_MAIL_SENDER = '<info@kharkivjs.com>'
 MAIL_FAIL_SILENTLY = True
+# MAIL_SERVER : default 'localhost'
+# MAIL_PORT : default 25
+# MAIL_USE_TLS : default False
+# MAIL_USE_SSL : default False
+# MAIL_DEBUG : default app.debug
+# MAIL_USERNAME : default None
+# MAIL_PASSWORD : default Nonee
+# DEFAULT_MAX_EMAILS : default None
+# MAIL_SUPPRESS_SEND : default False
+
 
 # Flask-Security settings for default email sender
-SECURITY_EMAIL_SENDER = DEFAULT_EMAIL_FROM
+SECURITY_EMAIL_SENDER = DEFAULT_MAIL_SENDER
 # either user should confirm email after registration or no
 SECURITY_RECOVERABLE = True
 # SECURITY_TRACKABLE = True
