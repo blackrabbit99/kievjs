@@ -54,6 +54,15 @@ class Speaker(Document):
 
 
 @mongo.register
+class Sponsor(Document):
+    structure = t.Dict({
+        'name': t.String,
+        'description': t.String(allow_blank=True),
+        'logo': t.Any,
+    })
+
+
+@mongo.register
 class Role(Document, RoleMixin):
     structure = t.Dict({'name': t.String})
 

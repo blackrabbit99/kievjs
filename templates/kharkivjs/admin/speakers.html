@@ -1,6 +1,6 @@
 {% extends 'admin/base.html' %}
 {% set page_title = "Speakers list" %}
-
+{% from "_macro.html" import admin_modal_form %}
 {% block top_content %}
   <div class="row">
     <div class="span12">
@@ -16,7 +16,7 @@
 
 {% block content %}
 <div class="row">
-  {% for speaker in speakers %}
+  {% for speaker in models %}
     <div class="span6">
       <h4>{{speaker.name}}</h4>
       <p>{{speaker.speech}}</p>
@@ -29,7 +29,7 @@
         {% endif %}
 <!--             <a href="#">{% if speaker.is_hidden %}show{% else %}hide{% endif %}</a> -->
         <span class="label label-important"
-              data-href="{{ url_for('.remove_speaker', id=speaker.id) }}"
+              data-href="{{ url_for('.SpeakerView', id=speaker.id) }}"
               data-action='remove-speaker'
               style="cursor: pointer;">remove</span>
       </p>
@@ -39,32 +39,7 @@
   {% endfor %}
 </div>
 <!-- Modal  -->
-<div class="modal hide fade" id="addSpeaker">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-    <h3>Add speaker</h3>
-  </div>
-  <form class="form-horizontal" method="POST" action=".">
-    <div class="modal-body">
-      {% for field in form %}
-        {% if field.type in ['HiddenField', 'CSRFTokenField'] -%}
-          {{ field }}
-        {% else %}
-        <div class="control-group">
-          {{ field.label(class='control-label') }}
-          <div class="controls">
-            {{ field(class='input-xlarge', placeholder=field.description) }}
-          </div>
-        </div>
-      {% endif %}
-      {% endfor %}
-    </div>
-    <div class="modal-footer">
-      <button class="btn" data-dismiss="modal">Close</button>
-      <button type="submit" href="#" class="btn btn-primary">Save changes</button>
-    </div>
-  </form>
-</div>
+{{ admin_modal_form('addSpeaker', 'Add speaker', form) }}
 {% endblock content %}
 {% block extra_js %}
 <script type="text/javascript">
@@ -76,7 +51,7 @@
       url: $(event.currentTarget).data('href')
     }).then(function(data, status, jqXhr) {
       if(jqXhr.status == 204) {
-        window.location = "{{ url_for('.speakers') }}";
+        window.location = "{{ url_for('.SpeakerView') }}";
       }
     });
   });

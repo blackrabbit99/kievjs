@@ -37,8 +37,8 @@
             {% from '_macro.html' import menu_item with context -%}
             <ul class="nav">
               {{menu_item(url_for('.visitors'), 'Visitors')}}
-              {{menu_item(url_for('.speakers'), 'Speakers')}}
-              {{menu_item('', 'Sponsors')}}
+              {{menu_item(url_for('.SpeakerView'), 'Speakers')}}
+              {{menu_item(url_for('.SponsorView'), 'Sponsors')}}
               {{menu_item('', 'Venue')}}
               {{menu_item('', 'Pages')}}
               {{menu_item(url_for('.users'), 'Users')}}
