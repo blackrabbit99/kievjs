@@ -7,6 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Le styles -->
+
     <link href="{{url_for('static', filename='css/bootstrap.css')}}" rel="stylesheet">
     <link href="{{url_for('static', filename='css/bootstrap-responsive.css')}}" rel="stylesheet">
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -35,12 +36,12 @@
           <div class="nav-collapse collapse">
             {% from '_macro.html' import menu_item with context -%}
             <ul class="nav">
-              {{menu_item('', 'Registrations')}}
-              {{menu_item(url_for('admin.speakers'), 'Speakers')}}
+              {{menu_item(url_for('.visitors'), 'Visitors')}}
+              {{menu_item(url_for('.speakers'), 'Speakers')}}
               {{menu_item('', 'Sponsors')}}
               {{menu_item('', 'Venue')}}
               {{menu_item('', 'Pages')}}
-              {{menu_item(url_for('admin.users'), 'Users')}}
+              {{menu_item(url_for('.users'), 'Users')}}
             </ul>
           </div>
         </div>

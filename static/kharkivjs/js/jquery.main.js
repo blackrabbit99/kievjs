@@ -20,7 +20,7 @@ function initOpenClose() {
 /*
  * jQuery Open/Close plugin
  */
-;(function($){
+(function($){
 	$.fn.openClose = function(o){
 		// default options
 		var options = $.extend({
@@ -65,7 +65,7 @@ function initOpenClose() {
 						} else {
 							self.each(function(){
 								if($(this).hasClass(options.activeClass)){
-									 $(this).find(options.opener).trigger('click');
+									$(this).find(options.opener).trigger('click');
 								}
 							});
 
@@ -83,7 +83,7 @@ function initOpenClose() {
 									}
 									if(typeof options.animEnd === 'function') options.animEnd();
 								}
-							})
+							});
 						}
 					}
 					return false;
@@ -96,7 +96,7 @@ function initOpenClose() {
 				}
 			}
 		});
-	}
+	};
 
 	// animation effects
 	var toggleEffects = {
@@ -125,5 +125,5 @@ function initOpenClose() {
 				o.box.hide(0, o.complete);
 			}
 		}
-	}
-}(jQuery));
+	};
+})(jQuery);

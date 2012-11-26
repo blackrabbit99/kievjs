@@ -337,7 +337,7 @@ figure{
 }
 .conf-place{
 	width:100%;
-	padding:4px 0 23px;
+	padding: 4px 0 0;
 }
 .conf-place .info{
 	overflow:hidden;
@@ -388,7 +388,7 @@ figure{
 #reg-form{
 	width:660px;
 	margin:0 auto;
-	padding:20px 0;
+	padding: 60px 0;
 }
 #reg-form .row{
 	width:100%;
@@ -419,7 +419,7 @@ figure{
 	display:block;
 	width:196px;
 	height:58px;
-	margin:0 auto;
+	margin: 50px auto;
 	padding:0 0 3px;
 	color:#fff;
 	font:700 22px/2.636 "Comfortaa", sans-serif;
@@ -437,9 +437,10 @@ figure{
 
 .hint{
     float: right;
-    font-size: 11px;
+    font-size: 18pt;
     margin-top: 10px;
     width: 50%;
+    color: #FC9965;
 }
 .note{
 	display: none;

@@ -1,11 +1,12 @@
 # -*- encoding: utf-8 -*-
-from flask import render_template, request
+from flask import render_template, request, g, redirect
 from flask.ext.security import current_user
 
 from city_lang.core import http
 
 from . import bp
-from .models import FlatPage, Speaker
+from .forms import RegistrationForm
+from .models import FlatPage, Speaker, Visitor
 
 
 @bp.route("/")
@@ -32,9 +33,22 @@ def organizers():
     return render_template('organizers.html', **{})
 
 
-@bp.route("/registration/")
+@bp.route("/registration/", methods=['GET', 'POST'])
 def registration():
-    return render_template('registration.html', **{})
+    g.is_registerable = False
+    form = RegistrationForm(request.form or None)
+
+    if request.form and form.validate():
+        print form.data
+        visitor = Visitor()
+        form.populate_obj(visitor)
+        visitor.save()
+        return redirect('/thank-you/')
+
+    context = {
+        'form': form
+    }
+    return render_template('registration.html', **context)
 
 
 def flatpage():

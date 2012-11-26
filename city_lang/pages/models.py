@@ -2,10 +2,28 @@
 import trafaret as t
 
 from city_lang.core.models import Document
-
+from datetime import datetime
 from flask.ext.security import RoleMixin, UserMixin
 
 from . import mongo
+
+
+@mongo.register
+class Event(Document):
+    structure = t.Dict({
+        'name': t.String
+    })
+
+
+@mongo.register
+class Visitor(Document):
+    structure = t.Dict({
+        'name': t.String,
+        'email': t.Email,
+        'position': t.String,
+        'company': t.String,
+        t.Key('created_at', default=datetime.utcnow): t.Type(datetime),
+    })
 
 
 @mongo.register

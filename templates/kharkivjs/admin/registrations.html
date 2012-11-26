@@ -1,0 +1,20 @@
+{% extends 'admin/base.html' %}
+{% set page_title = "Speakers list" %}
+
+{% block content %}
+  <div class="row">
+  <table class="table table-stripped">
+    <tbody>
+      {% for visitor in visitors %}
+        <tr class='warning'>
+          <td>{{ loop.index }}</td>
+          <td>{{ visitor.name }}</td>
+          <td>{{ visitor.email }}</td>
+          <td>{{ visitor.position }}</td>
+          <td>{{ visitor.company }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  </div>
+{% endblock content %}

@@ -6,7 +6,7 @@ from flask.ext.login import login_required
 from city_lang.core import http
 from city_lang.core.utils import jsonify_status_code
 from city_lang.pages.forms import SpeakerForm
-from city_lang.pages.models import Speaker, User
+from city_lang.pages.models import Speaker, User, Visitor
 
 from . import bp
 
@@ -15,6 +15,14 @@ from . import bp
 @login_required
 def index():
     return render_template('admin/index.html')
+
+
+@bp.route('/visitors/')
+def visitors():
+    context = {
+        'visitors': Visitor.query.all()
+    }
+    return render_template('admin/registrations.html', **context)
 
 
 @bp.route('/speakers/', methods=['GET', 'POST'])

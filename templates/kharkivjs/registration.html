@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% set page_title = "Registration" %}
+{% block content %}
+          <article class="conf-place">
+            <div class="hint">All fields are required</div>
+            <form id="reg-form" action="{{ url_for('.registration') }}" method="post">
+              <fieldset>
+              {%- for field in form -%}
+                {% if field.type in ['HiddenField', 'CSRFTokenField'] %}
+                  {{ field }}
+                {%- else %}
+                <div class="row">
+                  {{ field.label(class='required') }}
+                  {{ field(placeholder=field.description) }}
+                </div>
+                {%- endif -%}
+              {% endfor -%}
+              {#
+                <div class="row">
+                  <label id="text4" for="RegisterUser_verifyCode">Verification Code</label>
+                  <div>
+                    <img id="yw0" src="/site/captcha/v/50b2a3fb1bc2c" alt="" />
+                    <input id="text4" name="RegisterUser[verifyCode]" type="text" />
+                  </div>
+                  <div class="hint">
+                    Please enter the letters as they are shown in the image above.
+                    <br/>Letters are not case-sensitive.
+                  </div>
+                </div>
+              #}
+                <div class="row buttons">
+                  <input id="submit" type="submit" value="Register" />
+                </div>
+              </fieldset>
+            </form>
+          </article>
+{% endblock content %}

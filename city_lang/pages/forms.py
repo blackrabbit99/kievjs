@@ -11,7 +11,13 @@ class SpeakerForm(form.Form):
 
 
 class RegistrationForm(form.Form):
-    name = fields.TextField(u'Your name', [validators.Length(min=5)])
-    position = fields.TextField(u'Position', [validators.Length(min=5)])
-    company = fields.TextField(u'Company', [validators.Length(min=5)])
-    email = fields.TextField(u'', [validators.Email()])
+    name = fields.TextField(u'First & Last name', [validators.Length(min=5)],
+                description=u'John Doe')
+    email = fields.TextField(u'Email', [validators.Email()],
+                description=u'test@example.com')
+    position = fields.TextField(u'Job Position', [validators.Length(min=5)],
+                description=u'Senior Software Developer')
+    company = fields.TextField(u'Company', [validators.Length(min=5)],
+                description=u'Top 10 leader')
+
+
