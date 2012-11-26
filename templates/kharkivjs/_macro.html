@@ -1,0 +1,32 @@
+{% macro menu_item(url, title) -%}
+<li {% if request.path == url %} class="active"{% endif %}><a href="{{url}}">{{title}}</a></li>
+{%- endmacro %}
+
+{% macro admin_modal_form(id, title, form) %}
+<div class="modal hide fade" id="{{ id }}">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3>{{ title }}</h3>
+  </div>
+  <form class="form-horizontal" method="POST" action=".">
+    <div class="modal-body">
+      {% for field in form %}
+        {% if field.type in ['HiddenField', 'CSRFTokenField'] -%}
+          {{ field }}
+        {% else %}
+        <div class="control-group">
+          {{ field.label(class='control-label') }}
+          <div class="controls">
+            {{ field(class='input-xlarge', placeholder=field.description) }}
+          </div>
+        </div>
+      {% endif %}
+      {% endfor %}
+    </div>
+    <div class="modal-footer">
+      <button class="btn" data-dismiss="modal">Close</button>
+      <button type="submit" href="#" class="btn btn-primary">Save changes</button>
+    </div>
+  </form>
+</div>
+{% endmacro %}

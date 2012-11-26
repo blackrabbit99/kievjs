@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% set page_title = "Speakers" %}
+{% block content %}
+<ul class="partaker-list">
+  {% for speaker in speakers %}
+  <li>
+    <section>
+      <h2><a href="#" class="opener">{{ speaker.name }}</a></h2>
+      <figure class="visual">
+        {# <img width="122" height="122" src="{{url_for('static', filename='img/img-pt0.jpg')}}" alt="some image" /> #}
+      </figure>
+      <strong class="info">{{ speaker.speech }}</strong>
+      <div class="slide">
+        <p>{{ speaker.intro }}</p>
+      </div>
+    </section>
+  </li>
+  {% else %}
+  <li>We are calling for speakers. Please email us!</li>
+  {% endfor %}
+</ul>
+{% endblock content %}

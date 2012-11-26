@@ -1,9 +1,10 @@
 # -- Flask-specific settings
-DEBUG = False
-SECRET_KEY = "<your secret key>"
-USE_X_SENDFILE = True
+DEBUG = True
+SECRET_KEY = "9798s7fdamd90saf8sodfjk4qjhg43jfgjq43gfqpw97f[as09duf"
+USE_X_SENDFILE = False
 CSRF_ENABLED = True
-
+# SERVER_NAME = 'localhost'
+# SESSION_COOKIE_SECURE = True
 # MongoSet configuration ----------------
 MONGODB_DATABASE = 'kharkivjs'
 MONGODB_HOST = 'localhost'
@@ -14,21 +15,29 @@ MONGODB_AUTOINCREMENT = False
 MONGODB_FALLBACK_LANG = 'en'
 
 # Flask-Mail sender for default email sender
-DEFAULT_EMAIL_FROM = '<info@kharkivjs.com>'
-DEFAULT_MAIL_SENDER = DEFAULT_EMAIL_FROM
+DEFAULT_MAIL_SENDER = '<info@kharkivjs.com>'
 MAIL_FAIL_SILENTLY = True
+# MAIL_SERVER : default 'localhost'
+# MAIL_PORT : default 25
+# MAIL_USE_TLS : default False
+# MAIL_USE_SSL : default False
+# MAIL_DEBUG : default app.debug
+# MAIL_USERNAME : default None
+# MAIL_PASSWORD : default Nonee
+# DEFAULT_MAX_EMAILS : default None
+# MAIL_SUPPRESS_SEND : default False
+
 
 # Flask-Security settings for default email sender
-SECURITY_EMAIL_SENDER = DEFAULT_EMAIL_FROM
+SECURITY_EMAIL_SENDER = DEFAULT_MAIL_SENDER
 # either user should confirm email after registration or no
-SECURITY_CONFIRMABLE = True
 SECURITY_RECOVERABLE = True
-SECURITY_TRACKABLE = True
+# SECURITY_TRACKABLE = True
 
-SECURITY_CONFIRM_URL = '/account/activate/'
-SECURITY_LOGOUT_URL = '/account/signout'
-SECURITY_POST_LOGIN_VIEW = '/account/'
-SECURITY_POST_CONFIRM_VIEW = '/account/'
+SECURITY_LOGIN_URL = '/admin/login/'
+SECURITY_LOGOUT_URL = '/admin/logout/'
+
+SECURITY_POST_LOGIN_VIEW = '/admin/'
 
 SECURITY_PASSWORD_HASH = 'sha512_crypt'
 SECURITY_PASSWORD_SALT = ')(*ENB%WOI3j3kf'
@@ -51,6 +60,7 @@ SOCIAL_FACEBOOK = {
 
 # Site specific settings
 CURRENT_SITE = 'kharkivjs'
+CURRENT_SITE_NAME = 'JSKharkiv'
 # Users with email adresses listed here will be created as administrators
 ADMINS = ('admin@example.com', )
 # role name constants

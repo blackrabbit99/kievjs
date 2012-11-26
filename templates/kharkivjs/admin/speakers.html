@@ -1,0 +1,60 @@
+{% extends 'admin/base.html' %}
+{% set page_title = "Speakers list" %}
+{% from "_macro.html" import admin_modal_form %}
+{% block top_content %}
+  <div class="row">
+    <div class="span12">
+      <h1>
+        {{ page_title }}
+        <small>
+          <a class="pull-right" href="#addSpeaker" data-toggle="modal">Add speaker</a>
+        </small>
+      </h1>
+    </div>
+  </div>
+{% endblock top_content %}
+
+{% block content %}
+<div class="row">
+  {% for speaker in models %}
+    <div class="span6">
+      <h4>{{speaker.name}}</h4>
+      <p>{{speaker.speech}}</p>
+      <p><small>{{speaker.intro}}</small></p>
+      <p>
+        {% if speaker.is_hidden %}
+          <span class="label">hidden</span>
+        {% else %}
+          <span class="label label-success">active</span>
+        {% endif %}
+<!--             <a href="#">{% if speaker.is_hidden %}show{% else %}hide{% endif %}</a> -->
+        <span class="label label-important"
+              data-href="{{ url_for('.SpeakerView', id=speaker.id) }}"
+              data-action='remove-speaker'
+              style="cursor: pointer;">remove</span>
+      </p>
+    </div>
+  {% else %}
+    <h3>You should add someone to talk at your conference</h3>
+  {% endfor %}
+</div>
+<!-- Modal  -->
+{{ admin_modal_form('addSpeaker', 'Add speaker', form) }}
+{% endblock content %}
+{% block extra_js %}
+<script type="text/javascript">
+(function($) {
+  $('[data-action=remove-speaker]').on('click', function(event) {
+    event.preventDefault();
+    deffered = $.ajax({
+      type: 'DELETE',
+      url: $(event.currentTarget).data('href')
+    }).then(function(data, status, jqXhr) {
+      if(jqXhr.status == 204) {
+        window.location = "{{ url_for('.SpeakerView') }}";
+      }
+    });
+  });
+})(jQuery);
+</script>
+{% endblock %}

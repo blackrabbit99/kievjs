@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% set page_title = "Organizers" %}
+{% block content %}
+<div class="organizers-list">
+	{% for i in range(3) %}
+	<section>
+		<!--<figure class="visual">
+			<img width="122" height="122" src="images/img-pt0.jpg" alt="some image" />
+		</figure>-->
+		<div class="holder">
+			<h2>Artem Zakharchenko</h2>
+			<dl>
+				<dt>Mail</dt>
+				<dd><a href="mailto:myzlio@gmail.com">myzlio@gmail.com</a></dd>
+				<dt>Tel.</dt>
+				<dd>+380958912989</dd>
+			</dl>
+		</div>
+	</section>
+	{% endfor %}
+</div>
+{% endblock content %}

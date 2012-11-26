@@ -9,12 +9,16 @@
     :license: MIT, see LICENSE for more details.
 """
 from flask.ext.security.datastore import Datastore, UserDatastore
+from flask.ext.security.utils import encrypt_password
+
 from flask.ext.social.datastore import ConnectionDatastore
+
+from bson import ObjectId
 
 
 class MongoSetDatastore(Datastore):
     def put(self, model):
-        model.save()
+        model.update(model)
         return model
 
     def delete(self, model):
@@ -29,8 +33,16 @@ class MongoSetUserDatastore(MongoSetDatastore, UserDatastore):
         MongoSetDatastore.__init__(self, db)
         UserDatastore.__init__(self, user_model, role_model)
 
+    def create_user(self, **kwargs):
+        """Creates and returns a new user from the given parameters."""
+        kwargs['password'] = encrypt_password(kwargs.pop('password'))
+        user = self.user_model(**self._prepare_create_user_args(**kwargs))
+        return self.put(user)
+
     def find_user(self, **kwargs):
-        return self.user_model.query.find_one(**kwargs)
+        if 'id' in kwargs:
+            kwargs['_id'] = ObjectId(kwargs.pop('id'))
+        return self.user_model.query.find_one(kwargs)
 
     def find_role(self, role):
         return self.role_model.query.find_one({'name': role})

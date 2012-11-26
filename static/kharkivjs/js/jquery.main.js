@@ -20,7 +20,7 @@ function initOpenClose() {
 /*
  * jQuery Open/Close plugin
  */
-;(function($){
+(function($){
 	$.fn.openClose = function(o){
 		// default options
 		var options = $.extend({
@@ -34,16 +34,16 @@ function initOpenClose() {
 			effect:'fade',
 			event:'click'
 		},o);
-		
+
 		var self = $(this);
-		
+
 		return this.each(function(){
 			// options
 			var holder = $(this), animating;
 			var opener = $(options.opener, holder);
 			var slider = $(options.slider, holder);
 			if(slider.length) {
-				opener.bind(options.event,function(){
+				opener.bind(options.event, function(){
 					if(!animating) {
 						animating = true;
 						if(typeof options.animStart === 'function') options.animStart();
@@ -65,14 +65,14 @@ function initOpenClose() {
 						} else {
 							self.each(function(){
 								if($(this).hasClass(options.activeClass)){
-									 $(this).find(options.opener).trigger('click');
+									$(this).find(options.opener).trigger('click');
 								}
 							});
-							
+
 							if(options.addClassBeforeAnimation) {
 								holder.addClass(options.activeClass);
 							}
-							
+
 							toggleEffects[options.effect].show({
 								speed: options.animSpeed,
 								box: slider,
@@ -83,7 +83,7 @@ function initOpenClose() {
 									}
 									if(typeof options.animEnd === 'function') options.animEnd();
 								}
-							})
+							});
 						}
 					}
 					return false;
@@ -96,8 +96,8 @@ function initOpenClose() {
 				}
 			}
 		});
-	}
-	
+	};
+
 	// animation effects
 	var toggleEffects = {
 		slide: {
@@ -125,5 +125,5 @@ function initOpenClose() {
 				o.box.hide(0, o.complete);
 			}
 		}
-	}
-}(jQuery));
+	};
+})(jQuery);

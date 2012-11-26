@@ -4,7 +4,7 @@ body{
 	margin:0;
 	color:#fff;
 	font:24px/1.208 'PT Sans Reg', Arial, Helvetica, sans-serif;
-	background:#42352c url(../images/bg-page.png);
+	background:#42352c url(../img/bg-page.png);
 	-webkit-text-size-adjust:none;
 }
 img{border-style:none;}
@@ -53,7 +53,7 @@ figure{
 	width:100%;
 	position:relative;
 	overflow:hidden;
-	background:url(../images/bg-main.png) 50% 50%;
+	background:url(../img/bg-main.png) 50% 50%;
 }
 .header-content{
 	width:100%;
@@ -61,7 +61,7 @@ figure{
 	margin:0 0 -25px;
 	padding:0 0 60px;
 	border-top:6px solid #4f493f;
-	background:url(../images/bg-header.png) 50% 100%;
+	background:url(../img/bg-header.png) 50% 100%;
 	z-index:3;
 }
 #header{
@@ -93,7 +93,7 @@ figure{
 	margin:0 49px 0 0;
 	overflow:hidden;
 	text-indent:-9001px;
-	background:url(../images/logo.png) no-repeat;
+	background:url(../img/logo.png) no-repeat;
 }
 .logo a{
 	display:block;
@@ -121,18 +121,18 @@ figure{
 	border-radius:3px;
 	-moz-box-shadow: 3px 3px 0 rgba(74,72,68,0.25);
 	-webkit-box-shadow: 3px 3px 0 rgba(74,72,68,0.25);
-	box-shadow: 3px 3px 0 rgba(74,72,68,0.25);	
+	box-shadow: 3px 3px 0 rgba(74,72,68,0.25);
 }
 .header-content .btn .r{
 	float:left;
 	padding:15px 0 18px 29px;
-	background:url(../images/btn-orange.png) no-repeat;
+	background:url(../img/btn-orange.png) no-repeat;
 }
 .header-content .btn .l{
 	float:left;
 	width:56px;
-	height:58px;
-	background:url(../images/btn-orange.png) no-repeat 100% -58px;
+	height:57px;
+	background:url(../img/btn-orange.png) no-repeat 100% -57px;
 }
 .header-content .btn:hover,
 .header-content .btn:hover .r{text-decoration:underline;}
@@ -141,7 +141,7 @@ figure{
 	margin:0 -79px 15px;
 	padding:6px 79px 21px;
 	text-align:center;
-	background:url(../images/bg-stripe-title.png) no-repeat;
+	background:url(../img/bg-stripe-title.png) no-repeat;
 }
 .header-content .title h1{
 	margin:0;
@@ -162,7 +162,7 @@ figure{
 	vertical-align:top;
 	margin:0 0 0 ;
 	padding:0 37px 0 53px;
-	background:url(../images/blt-nav.png) no-repeat 0 13px;
+	background:url(../img/blt-nav.png) no-repeat 0 13px;
 }
 * +html #nav li{
 	display:inline;
@@ -177,7 +177,7 @@ figure{
 #nav a:hover,
 #nav .active a{
 	text-decoration:none;
-	background:url(../images/bg-nav-h.png) repeat-x 0 100%;
+	background:url(../img/bg-nav-h.png) repeat-x 0 100%;
 }
 .footer-content{
 	width:100%;
@@ -185,7 +185,7 @@ figure{
 	color:#fff;
 	font-size:14px;
 	line-height:1.214;
-	background:url(../images/bg-footer.png) repeat-x 50% 0;
+	background:url(../img/bg-footer.png) repeat-x 50% 0;
 	z-index:3;
 }
 #footer{
@@ -209,7 +209,7 @@ figure{
 	height:48px;
 	overflow:hidden;
 	text-indent:-9999px;
-	background:url(../images/icons-social.png) no-repeat;
+	background:url(../img/icons-social.png) no-repeat;
 }
 .footer-content .social-m .rss{background-position:0 0;}
 .footer-content .social-m .facebook{background-position:-48px 0;}
@@ -231,14 +231,14 @@ figure{
 }
 .footer-content .copy .sep{
 	padding:0 0 0 8px;
-	background:url(../images/sep-copy.png) no-repeat 2px;
+	background:url(../img/sep-copy.png) no-repeat 2px;
 }
 #main{
 	width:100%;
 	position:relative;
 	margin:0 0 -25px;
 	padding:56px 0 45px;
-	background:url(../images/bg-content.jpg) no-repeat 50% 0;
+	background:url(../img/bg-content.jpg) no-repeat 50% 0;
 	z-index:2;
 }
 #content{
@@ -254,7 +254,7 @@ figure{
 .partaker-list li{
 	width:100%;
 	padding:34px 0 6px;
-	background:url(../images/sep-pt-list.png) no-repeat 12px 0;
+	background:url(../img/sep-pt-list.png) no-repeat 12px 0;
 }
 .partaker-list li:first-child{
 	padding-top:0;
@@ -273,7 +273,7 @@ figure{
 	float:left;
 	padding:4px 55px 9px 0;
 	text-decoration:none;
-	background:url(../images/blt-title.png) no-repeat 100% -144px;
+	background:url(../img/blt-title.png) no-repeat 100% -144px;
 }
 .partaker-list .expanded h2 a{
 	color:#fff;
@@ -307,7 +307,7 @@ figure{
 .organizers-list section{
 	overflow:hidden;
 	padding:24px 0;
-	background:url(../images/sep-pt-list.png) no-repeat 50% 0;
+	background:url(../img/sep-pt-list.png) no-repeat 50% 0;
 }
 .organizers-list section:first-child{
 	padding-top:0;
@@ -337,7 +337,7 @@ figure{
 }
 .conf-place{
 	width:100%;
-	padding:4px 0 23px;
+	padding: 4px 0 0;
 }
 .conf-place .info{
 	overflow:hidden;
@@ -378,7 +378,7 @@ figure{
 .partners .title .blank{
 	width:50%;
 	display:table-cell;
-	background:url(../images/bg-stripe-title2.png) repeat-x 0 57%;
+	background:url(../img/bg-stripe-title2.png) repeat-x 0 57%;
 }
 #content .partners .title h2{
 	display:inline-block;
@@ -388,7 +388,7 @@ figure{
 #reg-form{
 	width:660px;
 	margin:0 auto;
-	padding:20px 0;
+	padding: 60px 0;
 }
 #reg-form .row{
 	width:100%;
@@ -419,7 +419,7 @@ figure{
 	display:block;
 	width:196px;
 	height:58px;
-	margin:0 auto;
+	margin: 50px auto;
 	padding:0 0 3px;
 	color:#fff;
 	font:700 22px/2.636 "Comfortaa", sans-serif;
@@ -428,7 +428,7 @@ figure{
 	-moz-box-shadow: 3px 3px 0 rgba(71,69,69,0.5);
 	-webkit-box-shadow: 3px 3px 0 rgba(71,69,69,0.5);
 	box-shadow: 3px 3px 0 rgba(71,69,69,0.5);
-	background:url(../images/btn-submit.png) no-repeat;
+	background:url(../img/btn-submit.png) no-repeat;
 }
 #reg-form #submit:hover{
 	text-decoration:underline;
@@ -437,9 +437,10 @@ figure{
 
 .hint{
     float: right;
-    font-size: 11px;
+    font-size: 18pt;
     margin-top: 10px;
     width: 50%;
+    color: #FC9965;
 }
 .note{
 	display: none;
