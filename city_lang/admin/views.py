@@ -84,6 +84,16 @@ class SpeakerView(CRUDView):
     form = SpeakerForm
     list_template = 'admin/speakers.html'
 
+    def get(self, id=None):
+        if 'data' in request.args:
+            speaker = self.model.query.get_or_404(ObjectId(id))
+            form = SpeakerForm(obj=speaker)
+            return jsonify_status_code({
+                'form': render_template('admin/speaker_form.html', form=form)
+            })
+        else:
+            return super(SpeakerView, self).get(id)
+
 
 class SponsorView(CRUDView):
     model = Sponsor

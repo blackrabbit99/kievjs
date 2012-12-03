@@ -28,7 +28,7 @@ def create_app(conf_module):
 
         app.register_blueprint(admin)
         app.register_blueprint(pages)
-        print app.url_map
+
         return app
 
 

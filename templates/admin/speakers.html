@@ -1,0 +1,91 @@
+{% extends 'admin/base.html' %}
+{% set page_title = "Speakers list" %}
+{% from "_macro.html" import admin_modal_form %}
+{% block top_content %}
+  <div class="row">
+    <div class="span12">
+      <h1>
+        {{ page_title }}
+        <small>
+          <a class="pull-right" href="#addSpeaker" data-toggle="modal">Add speaker</a>
+        </small>
+      </h1>
+    </div>
+  </div>
+{% endblock top_content %}
+
+{% block content %}
+  {% for speaker in models %}
+    {% if loop.index0 % 2 == 0 %}
+      <div class="row">
+    {% endif %}
+    {% set icon_hidden = speaker.is_hidden and 'icon-eye-open' or 'icon-eye-close' -%}
+    <div class="span6">
+      <ul class="breadcrumb pull-left" data-url="{{ url_for('.SpeakerView', id=speaker.id) }}"
+        style="margin-right: 20px">
+        <li>
+          <a data-action='remove-speaker' title="remove" class="action" href="#">
+            <i class="icon-remove"></i>
+          </a>
+        </li>
+        <li>
+          <a data-action='toggle-hide-speaker' title="hide" class="action" href="#">
+            <i class="{{icon_hidden}}"></i>
+          </a>
+        </li>
+        <li>
+          <a data-action='edit-speaker' title="edit" class="action" href="#">
+            <i class="icon-pencil"></i>
+          </a>
+        </li>
+      </ul>
+      <h4>{{speaker.name}}</h4>
+      <blockquote class="pull-right">
+        <p>{{speaker.speech}}</p>
+        <small>{{speaker.intro}}</small>
+      </blockquote>
+    </div>
+  {% if loop.index0 % 2 == 1 %}
+    </div>
+  {% endif %}
+  {% else %}
+    <h3>You should add someone to talk at your conference</h3>
+  {% endfor %}
+<!-- Modal  -->
+{{ admin_modal_form('addSpeaker', 'Add speaker', form) }}
+<div data-placeholder="speaker-form"></div>
+{% endblock content %}
+{% block extra_js %}
+<script type="text/javascript">
+(function($) {
+//
+  function getSpeakerUrl(target) {
+    return $(target).closest('ul.breadcrumb').data('url');
+  }
+//
+  $('.action').tooltip({placement: 'bottom'});
+//
+  $('[data-action=remove-speaker]').on('click', function(event) {
+    // console.log('url: ', url);
+    event.preventDefault();
+    deffered = $.ajax({
+      type: 'DELETE',
+      url: getSpeakerUrl(event.currentTarget)
+    }).then(function(data, status, jqXhr) {
+      if(jqXhr.status == 204) {
+        window.location = "{{ url_for('.SpeakerView') }}";
+      }
+    });
+  });
+
+  $('[data-action=edit-speaker]').on('click', function(event) {
+    event.preventDefault();
+    var url = getSpeakerUrl(event.currentTarget);
+    $.get(url, {data: 'form'}, function(data) {
+      console.log(data);
+    });
+  });
+//
+})(jQuery);
+</script>
+{% endblock %}
