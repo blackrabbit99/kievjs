@@ -1,8 +1,9 @@
 # -*- encoding: utf-8 -*-
 from bson import ObjectId
-from flask import render_template, request, url_for, redirect
+from flask import current_app, render_template, request, url_for, redirect
 from flask.views import MethodView
 from flask.ext.login import login_required
+from flask.ext.uploads import UploadSet, configure_uploads
 
 from city_lang.admin.forms import SpeakerForm, SponsorForm
 
@@ -43,8 +44,12 @@ class CRUDView(MethodView):
     list_template = None
     item_form_template = 'admin/form_model.html'
     object_template = None
-
+    upload_set = UploadSet('image')
     decorators = [login_required]
+
+    def __init__(self, *args, **kwargs):
+        configure_uploads(current_app, (self.upload_set,))
+        super(CRUDView, self).__init__(*args, **kwargs)
 
     def get(self, id=None):
         if 'data' in request.args:
@@ -75,6 +80,10 @@ class CRUDView(MethodView):
         if request.form and form.validate():
             form_data = form.data
             form_data.pop('id')
+
+            if 'image' in request.files:
+                filename = self.upload_set.save(request.files['image'])
+                form_data['image'] = self.upload_set.url(filename)
 
             instance.update(with_reload=False, **form_data)
 

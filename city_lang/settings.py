@@ -70,6 +70,12 @@ ORGANIZER_ROLE = 'organizer'
 
 ROLES = [USER_ROLE, ADMIN_ROLE, ORGANIZER_ROLE]
 
+import os
+
+rel = lambda *x: os.path.abspath(os.path.join(os.path.dirname(__file__), *x))
+
+UPLOADS_DEFAULT_DEST = rel('../uploads')
+UPLOADS_DEFAULT_URL = '/uploads/'
 
 # settings_local autoimport
 import sys
