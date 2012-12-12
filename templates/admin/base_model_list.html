@@ -1,0 +1,60 @@
+{% extends 'admin/base.html' %}
+{% set page_title = "Speakers list" %}
+{% set view_url = url_for('.SpeakerView') %}
+
+{% from "_macro.html" import admin_modal_form %}
+
+{% block top_content %}
+  <div class="row">
+    <div class="span12">
+      <h1>
+        {{ page_title }}
+        <small>
+          <a class="pull-right" href="#addItem" data-toggle="modal">Add</a>
+        </small>
+      </h1>
+    </div>
+  </div>
+{% endblock top_content %}
+
+{% block content %}
+  {% block item_list %}{% endblock item_list %}
+<!-- Modal  -->
+{{ admin_modal_form('#addItem', 'Add', form) }}
+<div data-placeholder="edit-form"></div>
+{% endblock content %}
+{% block extra_js %}
+<script type="text/javascript">
+(function($) {
+//
+  function getFormUrl(target) {
+    return $(target).closest('ul.breadcrumb').data('url');
+  }
+//
+  $('.action').tooltip({placement: 'bottom'});
+//
+  $('[data-action=remove]').on('click', function(event) {
+    // console.log('url: ', url);
+    event.preventDefault();
+    deffered = $.ajax({
+      type: 'DELETE',
+      url: getSpeakerUrl(event.currentTarget)
+    }).then(function(data, status, jqXhr) {
+      if(jqXhr.status == 204) {
+        window.location = "{{ view_url }}";
+      }
+    });
+  });
+
+  $('[data-action=edit]').on('click', function(event) {
+    event.preventDefault();
+    var url = getFormUrl(event.currentTarget);
+    $.get(url, {data: 'form'}, function(data) {
+      $("[data-placeholder=edit-form]").html(data.form);
+      $("[data-placeholder=edit-form] .modal").modal('show');
+    });
+  });
+//
+})(jQuery);
+</script>
+{% endblock %}

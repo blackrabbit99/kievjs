@@ -17,3 +17,4 @@ class SponsorForm(Form):
     description = fields.TextAreaField(u'Description',
                 description=u"A few words to describe (optional)")
     logo = fields.FileField(u'Logo')
+    id = fields.HiddenField()

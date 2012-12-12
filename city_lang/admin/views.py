@@ -41,12 +41,21 @@ class CRUDView(MethodView):
     model = None
     form = None
     list_template = None
+    item_form_template = 'admin/form_model.html'
     object_template = None
 
     decorators = [login_required]
 
     def get(self, id=None):
-        if id is None:
+        if 'data' in request.args:
+            instance = self.model.query.get_or_404(id)
+            form = self.form(obj=instance)
+            return jsonify_status_code({
+                'form': render_template(self.item_form_template, form=form),
+                'id': instance.id,
+                'title': 'Editing {}'.format(self.__class__.__name__)
+            })
+        elif id is None:
             context = {'models': self.get_objects()}
             template = self.list_template
         else:
@@ -90,18 +99,6 @@ class SpeakerView(CRUDView):
     model = Speaker
     form = SpeakerForm
     list_template = 'admin/speakers.html'
-
-    def get(self, id=None):
-        if 'data' in request.args:
-            speaker = self.model.query.get_or_404(id)
-            form = SpeakerForm(obj=speaker)
-            return jsonify_status_code({
-                'form': render_template('admin/speaker_form.html', form=form),
-                'id': speaker.id,
-                'title': 'Editing speaker'
-            })
-        else:
-            return super(SpeakerView, self).get(id)
 
 
 class SponsorView(CRUDView):

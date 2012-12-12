@@ -1,20 +1,9 @@
-{% extends 'admin/base.html' %}
-{% set page_title = "Sponsors list" %}
-{% from "_macro.html" import admin_modal_form %}
-{% block top_content %}
-  <div class="row">
-    <div class="span12">
-      <h1>
-        {{ page_title }}
-        <small>
-          <a class="pull-right" href="#addSponsor" data-toggle="modal">Add sponsor</a>
-        </small>
-      </h1>
-    </div>
-  </div>
-{% endblock top_content %}
+{% extends 'admin/base_model_list.html' %}
 
-{% block content %}
+{% set page_title = "Sponsors list" %}
+{% set view_url = url_for('.SponsorView') %}
+
+{% block item_list %}
   {% for sponsor in models %}
     {% if loop.index0 is divisibleby 2 %}
       <div class="row">
@@ -29,12 +18,12 @@
           </a>
         </li>
         <li>
-          <a data-action='toggle-hide-sponsor' title="hide" class="action" href="#">
+          <a data-action='toggle-hide' title="hide" class="action" href="#">
             <i class="{{icon_hidden}}"></i>
           </a>
         </li>
         <li>
-          <a data-action='edit-sponsor' title="edit" class="action" href="#">
+          <a data-action='edit' title="edit" class="action" href="#">
             <i class="icon-pencil"></i>
           </a>
         </li>
@@ -50,25 +39,4 @@
   {% else %}
     <h3>No one gave its financial aid yet</h3>
   {% endfor %}
-<!-- Modal  -->
-{{ admin_modal_form('addSponsor', 'Add sponsor', form) }}
-{% endblock content %}
-{% block extra_js %}
-<script type="text/javascript">
-(function($) {
-  $('[data-action=remove]').on('click', function(event) {
-    event.preventDefault();
-    var url = $(event.currentTarget).closest('ul.breadcrumb').data('url');
-    console.log('url: ', url);
-    // deffered = $.ajax({
-    //   type: 'DELETE',
-    //   url: $(event.currentTarget).data('href')
-    // }).then(function(data, status, jqXhr) {
-    //   if(jqXhr.status == 204) {
-    //     window.location = "{{ url_for('.SponsorView') }}";
-    //   }
-    // });
-  });
-})(jQuery);
-</script>
-{% endblock %}
+{% endblock item_list %}
