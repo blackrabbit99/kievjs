@@ -7,7 +7,7 @@
       <h1>
         {{ page_title }}
         <small>
-          <a class="pull-right" href="#addSpeaker" data-toggle="modal">Add speaker</a>
+          <a class="pull-right" href="#addSpeaker" data-toggle="modal">Add</a>
         </small>
       </h1>
     </div>
@@ -24,17 +24,17 @@
       <ul class="breadcrumb pull-left" data-url="{{ url_for('.SpeakerView', id=speaker.id) }}"
         style="margin-right: 20px">
         <li>
-          <a data-action='remove-speaker' title="remove" class="action" href="#">
+          <a data-action='remove' title="remove" class="action" href="#">
             <i class="icon-remove"></i>
           </a>
         </li>
         <li>
-          <a data-action='toggle-hide-speaker' title="hide" class="action" href="#">
+          <a data-action='toggle-hide' title="hide" class="action" href="#">
             <i class="{{icon_hidden}}"></i>
           </a>
         </li>
         <li>
-          <a data-action='edit-speaker' title="edit" class="action" href="#">
+          <a data-action='edit' title="edit" class="action" href="#">
             <i class="icon-pencil"></i>
           </a>
         </li>
@@ -53,19 +53,19 @@
   {% endfor %}
 <!-- Modal  -->
 {{ admin_modal_form('addSpeaker', 'Add speaker', form) }}
-<div data-placeholder="speaker-form"></div>
+<div data-placeholder="edit-form"></div>
 {% endblock content %}
 {% block extra_js %}
 <script type="text/javascript">
 (function($) {
 //
-  function getSpeakerUrl(target) {
+  function getFormUrl(target) {
     return $(target).closest('ul.breadcrumb').data('url');
   }
 //
   $('.action').tooltip({placement: 'bottom'});
 //
-  $('[data-action=remove-speaker]').on('click', function(event) {
+  $('[data-action=remove]').on('click', function(event) {
     // console.log('url: ', url);
     event.preventDefault();
     deffered = $.ajax({
@@ -78,11 +78,12 @@
     });
   });
 
-  $('[data-action=edit-speaker]').on('click', function(event) {
+  $('[data-action=edit]').on('click', function(event) {
     event.preventDefault();
-    var url = getSpeakerUrl(event.currentTarget);
+    var url = getFormUrl(event.currentTarget);
     $.get(url, {data: 'form'}, function(data) {
-      console.log(data);
+      $("[data-placeholder=edit-form]").html(data.form);
+      $("[data-placeholder=edit-form] .modal").modal('show');
     });
   });
 //

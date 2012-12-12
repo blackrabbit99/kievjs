@@ -1,7 +1,7 @@
 # encoding: utf-8
 import trafaret as t
 
-from city_lang.core.models import Document
+from city_lang.core.documents import Document
 from datetime import datetime
 from flask.ext.security import RoleMixin, UserMixin
 
@@ -23,12 +23,17 @@ class Visitor(Document):
         'position': t.String,
         'company': t.String,
         'created_at': t.Type(datetime),
+        t.Key('is_confirmed', default=True): t.Bool,
+        t.Key('is_upproved', default=False): t.Bool,
+        t.Key('is_declined', default=False): t.Bool,
     })
 
     def save_registered(self):
         if self.query.find_one({'email': self.email}) is None:
             self.created_at = datetime.utcnow()
             return self.save()
+        else:
+            return None
 
 
 @mongo.register

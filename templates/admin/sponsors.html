@@ -24,7 +24,7 @@
       <ul class="breadcrumb pull-left" data-url="{{ url_for('.SponsorView', id=sponsor.id) }}"
         style="margin-right: 20px">
         <li>
-          <a data-action='remove-sponsor' title="remove" class="action" href="#">
+          <a data-action='remove' title="remove" class="action" href="#">
             <i class="icon-remove"></i>
           </a>
         </li>
@@ -56,7 +56,7 @@
 {% block extra_js %}
 <script type="text/javascript">
 (function($) {
-  $('[data-action=remove-sponsor]').on('click', function(event) {
+  $('[data-action=remove]').on('click', function(event) {
     event.preventDefault();
     var url = $(event.currentTarget).closest('ul.breadcrumb').data('url');
     console.log('url: ', url);

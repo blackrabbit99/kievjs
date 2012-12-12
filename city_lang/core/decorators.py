@@ -1,33 +1,31 @@
-from werkzeug import import_string, cached_property
+# -*- encoding: utf-8 -*-
+from functools import wraps
+from flask import abort
+from flask.ext.security import current_user
+
+from . import http
+from .utils import LazyResource
 
 
-class ClassProperty(property):
-    def __init__(self, method, *args, **kwargs):
-        method = classmethod(method)
-        return super(ClassProperty, self).__init__(method, *args, **kwargs)
+def api_resource(bp, endpoint, pk_def):
+    pk = pk_def.keys()[0]
+    pk_type = pk_def[pk] and pk_def[pk].__name__ or None
+    # building url from the endpoint
+    url = "/{}/".format(endpoint)
 
-    def __get__(self, cls, owner):
-        return self.fget.__get__(None, owner)()
+    def wrapper(resource_class):
+        resource = resource_class().as_view(endpoint)
+        bp.add_url_rule(url, view_func=resource, methods=['GET', 'POST'])
+        if pk_type is None:
+            url_rule = "%s<%s>" % (url, pk)
+        else:
+            url_rule = "%s<%s:%s>" % (url, pk_type, pk)
+        bp.add_url_rule(url_rule,
+                        view_func=resource,
+                        methods=['GET', 'PUT', 'DELETE'])
+        return resource_class
 
-
-classproperty = ClassProperty
-
-
-class LazyResource(object):
-
-    def __init__(self, import_name, endpoint):
-        self.__module__, self.__name__ = import_name.rsplit('.', 1)
-        self.import_name = import_name
-        self.endpoint = endpoint
-
-    @cached_property
-    def view(self):
-        view_class = import_string(self.import_name)
-        view_class.endpoint = self.endpoint
-        return view_class.as_view(self.endpoint)
-
-    def __call__(self, *args, **kwargs):
-        return self.view(*args, **kwargs)
+    return wrapper
 
 
 def lazy_rule(bp, endpoint, pk_def, import_name):
@@ -48,3 +46,24 @@ def lazy_rule(bp, endpoint, pk_def, import_name):
     bp.add_url_rule(item_url, view_func=resource,
                     methods=['GET', 'PUT', 'DELETE'])
 
+
+def login_required(fn):
+    @wraps(fn)
+    def wrapper(*args, **kwargs):
+        if not current_user.is_authenticated():
+            abort(http.UNAUTHORIZED)
+        return fn(*args, **kwargs)
+
+    return wrapper
+
+
+class ClassProperty(property):
+    def __init__(self, method, *args, **kwargs):
+        method = classmethod(method)
+        return super(ClassProperty, self).__init__(method, *args, **kwargs)
+
+    def __get__(self, cls, owner):
+        return self.fget.__get__(None, owner)()
+
+
+classproperty = ClassProperty

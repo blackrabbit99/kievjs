@@ -50,8 +50,7 @@ class CRUDView(MethodView):
             context = {'models': self.get_objects()}
             template = self.list_template
         else:
-            id = ObjectId(id)
-            context = {'model': self.model.query.get_or_404(id)}
+            context = {'model': self.model.query.get_or_404(ObjectId(id))}
             template = self.list_template
 
         context['form'] = self.form()
@@ -59,11 +58,19 @@ class CRUDView(MethodView):
 
     def post(self):
         form = self.form(request.form)
+        instance = self.model()
+
+        if len(form.id.data) > 0:
+            instance = self.model.query.get_or_404(form.id.data)
+
         if request.form and form.validate():
-            instance = self.model()
-            form.populate_obj(instance)
-            instance.save()
+            form_data = form.data
+            form_data.pop('id')
+
+            instance.update(with_reload=False, **form_data)
+
             return redirect(url_for('.{}'.format(self.__class__.__name__)))
+
         context = {
             'models': self.get_objects(),
             'form': form
@@ -86,10 +93,12 @@ class SpeakerView(CRUDView):
 
     def get(self, id=None):
         if 'data' in request.args:
-            speaker = self.model.query.get_or_404(ObjectId(id))
+            speaker = self.model.query.get_or_404(id)
             form = SpeakerForm(obj=speaker)
             return jsonify_status_code({
-                'form': render_template('admin/speaker_form.html', form=form)
+                'form': render_template('admin/speaker_form.html', form=form),
+                'id': speaker.id,
+                'title': 'Editing speaker'
             })
         else:
             return super(SpeakerView, self).get(id)
