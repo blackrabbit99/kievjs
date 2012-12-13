@@ -18,6 +18,7 @@ class SponsorForm(Form):
                 description=u"Company title")
     description = fields.TextAreaField(u'Description',
                 description=u"A few words to describe (optional)")
+    url = fields.TextField(u'URL', description=u"Site URL")
     image = fields.FileField(u'Logo')
 
 

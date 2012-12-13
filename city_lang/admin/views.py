@@ -78,16 +78,16 @@ class CRUDView(MethodView):
             instance = self.model.query.get_or_404(id)
 
         if request.form and form.validate():
+            instance_data = form.data.copy()
             # processing uploaded files if any
-            form.populate_obj(instance)
             if 'image' in request.files:
                 try:
                     filename = self.upload_set.save(request.files['image'])
-                    instance.image = self.upload_set.url(filename)
+                    instance_data['image'] = self.upload_set.url(filename)
                 except UploadNotAllowed:
-                    pass
-            print instance
-            instance.save()
+                    del instance_data['image']
+
+            instance.update(upsert=True, **instance_data)
 
             return redirect(url_for('.{}'.format(self.__class__.__name__)))
 

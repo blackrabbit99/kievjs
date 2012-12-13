@@ -131,7 +131,7 @@ figure{
 .header-content .btn .l{
 	float:left;
 	width:56px;
-	height:58px;
+	height:57px;
 	background:url(../img/btn-orange.png) no-repeat 100% -58px;
 }
 .header-content .btn:hover,
@@ -364,6 +364,9 @@ figure{
 .partners section{
 	overflow:hidden;
 	padding:0 0 21px;
+}
+.partners section a{
+	color: #fdc5a8;
 }
 .partners .alignleft{
 	float:left;

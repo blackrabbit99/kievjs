@@ -67,6 +67,7 @@ class Sponsor(Document):
     structure = t.Dict({
         'name': t.String,
         'description': t.String(allow_blank=True),
+        'url': t.String(allow_blank=True),
         'image': t.String(allow_blank=True),
         'kind': t.String
     })
