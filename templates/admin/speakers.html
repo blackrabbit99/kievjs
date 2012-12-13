@@ -1,0 +1,43 @@
+{% extends 'admin/base_model_list.html' %}
+
+{% set page_title = "Speakers list" %}
+{% set view_url = url_for('.SpeakerView') %}
+
+{% block item_list %}
+  {% for speaker in models %}
+    {% if loop.index0 % 2 == 0 %}
+      <div class="row">
+    {% endif %}
+    {% set icon_hidden = speaker.is_hidden and 'icon-eye-open' or 'icon-eye-close' -%}
+    <div class="span6">
+      <ul class="breadcrumb pull-left" data-url="{{ url_for('.SpeakerView', id=speaker.id) }}"
+        style="margin-right: 20px">
+        <li>
+          <a data-action='remove' title="remove" class="action" href="#">
+            <i class="icon-remove"></i>
+          </a>
+        </li>
+        <li>
+          <a data-action='toggle-hide' title="hide" class="action" href="#">
+            <i class="{{icon_hidden}}"></i>
+          </a>
+        </li>
+        <li>
+          <a data-action='edit' title="edit" class="action" href="#">
+            <i class="icon-pencil"></i>
+          </a>
+        </li>
+      </ul>
+      <h4>{{speaker.name}}</h4>
+      <blockquote class="pull-right">
+        <p>{{speaker.speech}}</p>
+        <small>{{speaker.intro}}</small>
+      </blockquote>
+    </div>
+  {% if loop.index0 % 2 == 1 %}
+    </div>
+  {% endif %}
+  {% else %}
+    <h3>You should add someone to talk at your conference</h3>
+  {% endfor %}
+{% endblock item_list %}

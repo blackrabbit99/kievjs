@@ -8,6 +8,7 @@ class SpeakerForm(Form):
                 description=u"Title for the speech")
     intro = fields.TextAreaField(u'Speech intro', [validators.Required()],
                 description=u"A few words to introduce speech")
+    id = fields.HiddenField()
 
 
 class SponsorForm(Form):
@@ -16,3 +17,4 @@ class SponsorForm(Form):
     description = fields.TextAreaField(u'Description',
                 description=u"A few words to describe (optional)")
     logo = fields.FileField(u'Logo')
+    id = fields.HiddenField()

@@ -1,0 +1,42 @@
+{% extends 'admin/base_model_list.html' %}
+
+{% set page_title = "Sponsors list" %}
+{% set view_url = url_for('.SponsorView') %}
+
+{% block item_list %}
+  {% for sponsor in models %}
+    {% if loop.index0 is divisibleby 2 %}
+      <div class="row">
+    {% endif %}
+    {% set icon_hidden = sponsor.is_hidden and 'icon-eye-open' or 'icon-eye-close' -%}
+    <div class="span6">
+      <ul class="breadcrumb pull-left" data-url="{{ url_for('.SponsorView', id=sponsor.id) }}"
+        style="margin-right: 20px">
+        <li>
+          <a data-action='remove' title="remove" class="action" href="#">
+            <i class="icon-remove"></i>
+          </a>
+        </li>
+        <li>
+          <a data-action='toggle-hide' title="hide" class="action" href="#">
+            <i class="{{icon_hidden}}"></i>
+          </a>
+        </li>
+        <li>
+          <a data-action='edit' title="edit" class="action" href="#">
+            <i class="icon-pencil"></i>
+          </a>
+        </li>
+      </ul>
+      <h4>{{ sponsor.name }}</h4>
+      <blockquote class="pull-right">
+        <p>{{ sponsor.description|safe }}</p>
+      </blockquote>
+    </div>
+  {% if loop.index0 is not divisibleby 2 %}
+    </div>
+  {% endif %}
+  {% else %}
+    <h3>No one gave its financial aid yet</h3>
+  {% endfor %}
+{% endblock item_list %}

@@ -41,17 +41,25 @@ class CRUDView(MethodView):
     model = None
     form = None
     list_template = None
+    item_form_template = 'admin/form_model.html'
     object_template = None
 
     decorators = [login_required]
 
     def get(self, id=None):
-        if id is None:
+        if 'data' in request.args:
+            instance = self.model.query.get_or_404(id)
+            form = self.form(obj=instance)
+            return jsonify_status_code({
+                'form': render_template(self.item_form_template, form=form),
+                'id': instance.id,
+                'title': 'Editing {}'.format(self.__class__.__name__)
+            })
+        elif id is None:
             context = {'models': self.get_objects()}
             template = self.list_template
         else:
-            id = ObjectId(id)
-            context = {'model': self.model.query.get_or_404(id)}
+            context = {'model': self.model.query.get_or_404(ObjectId(id))}
             template = self.list_template
 
         context['form'] = self.form()
@@ -59,11 +67,19 @@ class CRUDView(MethodView):
 
     def post(self):
         form = self.form(request.form)
+        instance = self.model()
+
+        if len(form.id.data) > 0:
+            instance = self.model.query.get_or_404(form.id.data)
+
         if request.form and form.validate():
-            instance = self.model()
-            form.populate_obj(instance)
-            instance.save()
+            form_data = form.data
+            form_data.pop('id')
+
+            instance.update(with_reload=False, **form_data)
+
             return redirect(url_for('.{}'.format(self.__class__.__name__)))
+
         context = {
             'models': self.get_objects(),
             'form': form
