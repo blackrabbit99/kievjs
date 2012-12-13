@@ -18,7 +18,7 @@
 {% block content %}
   {% block item_list %}{% endblock item_list %}
 <!-- Modal  -->
-{{ admin_modal_form('#addItem', 'Add', form) }}
+{{ admin_modal_form('addItem', 'Add', form, item_url) }}
 <div data-placeholder="edit-form"></div>
 {% endblock content %}
 {% block extra_js %}
@@ -36,7 +36,7 @@
     event.preventDefault();
     deffered = $.ajax({
       type: 'DELETE',
-      url: getSpeakerUrl(event.currentTarget)
+      url: getFormUrl(event.currentTarget)
     }).then(function(data, status, jqXhr) {
       if(jqXhr.status == 204) {
         window.location = "{{ view_url }}";

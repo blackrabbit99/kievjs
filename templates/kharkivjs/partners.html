@@ -1,27 +1,25 @@
 {% extends "base.html" %}
 {% set page_title = "Partners" %}
+
 {% block content %}
 <div class="partners">
+	<section>
+		 <p style='text-align:center'><a href="mailto:info@kharkivjs.com">info@kharkivjs.com</a> Want to be a sponsor?</p>
+	</section>
+	{% for kind, partners in kinds %}
 	<div class="title">
 		<div class="wrap">
-			<span class="blank"></span><h2>Platinum</h2><span class="blank"></span>
+			<span class="blank"></span><h2>{{kind}}</h2><span class="blank"></span>
 		</div>
 	</div>
-	<section>
-		<a href="http://dev-pro.net"><strong><img width="405" height="123" src="images/logo-dev-pro.png" alt="Dev-Pro logo" class="alignleft" /></strong></a>
-		<p>Dev-Pro is headed by Jeff Bianco, a US citizen with more than 18 years of experience as a partner, manager, and client of Ukrainian IT services. We understand the business of our clients and have established exceptional customer service and high communication standards that allow us to deliver quality results. <a href="#">www.dev-pro.net</a></p>
-	</section>
-	<section>
-		<a href="http://mediasapiens.co/"><strong><img src="images/logo.jpeg" alt="Dev-Pro logo" class="alignleft" /></strong></a>
-		<p>Small, neat and flexible international team with modern stack technologies and ambitions. Riding own way for the full circle solutions and service-base products.</p>
-	</section>
-	<div class="title">
-		<div class="wrap">
-			<span class="blank"></span><h2>Gold</h2><span class="blank"></span>
-		</div>
-	</div>
-	<section>
-		 <p style = 'text-align:center'><a href="mailto:info@kharkivjs.com">info@kharkivjs.com</a> Want to be a sponsor?</p>
-	</section>
+		{% for company in partners %}
+		<section>
+			<a href="{{company.url}}">
+				<img width="405" height="123" src="{{company.image}}" alt="{{company.name}}" class="alignleft" />
+			</a>
+			{{company.description|safe}}
+		</section>
+		{% endfor %}
+	{% endfor %}
 </div>
 {% endblock content %}

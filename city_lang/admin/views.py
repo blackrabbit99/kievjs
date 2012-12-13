@@ -1,16 +1,17 @@
 # -*- encoding: utf-8 -*-
 from bson import ObjectId
-from flask import current_app, render_template, request, url_for, redirect
+
+from flask import render_template, request, url_for, redirect
 from flask.views import MethodView
 from flask.ext.login import login_required
-from flask.ext.uploads import UploadSet, configure_uploads
+from flask.ext.uploads import UploadSet, UploadNotAllowed
 
-from city_lang.admin.forms import SpeakerForm, SponsorForm
+from city_lang.admin.forms import SpeakerForm, SponsorForm, PageForm
 
 from city_lang.core import http
 from city_lang.core.utils import jsonify_status_code
 
-from city_lang.pages.models import Speaker, Sponsor, User, Visitor
+from city_lang.pages.models import Speaker, Sponsor, User, Visitor, FlatPage
 
 from . import bp
 
@@ -44,19 +45,18 @@ class CRUDView(MethodView):
     list_template = None
     item_form_template = 'admin/form_model.html'
     object_template = None
-    upload_set = UploadSet('image')
     decorators = [login_required]
-
-    def __init__(self, *args, **kwargs):
-        configure_uploads(current_app, (self.upload_set,))
-        super(CRUDView, self).__init__(*args, **kwargs)
+    upload_set = UploadSet('image')
 
     def get(self, id=None):
         if 'data' in request.args:
             instance = self.model.query.get_or_404(id)
+            item_url = url_for('.{}'.format(self.__class__.__name__),
+                               id=instance.id)
             form = self.form(obj=instance)
             return jsonify_status_code({
-                'form': render_template(self.item_form_template, form=form),
+                'form': render_template(self.item_form_template, form=form,
+                                        item_url=item_url),
                 'id': instance.id,
                 'title': 'Editing {}'.format(self.__class__.__name__)
             })
@@ -70,22 +70,24 @@ class CRUDView(MethodView):
         context['form'] = self.form()
         return render_template(template, **context)
 
-    def post(self):
+    def post(self, id=None):
         form = self.form(request.form)
         instance = self.model()
 
-        if len(form.id.data) > 0:
-            instance = self.model.query.get_or_404(form.id.data)
+        if id is not None:
+            instance = self.model.query.get_or_404(id)
 
         if request.form and form.validate():
-            form_data = form.data
-            form_data.pop('id')
-
+            # processing uploaded files if any
+            form.populate_obj(instance)
             if 'image' in request.files:
-                filename = self.upload_set.save(request.files['image'])
-                form_data['image'] = self.upload_set.url(filename)
-
-            instance.update(with_reload=False, **form_data)
+                try:
+                    filename = self.upload_set.save(request.files['image'])
+                    instance.image = self.upload_set.url(filename)
+                except UploadNotAllowed:
+                    pass
+            print instance
+            instance.save()
 
             return redirect(url_for('.{}'.format(self.__class__.__name__)))
 
@@ -96,8 +98,7 @@ class CRUDView(MethodView):
         return render_template(self.list_template, **context)
 
     def delete(self, id):
-        instance = self.model.query.get_or_404(ObjectId(id))
-        instance.delete()
+        self.model.query.remove({'_id': ObjectId(id)})
         return jsonify_status_code({}, http.NO_CONTENT)
 
     def get_objects(self, query_args=None):
@@ -114,3 +115,9 @@ class SponsorView(CRUDView):
     model = Sponsor
     form = SponsorForm
     list_template = 'admin/sponsors.html'
+
+
+class PageView(CRUDView):
+    model = FlatPage
+    form = PageForm
+    list_template = 'admin/pages.html'

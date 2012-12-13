@@ -7,3 +7,4 @@ tools/settings.py
 tools/build/*.pdf
 tools/build/codes/*.png
 tools/testing/*
+uploads

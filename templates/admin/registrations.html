@@ -1,21 +1,34 @@
 {% extends 'admin/base.html' %}
 {% set page_title = "Visitors – {}".format(visitors.count()) %}
 
+{% from "_macro.html" import visit_state %}
+
 {% block content %}
   <div class="row">
-  <table class="table table-stripped">
+  <table class="table table-hover visitors">
     <tbody>
       {% for visitor in visitors %}
-        <tr class='warning'>
+        <tr>
           <td>{{ loop.index }}</td>
           <td>{{ visitor.name }}</td>
-          <td>{{ visitor.email }}</td>
           <td>{{ visitor.position }}</td>
           <td>{{ visitor.company }}</td>
           <td>{{ visitor.created_at }}</td>
+          <td class="visitor-state">{{ visit_state(visitor) }}</td>
         </tr>
       {% endfor %}
     </tbody>
   </table>
   </div>
 {% endblock content %}
+
+{% block extra_js %}
+{{ super() }}
+<script type="text/javascript">
+  (function($) {
+    $(function() {
+      $('[rel=tooltip]').tooltip();
+    });
+  })(jQuery);
+</script>
+{% endblock extra_js %}

@@ -2,6 +2,7 @@
 
 {% set page_title = "Sponsors list" %}
 {% set view_url = url_for('.SponsorView') %}
+{% set item_url = url_for('.SponsorView') %}
 
 {% block item_list %}
   {% for sponsor in models %}
@@ -29,6 +30,7 @@
         </li>
       </ul>
       <h4>{{ sponsor.name }}</h4>
+      <img src="{{ sponsor.image }}" />
       <blockquote class="pull-right">
         <p>{{ sponsor.description|safe }}</p>
       </blockquote>

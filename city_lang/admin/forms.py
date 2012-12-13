@@ -1,3 +1,4 @@
+from flask import current_app
 from flask.ext.wtf import Form, fields, validators
 
 
@@ -8,13 +9,23 @@ class SpeakerForm(Form):
                 description=u"Title for the speech")
     intro = fields.TextAreaField(u'Speech intro', [validators.Required()],
                 description=u"A few words to introduce speech")
-    id = fields.HiddenField()
 
 
 class SponsorForm(Form):
+    kind = fields.SelectField(u'Kind',
+                              choices=current_app.config['PARTNERS_KINDS'])
     name = fields.TextField(u'Name', [validators.Required()],
                 description=u"Company title")
     description = fields.TextAreaField(u'Description',
                 description=u"A few words to describe (optional)")
-    logo = fields.FileField(u'Logo')
-    id = fields.HiddenField()
+    image = fields.FileField(u'Logo')
+
+
+class PageForm(Form):
+    title = fields.TextField(u'Title', [validators.Required()],
+                             description=u'Page Title')
+    slug = fields.TextField(u'Slug', [validators.Required()],
+                            description=u'Page Slug')
+    content = fields.TextAreaField(u'Content', [validators.Required()],
+                                   description='Content text')
+    login_required = fields.BooleanField(u'Requires login')

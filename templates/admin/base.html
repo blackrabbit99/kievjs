@@ -19,6 +19,8 @@
     <link rel="shortcut icon" href="{{url_for('static', filename='ico/favicon.ico')}}">
     <style type="text/css">
       body {padding-top: 40px;}
+      table.visitors {font-size: 10pt}
+      .visitor-state a:hover {text-decoration: none;}
     </style>
   </head>
 
@@ -40,8 +42,7 @@
               {{menu_item(url_for('admin.visitors'), 'Visitors')}}
               {{menu_item(url_for('admin.SpeakerView'), 'Speakers')}}
               {{menu_item(url_for('admin.SponsorView'), 'Sponsors')}}
-              {{menu_item('', 'Venue')}}
-              {{menu_item('', 'Pages')}}
+              {{menu_item(url_for('admin.PageView'), 'Pages')}}
               {{menu_item(url_for('admin.users'), 'Users')}}
             </ul>
           </div>
