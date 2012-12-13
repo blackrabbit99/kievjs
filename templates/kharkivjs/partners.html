@@ -14,8 +14,9 @@
 	</div>
 		{% for company in partners %}
 		<section>
+			<h3>{{company.name}}</h3>
 			<a href="{{company.url}}">
-				<img width="405" height="123" src="{{company.image}}" alt="{{company.name}}" class="alignleft" />
+				{% if company.image %}<img width="405" height="123" src="{{company.image}}" alt="{{company.name}}" class="alignleft" />{% endif %}
 			</a>
 			{{company.description|safe}}
 		</section>

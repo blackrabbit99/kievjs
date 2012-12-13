@@ -54,9 +54,8 @@ def registration():
     return render_template('registration.html', **context)
 
 
-@bp.route("/<path>/")
-def flatpage(path):
-    page = FlatPage.query.find_one({'slug': path.strip('/')})
+def flatpage():
+    page = FlatPage.query.find_one({'slug': request.path.strip('/')})
 
     if page is None:
         return render_template('404.html'), http.NOT_FOUND
