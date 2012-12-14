@@ -1,12 +1,12 @@
 # -*- encoding: utf-8 -*-
-from flask import render_template, request, g, redirect
+from flask import current_app, render_template, request, g, redirect
 from flask.ext.security import current_user
 
 from city_lang.core import http
 
 from . import bp
 from .forms import RegistrationForm
-from .models import FlatPage, Speaker, Visitor
+from .models import FlatPage, Speaker, Visitor, Sponsor
 
 
 @bp.route("/")
@@ -19,8 +19,12 @@ def speakers():
 
 @bp.route("/partners/")
 def partners():
-    print 'partners'
-    return render_template('partners.html', **{})
+    partners_set = []
+    for kind, value in current_app.config['PARTNERS_KINDS']:
+        if Sponsor.query.find({'kind': kind}).count() > 0:
+            partners_set.append((value, Sponsor.query.find({'kind': kind})))
+
+    return render_template('partners.html', kinds=partners_set)
 
 
 @bp.route("/venue/")
@@ -51,15 +55,14 @@ def registration():
 
 
 def flatpage():
-    path = request.path.strip('/')
-    page = FlatPage.query.find_one({'slug': path})
+    page = FlatPage.query.find_one({'slug': request.path.strip('/')})
 
     if page is None:
         return render_template('404.html'), http.NOT_FOUND
 
-    if page.registration_required and current_user.is_anonymous():
+    if page.login_required and current_user.is_anonymous():
         return render_template('404.html'), http.NOT_FOUND
 
-    template = page.template_name or 'flatpage.html'
+    template = page.get('template', 'flatpage.html')
 
     return render_template(template, page=page)

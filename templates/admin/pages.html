@@ -1,26 +1,20 @@
 {% extends 'admin/base_model_list.html' %}
 
-{% set page_title = "Speakers list" %}
-{% set view_url = url_for('.SpeakerView') %}
-{% set item_url = url_for('.SpeakerView') %}
+{% set page_title = "Pages list" %}
+{% set view_url = url_for('.PageView') %}
+{% set item_url = url_for('.PageView') %}
 
 {% block item_list %}
-  {% for speaker in models %}
+  {% for page in models %}
     {% if loop.index0 % 2 == 0 %}
       <div class="row">
     {% endif %}
-    {% set icon_hidden = speaker.is_hidden and 'icon-eye-open' or 'icon-eye-close' -%}
     <div class="span6">
-      <ul class="breadcrumb pull-left" data-url="{{ url_for('.SpeakerView', id=speaker.id) }}"
+      <ul class="breadcrumb pull-left" data-url="{{ url_for('.PageView', id=page.id) }}"
         style="margin-right: 20px">
         <li>
           <a data-action='remove' title="remove" class="action" href="#">
             <i class="icon-remove"></i>
-          </a>
-        </li>
-        <li>
-          <a data-action='toggle-hide' title="hide" class="action" href="#">
-            <i class="{{icon_hidden}}"></i>
           </a>
         </li>
         <li>
@@ -29,16 +23,16 @@
           </a>
         </li>
       </ul>
-      <h4>{{speaker.name}}</h4>
+      <h4>{{page.title}}</h4>
       <blockquote class="pull-right">
-        <p>{{speaker.speech}}</p>
-        <small>{{speaker.intro}}</small>
+        <p>{{page.slug}}</p>
+        <small>{{page.content}}</small>
       </blockquote>
     </div>
   {% if loop.index0 % 2 == 1 %}
     </div>
   {% endif %}
   {% else %}
-    <h3>You should add someone to talk at your conference</h3>
+    <h3>You should add some page to show</h3>
   {% endfor %}
 {% endblock item_list %}

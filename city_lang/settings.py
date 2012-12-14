@@ -1,12 +1,12 @@
 # -- Flask-specific settings
-DEBUG = True
+DEBUG = False
 SECRET_KEY = "9798s7fdamd90saf8sodfjk4qjhg43jfgjq43gfqpw97f[as09duf"
-USE_X_SENDFILE = False
+USE_X_SENDFILE = True
 CSRF_ENABLED = True
 # SERVER_NAME = 'localhost'
 # SESSION_COOKIE_SECURE = True
 # MongoSet configuration ----------------
-MONGODB_DATABASE = 'kharkivjs'
+MONGODB_DATABASE = ''
 MONGODB_HOST = 'localhost'
 MONGODB_PORT = 27017
 # should we unroll DBRef links to objects
@@ -15,7 +15,7 @@ MONGODB_AUTOINCREMENT = False
 MONGODB_FALLBACK_LANG = 'en'
 
 # Flask-Mail sender for default email sender
-DEFAULT_MAIL_SENDER = '<info@kharkivjs.com>'
+DEFAULT_MAIL_SENDER = ''
 MAIL_FAIL_SILENTLY = True
 # MAIL_SERVER : default 'localhost'
 # MAIL_PORT : default 25
@@ -59,8 +59,17 @@ SOCIAL_FACEBOOK = {
 
 
 # Site specific settings
-CURRENT_SITE = 'kharkivjs'
-CURRENT_SITE_NAME = 'JSKharkiv'
+PARTNERS_KINDS = [
+    ('organizers', u'Organizers'),
+    ('gold', u'Gold'),
+    ('silver', u'Silver'),
+    ('bronse', u'Bronse'),
+    ('host', u'Hosting'),
+    ('informational', u'Informational'),
+]
+
+CURRENT_SITE = ''
+CURRENT_SITE_NAME = ''
 # Users with email adresses listed here will be created as administrators
 ADMINS = ('admin@example.com', )
 # role name constants
@@ -70,6 +79,12 @@ ORGANIZER_ROLE = 'organizer'
 
 ROLES = [USER_ROLE, ADMIN_ROLE, ORGANIZER_ROLE]
 
+import os
+
+rel = lambda *x: os.path.abspath(os.path.join(os.path.dirname(__file__), *x))
+
+UPLOADS_DEFAULT_DEST = rel('../uploads')
+UPLOADS_DEFAULT_URL = '/uploads/'
 
 # settings_local autoimport
 import sys

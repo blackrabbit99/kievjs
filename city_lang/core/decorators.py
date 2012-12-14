@@ -44,7 +44,7 @@ def lazy_rule(bp, endpoint, pk_def, import_name):
     bp.add_url_rule(collection_url, view_func=resource,
                     methods=['GET', 'POST'])
     bp.add_url_rule(item_url, view_func=resource,
-                    methods=['GET', 'PUT', 'DELETE'])
+                    methods=['GET', 'POST', 'PUT', 'DELETE'])
 
 
 def login_required(fn):
