@@ -9,10 +9,12 @@ CURRENT_SITE_NAME = 'JSKharkiv'
 
 SQLALCHEMY_DATABASE_URI = "mysql://root@localhost:3360/kharkivjs"
 BROKER_URL = 'mongodb://localhost:27017/celery'
+CELERY_RESULT_BACKEND = 'mongodb'
 
-
+MAIL_FAIL_SILENTLY = False
 MAIL_SERVER = 'smtp.gmail.com'
 MAIL_PORT = 465
-MAIL_USE_TLS = True
-MAIL_USERNAME = 'info@kharkivjs.com'
-MAIL_PASSWORD = ',fhctkjyf1990'
+# MAIL_USE_TLS = True
+MAIL_USE_SSL = True
+
+

@@ -1,0 +1,13 @@
+Hello, {{visitor.name}}
+
+We are sad to inform you. But there are tons of attendees today and according to
+your position/occupation provided with registration data you won't target with
+the KharkivJS subject.
+
+Keep watching on upcoming events. You always have a chance to come once later.
+
+
+--
+Sincerely, KharkivJS org team.
+info@kharkivjs.com
+http://kharkivjs.com

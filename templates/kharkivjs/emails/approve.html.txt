@@ -1,0 +1,13 @@
+Welcome to Kharkiv JS conference!
+
+Dear {{visitor.name}}, a conference will be on Saturday, 15th of December.
+It will be held in Zfort Group. The adress is 45, Geroev Stalingrada str.
+Registration starts at 10:00, the conference will begin at 11:00.
+We are looking forward to see you.
+
+We are on http://kharkivjs.com
+Our email is info@kharkivjs.com
+
+
+--
+Sincerely, KharkivJS org team.

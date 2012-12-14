@@ -8,9 +8,9 @@ from flask.ext.mongoset import MongoSet
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.uploads import UploadSet, configure_uploads, patch_request_class
 
-from .settings import CURRENT_SITE, BROKER_URL
+from .settings import CURRENT_SITE, BROKER_URL, CELERY_RESULT_BACKEND
 
-celery = Celery('city_lang', BROKER_URL)
+celery = Celery('city_lang', backend=CELERY_RESULT_BACKEND, broker=BROKER_URL)
 
 
 def create_app(conf_module):

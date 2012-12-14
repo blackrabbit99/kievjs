@@ -6,10 +6,10 @@ from flask.views import MethodView
 from flask.ext.login import login_required
 from flask.ext.uploads import UploadSet, UploadNotAllowed
 
-from city_lang.admin.forms import SpeakerForm, SponsorForm, PageForm
-from city_lang.core import http
-from city_lang.core.utils import jsonify_status_code
-from city_lang.pages.models import Speaker, Sponsor, User, Visitor, FlatPage
+from ..admin.forms import SpeakerForm, SponsorForm, PageForm
+from ..core import http, tasks
+from ..core.utils import jsonify_status_code
+from ..pages.models import Speaker, Sponsor, User, Visitor, FlatPage
 
 from . import bp
 
@@ -24,7 +24,9 @@ def index():
 @login_required
 def visitors():
     context = {
-        'visitors': Visitor.query.all()
+        'visitors': Visitor.query.all(),
+        'approved': Visitor.query.find({'is_approved': True}).count(),
+        'declined': Visitor.query.find({'is_declined': True}).count(),
     }
     return render_template('admin/registrations.html', **context)
 
@@ -37,10 +39,14 @@ def manipulate(id):
         if request.json['action'] == 'approve':
             visitor.update(is_confirmed=True, is_approved=True,
                            is_declined=False, with_reload=False)
+            tasks.send_email(visitor.email, 'emails/approve.html',
+                             {'visitor': visitor})
             response = {'response': 'approved'}
         elif request.json['action'] == 'decline':
             visitor.update(is_approved=False, is_declined=True,
                            with_reload=False)
+            tasks.send_email(visitor.email, 'emails/decline.html',
+                             {'visitor': visitor})
             response = {'response': 'declined'}
         else:
             response = {}
