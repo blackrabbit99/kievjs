@@ -1,7 +1,7 @@
 {% extends 'admin/base.html' %}
 {% set page_title = "Visitors – {}".format(visitors.count()) %}
 
-{% from "_macro.html" import visit_state %}
+{% from "_macro.html" import visit_state, visit_action %}
 
 {% block content %}
   <div class="row">
@@ -13,8 +13,9 @@
           <td>{{ visitor.name }}</td>
           <td>{{ visitor.position }}</td>
           <td>{{ visitor.company }}</td>
-          <td>{{ visitor.created_at }}</td>
-          <td class="visitor-state">{{ visit_state(visitor) }}</td>
+          <td>{% if visitor.created_at %}{{ visitor.created_at.strftime("%b %d '%y") }}{% endif %}</td>
+          <td class="visitor-state" data-source="{{ url_for('.state', id=visitor.id) }}">{{ visit_state(visitor) }}</td>
+          <td class="visitor-action" data-source="{{ url_for('.action', id=visitor.id) }}">{{ visit_action(visitor) }}</td>
         </tr>
       {% endfor %}
     </tbody>
@@ -25,9 +26,54 @@
 {% block extra_js %}
 {{ super() }}
 <script type="text/javascript">
+  var reactions = {
+    approved: function($target) {
+      var actionText = 'decline';
+      $target.addClass('btn-inverse').text(actionText).data('action', actionText);
+    },
+    declined: function($target) {
+      var actionText = 'approve';
+      $target.addClass('btn-success').text(actionText).data('action', actionText);
+    }
+  };
+
   (function($) {
     $(function() {
       $('[rel=tooltip]').tooltip();
+
+      $('table.visitors').on('click', 'a[data-action]', function(event) {
+        event.preventDefault();
+
+        var $target = $(event.currentTarget),
+            url = event.currentTarget.href;
+
+        $.ajax({
+          url: url,
+          type: 'PUT',
+          data: JSON.stringify($target.data()),
+          contentType: 'application/json',
+          processData: false
+        }).done(function(data, state, jqXhr) {
+          $target.attr('class', 'btn btn-mini');
+          try {
+            reactions[data.response]($target);
+          } catch(err) {
+            console.warn('shit happens', err);
+          }
+          // update state icon
+          var $stateContainer = $target.closest('tr').find('.visitor-state');
+          $.get($stateContainer.data('source'), function(data, state, jsXhr) {
+            $stateContainer.html(data);
+          });
+          // need to refactor
+          var $actionContainer = $target.closest('tr').find('.visitor-action');
+          $.get($actionContainer.data('source'), function(data, state, jsXhr) {
+            $actionContainer.html(data);
+          });
+
+
+        });
+      });
     });
   })(jQuery);
 </script>

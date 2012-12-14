@@ -31,14 +31,29 @@
 </div>
 {% endmacro %}
 
+{# displays icons for visitor states #}
 {% macro visit_state(visitor) %}
-  {% if visitor.is_confirmed %}
-    <a rel="tooltip" title="email confirmed"><i class="icon-envelope-alt"></i></a>
-  {% elif visitor.is_confirmed and visitor.is_approved %}
-    <a rel="tooltip" title="approved"><i class="icon-ok"></i></a>
-  {% elif visitor.is_confirmed and visitor.is_declined %}
-    <a rel="tooltip" title="declined"><i class="icon-minus"></i></a>
-  {% else %}
-    <a rel="tooltip" title="waiting"><i class="icon-question-sign"></i></a>
+  {% if visitor.is_confirmed %}<a rel="tooltip" title="email confirmed"><i class="icon-envelope-alt"></i></a>
+  {% else %}<a rel="tooltip" title="waiting email"><i class="icon-question-sign"></i></a>
   {% endif %}
+    <!--  -->
+  {% if visitor.is_approved %}<a rel="tooltip" title="approved"><i class="icon-thumbs-up"></i></a>
+  {% elif visitor.is_declined %}<a rel="tooltip" title="declined"><i class="icon-thumbs-down"></i></a>
+  {% endif %}
+{% endmacro %}
+
+{# changes state controls depending on current visitor state #}
+{% macro visit_action(visitor) %}
+  {% if visitor.is_approved %}
+    {% set class_name, action_name = "btn-inverse", "decline" %}
+  {% elif visitor.is_declined %}
+    {% set class_name, action_name = "btn-success", "approve" %}
+  {% else %}
+    {% set class_name, action_name = "btn-success", "approve" %}
+    {% set class_name2, action_name2 = "btn-inverse", "decline" %}
+
+    <a class="btn btn-mini {{class_name2}}" data-action="{{action_name2}}" href="{{ url_for('.manipulate', id=visitor.id) }}">{{action_name2}}</a>
+  {% endif %}
+
+    <a class="btn btn-mini {{class_name}}" data-action="{{action_name}}" href="{{ url_for('.manipulate', id=visitor.id) }}">{{action_name}}</a>
 {% endmacro %}

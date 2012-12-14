@@ -7,10 +7,8 @@ from flask.ext.login import login_required
 from flask.ext.uploads import UploadSet, UploadNotAllowed
 
 from city_lang.admin.forms import SpeakerForm, SponsorForm, PageForm
-
 from city_lang.core import http
 from city_lang.core.utils import jsonify_status_code
-
 from city_lang.pages.models import Speaker, Sponsor, User, Visitor, FlatPage
 
 from . import bp
@@ -23,11 +21,44 @@ def index():
 
 
 @bp.route('/visitors/')
+@login_required
 def visitors():
     context = {
         'visitors': Visitor.query.all()
     }
     return render_template('admin/registrations.html', **context)
+
+
+@bp.route('/manipulate/<id>', methods=['PUT'])
+@login_required
+def manipulate(id):
+    visitor = Visitor.query.get_or_404(id)
+    if 'action' in request.json:
+        if request.json['action'] == 'approve':
+            visitor.update(is_confirmed=True, is_approved=True,
+                           is_declined=False, with_reload=False)
+            response = {'response': 'approved'}
+        elif request.json['action'] == 'decline':
+            visitor.update(is_approved=False, is_declined=True,
+                           with_reload=False)
+            response = {'response': 'declined'}
+        else:
+            response = {}
+    return jsonify_status_code(response)
+
+
+@bp.route('/state/<id>')
+@login_required
+def state(id):
+    return render_template('admin/registrations_state.html',
+                           visitor=Visitor.query.get_or_404(id))
+
+
+@bp.route('/action/<id>')
+@login_required
+def action(id):
+    return render_template('admin/registrations_action.html',
+                           visitor=Visitor.query.get_or_404(id))
 
 
 @bp.route('/users/')

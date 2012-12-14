@@ -41,4 +41,3 @@ class ImportVisitors(Command):
 
     def run(self):
         self.import_data()
-        pass
