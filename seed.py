@@ -10,10 +10,10 @@ mongo = LocalProxy(lambda: current_app.extensions['mongoset'])
 _security = LocalProxy(lambda: current_app.extensions['security'])
 
 user_data = {
-    'email': 'test@example.com',
-    'password': 'test',
-    'first_name': 'Somebody',
-    'last_name': "Someone",
+    'email': 'kl..@gmail.com',
+    'password': '',
+    'first_name': 'Max',
+    'last_name': "K",
     # 'current_login_at': datetime.utcnow(),
     # 'current_login_ip': '127.0.0.1',
     # 'login_count': 0,

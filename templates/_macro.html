@@ -1,0 +1,59 @@
+{% macro menu_item(url, title) -%}
+<li {% if request.path == url %} class="active"{% endif %}><a href="{{url}}">{{title}}</a></li>
+{%- endmacro %}
+
+{% macro admin_modal_form(id, title, form, post_url) %}
+<div class="modal hide fade" id="{{ id }}">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3>{{ title }}</h3>
+  </div>
+  <form class="form-horizontal" method="POST" action="{{ post_url }}" enctype="multipart/form-data">
+    <div class="modal-body">
+      {% for field in form %}
+        {% if field.type in ['HiddenField', 'CSRFTokenField'] -%}
+          {{ field }}
+        {% else %}
+        <div class="control-group">
+          {{ field.label(class='control-label') }}
+          <div class="controls">
+            {{ field(class='input-xlarge', placeholder=field.description) }}
+          </div>
+        </div>
+      {% endif %}
+      {% endfor %}
+    </div>
+    <div class="modal-footer">
+      <a class="btn" data-dismiss="modal">Close</a>
+      <button type="submit" href="#" class="btn btn-primary">Save changes</button>
+    </div>
+  </form>
+</div>
+{% endmacro %}
+
+{# displays icons for visitor states #}
+{% macro visit_state(visitor) %}
+  {% if visitor.is_confirmed %}<a rel="tooltip" title="email confirmed"><i class="icon-envelope-alt"></i></a>
+  {% else %}<a rel="tooltip" title="waiting email"><i class="icon-question-sign"></i></a>
+  {% endif %}
+    <!--  -->
+  {% if visitor.is_approved %}<a rel="tooltip" title="approved"><i class="icon-thumbs-up"></i></a>
+  {% elif visitor.is_declined %}<a rel="tooltip" title="declined"><i class="icon-thumbs-down"></i></a>
+  {% endif %}
+{% endmacro %}
+
+{# changes state controls depending on current visitor state #}
+{% macro visit_action(visitor) %}
+  {% if visitor.is_approved %}
+    {% set class_name, action_name = "btn-inverse", "decline" %}
+  {% elif visitor.is_declined %}
+    {% set class_name, action_name = "btn-success", "approve" %}
+  {% else %}
+    {% set class_name, action_name = "btn-success", "approve" %}
+    {% set class_name2, action_name2 = "btn-inverse", "decline" %}
+
+    <a class="btn btn-mini {{class_name2}}" data-action="{{action_name2}}" href="{{ url_for('.manipulate', id=visitor.id) }}">{{action_name2}}</a>
+  {% endif %}
+
+    <a class="btn btn-mini {{class_name}}" data-action="{{action_name}}" href="{{ url_for('.manipulate', id=visitor.id) }}">{{action_name}}</a>
+{% endmacro %}

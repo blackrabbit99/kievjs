@@ -1,0 +1,119 @@
+/* Artfully masterminded by ZURB  */
+
+/* --------------------------------------------------
+   Table of Contents
+-----------------------------------------------------
+:: Shared Styles
+:: Page Name 1
+:: Page Name 2
+*/
+
+.logo h1 {
+    display:inline-block;
+}
+
+.yellow-box {
+    display:inline-block;
+    background-color:#ddee00;
+    width:100px;
+    height:100px;
+}
+
+.huge {
+    font-size:78px;
+    letter-spacing:-3px;
+}
+
+.big {
+    font-size:36px !important;
+}
+
+.bold {
+    font-weight:bold !important;
+}
+
+a.white {
+    border-bottom:3px dashed #fff;
+}
+
+a.white:hover {
+    border-bottom:3px solid #fff;
+}
+/* -----------------------------------------
+   Shared Styles
+----------------------------------------- */
+
+.dark {
+    background-color:#0CAEE3;
+}
+
+.video, .gallery {
+    background-color:#000;
+}
+
+.black {
+    color:#000 !important;
+}
+
+.white {
+    color:#fff !important;
+}
+
+.bottom-margin {
+    margin-bottom:50px;
+}
+
+.top-margin {
+    margin-top:50px;
+}
+
+.bottom-padding {
+    padding-bottom:50px;
+}
+
+.top-padding {
+    padding-top:50px;
+}
+
+p {
+    font-size:18px;
+}
+
+.center {
+    text-align:center !important;
+}
+/* -----------------------------------------
+   Page Name 1
+----------------------------------------- */
+
+#galleria {
+    width: 900px;
+    height: 500px;
+    background: #000;
+}
+
+.navigation {
+    margin-top:60px;
+}
+.navigation .tabs dd a {
+    color:#000;
+    font-size:16px;
+}
+[class*="foundicon-"]:after {
+    position: relative;
+    top: -8px; left: 10px;
+    color: #fff; font-size: 60%;
+    font-style: normal;
+}
+
+.foundicon-calendar {
+    width:150px;
+    height:150px;
+    font-size:150px;
+}
+
+/* -----------------------------------------
+   Page Name 2
+----------------------------------------- */
+
+

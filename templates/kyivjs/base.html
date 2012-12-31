@@ -1,48 +1,57 @@
-<table width="100%" align="center" width="400">
-<tr>
-    <td>
-        <table width="100%" align="center" width="400">
-            <tr>
-                <td width="128">
-                    <img width="128" height="128" src="http://kyivjs.org.ua/img/logo.png" />
-                </td>
-                <td>&nbsp;&nbsp;</td>
-                <td>
-                    <h1><a href="http://kyivjs.org.ua"><font color="#000000" size="8pt" face="arial">KyivJS</font></a></h1>
-                    <p><font size="3pt" face="arial">Конференция для front-end разработчиков</font></p>
-                </td>
-            </tr>
-        </table>
-    </td>
-</tr>
-<tr>
-    <td width="100%">
-        <br>
-        <p><font size="3pt" face="arial">
-        {% block content %}
+<html>
+<head>
+    <title>Kyivjs: {{ page_title }}</title>
+    {% assets "css_all" %}
+        <link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}" />
+    {% endassets %}
+</head>
+<body>
 
-        {% endblock content %}
-        </font></p>
+<div class="row">
+    <div class="five columns">
+        <div class="typography">
+            <div class="logo">
+                <div class="yellow-box"></div>
+                <h1 class="black subheader huge"><a class="black" href="/">Kyiv.JS</a></h1>
+            </div>
+        </div>
+    </div>
+    <div class="seven columns navigation">
+        <dl class="tabs">
+            <dd><a href="#simple1">Доклады</a></dd>
+            <dd><a href="/#media">Медиа</a></dd>
+            <dd class="hide-for-small"><a href="#simple3">Партнеры</a></dd>
+            <dd class="hide-for-small"><a href="#simple3">Организаторы</a></dd>
+        </dl>
+    </div>
+</div>
 
-        <p><font size="3pt" face="arial">
-            Конференция пройдет в гостинице <a href="http://bratislava.com.ua">Братислава</a>,
-            <a href="http://maps.yandex.ua/-/CVq3YPMF">стм. Дарница</a>
-        </font></p>
+{% block content %}
+{% endblock content %}
 
-        <p><font size="3pt" face="arial">
-            Все самые важные и свежие новости в нашем
-            <a href="http://twitter.com/KyivJS">Twitter</a>-е или
-            <a href="http://kyivjs.org.ua">на сайте конференции</a>
-        </font></p>
-        <br>
-    </td>
-</tr>
-<tr>
-    <td bgcolor="#000000">
-        <br>
-        <font size="3pt" color="white" face="arial">
-            &nbsp;&nbsp;&nbsp;&copy; 2012 KyivJS Team</font>
-        <br><br>
-    </td>
-</tr>
-</table>
+<footer>
+    <div class="row">
+        <div class="five columns">
+            <h4 class="subheader black">&copy; 2012-2013 <strong>CityConf</strong> Team</h4>
+            <p>IT-конференции в разных городах Украины:<br />
+                <a href="http://kyivjs.org.ua">Киев</a>,
+                <a href="http://kharkivjs.com">Харьков</a>,
+                <a href="http://lvivjs.org.ua">Львов</a>,
+                <a href="http://odessajs.org.ua">Одесса</a>,
+                <a href="http://dneprjs.org.ua">Днепропетровск</a></p>
+        </div>
+        <div class="five columns">
+            <h5 class="subheader">
+                Мы ищем докладчиков и спонсоров на конференцию
+                <storng>KyivJS 2013</strong>, которая пройдет
+                осенью 2013-го года
+            </h5>
+        </div>
+    </div>
+</footer>
+
+{% assets "js_all" %}
+<script type="text/javascript" src="{{ ASSET_URL }}"></script>
+{% endassets %}
+</body>
+</html>

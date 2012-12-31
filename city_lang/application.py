@@ -18,17 +18,22 @@ def create_app(conf_module):
                 static_folder='../static/{}'.format(CURRENT_SITE),
                 template_folder='../templates/{}'.format(CURRENT_SITE))
     app.config.from_object(conf_module)
-
     # Cache(app)
 
     Mail(app)
     MongoSet(app)
     # SQLAlchemy(app)
     # app.extensions['celery'] = celery
-
     images = UploadSet('image')
     configure_uploads(app, (images))
     patch_request_class(app)
+
+    # setup local assets
+    try:
+        from city_lang.assets_local import setup_assets
+        setup_assets(app)
+    except ImportError, e:
+        print "No module assets_local: {}".format(e)
 
     with app.app_context():
         from city_lang.admin import bp as admin

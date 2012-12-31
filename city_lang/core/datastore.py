@@ -18,7 +18,10 @@ from bson import ObjectId
 
 class MongoSetDatastore(Datastore):
     def put(self, model):
-        model.update(model)
+        if "_id" not in model:
+            model.save(model)
+        else:
+            model.update(model)
         return model
 
     def delete(self, model):
@@ -37,6 +40,7 @@ class MongoSetUserDatastore(MongoSetDatastore, UserDatastore):
         """Creates and returns a new user from the given parameters."""
         kwargs['password'] = encrypt_password(kwargs.pop('password'))
         user = self.user_model(**self._prepare_create_user_args(**kwargs))
+
         return self.put(user)
 
     def find_user(self, **kwargs):

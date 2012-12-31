@@ -8,3 +8,5 @@ tools/build/*.pdf
 tools/build/codes/*.png
 tools/testing/*
 uploads
+*.webassets-cache
+.venv
