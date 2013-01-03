@@ -16,6 +16,7 @@ class DocumentMixin(Model):
     """ Base mixin for all mongodb models
     """
     __abstract__ = True
+    inc_id = True
 
     structure = t.Dict().allow_extra('id')
 
@@ -39,7 +40,9 @@ class DocumentMixin(Model):
 
     @property
     def id(self):
-        return self['_id']
+        if "_id" in self:
+            return self["_id"]
+        return None
 
 
 class IdDocument(DocumentMixin):

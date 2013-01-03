@@ -1,7 +1,7 @@
 # encoding: utf-8
 import trafaret as t
 
-from city_lang.core.documents import Document
+from city_lang.core.documents import Document, EmbeddedDocument
 from datetime import datetime
 from flask.ext.security import RoleMixin, UserMixin
 
@@ -9,14 +9,14 @@ from . import mongo
 
 
 @mongo.register
-class Event(Document):
+class Event(EmbeddedDocument):
     structure = t.Dict({
         'name': t.String
     })
 
 
 @mongo.register
-class Visitor(Document):
+class Visitor(EmbeddedDocument):
     structure = t.Dict({
         'name': t.String,
         'email': t.Email,
@@ -39,7 +39,7 @@ class Visitor(Document):
 
 
 @mongo.register
-class FlatPage(Document):
+class FlatPage(EmbeddedDocument):
     """ A flatpage representation model
     """
     structure = t.Dict({
@@ -53,7 +53,7 @@ class FlatPage(Document):
 
 
 @mongo.register
-class Speaker(Document):
+class Speaker(EmbeddedDocument):
     structure = t.Dict({
         'name': t.String,
         'speech': t.String,
@@ -63,7 +63,7 @@ class Speaker(Document):
 
 
 @mongo.register
-class Sponsor(Document):
+class Sponsor(EmbeddedDocument):
     structure = t.Dict({
         'name': t.String,
         'description': t.String(allow_blank=True),
@@ -77,12 +77,12 @@ class Sponsor(Document):
 
 
 @mongo.register
-class Role(Document, RoleMixin):
+class Role(EmbeddedDocument, RoleMixin):
     structure = t.Dict({'name': t.String})
 
 
 @mongo.register
-class User(Document, UserMixin):
+class User(EmbeddedDocument, UserMixin):
     structure = t.Dict({
         'email': t.Email,
         'password': t.String,
