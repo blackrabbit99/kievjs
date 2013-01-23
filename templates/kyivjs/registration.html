@@ -1,12 +1,44 @@
 {% extends "base.html" %}
 {% block content %}
-        Привет, {{ name }}.
-        <br>
 
-        Мы рады сообщить, что регистрация на <strong>KyivJS</strong>
-        пройдена успешно.
-        <br><br>
+<div class="row">
+    <div class="five columns">
 
-        Будет послано еще два письма: первое подтверждение присутствия
-        за 2 недели до конференции и второе - за 2 дня.
+    <form id="reg-form" action="{{ url_for('.registration') }}" method="post">
+      <fieldset>
+      {%- for field in form -%}
+
+        {% if field.type in ['HiddenField', 'CSRFTokenField'] %}
+          {{ field }}
+        {%- else %}
+
+          {{ field.label(class='required') }}
+
+          {% if field.errors %}
+            {{ field(placeholder=field.description, class="error") }}
+            <small class="error">{{ field.errors|join("; ") }}</small>
+          {% else %}
+            {{ field(placeholder=field.description) }}
+          {% endif %}
+        {%- endif -%}
+      {% endfor -%}
+
+        <button id="submit" type="submit" class="button success">Register</button>
+        <br /><br />
+
+      </fieldset>
+    </form>
+    </div>
+    <div class="seven columns">
+        <div class="panel panel-form-side">
+          <h5>Регистрация на сайт</h5>
+          <p>Все поля обязательные для заполнения</p>
+
+          <p>Вам прийдет три имейла. Первый - о подтверждении регистрации, в течении одного-трех дней.</p>
+          <p>Второй &mdash; подтверждение посещения, за неделю до мероприятия.</p>
+          <p>Третий &mdash; подтверждение посещения, два дня до мероприятия.</p>
+        </div>
+    </div>
+</div>
+
 {% endblock %}

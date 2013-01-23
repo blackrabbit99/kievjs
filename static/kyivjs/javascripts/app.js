@@ -19,8 +19,10 @@
 
     $.fn.placeholder                ? $('input, textarea').placeholder() : null;
 
-    Galleria.loadTheme('static/javascripts/themes/classic/galleria.classic.min.js');
-    Galleria.run('#galleria');
+    if ($("#galleria").length !== 0) {
+      Galleria.loadTheme('static/javascripts/themes/classic/galleria.classic.min.js');
+      Galleria.run('#galleria');
+    }
 
   });
 

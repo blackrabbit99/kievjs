@@ -51,6 +51,7 @@ def registration():
     context = {
         'form': form
     }
+    # import ipdb; ipdb.set_trace()
     return render_template('registration.html', **context)
 
 
