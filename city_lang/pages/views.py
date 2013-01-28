@@ -61,8 +61,8 @@ def flatpage():
     if page is None:
         return render_template('404.html'), http.NOT_FOUND
 
-    if page.login_required and current_user.is_anonymous():
-        return render_template('404.html'), http.NOT_FOUND
+    #if page.login_required and current_user.is_anonymous():
+    #    return render_template('404.html'), http.NOT_FOUND
 
     template = page.get('template', 'flatpage.html')
 
