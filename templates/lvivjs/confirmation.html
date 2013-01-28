@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+Привет, {{ name }}.
+<br>
+
+Пожалуйста, откройте ссылку для подтверждения участия в конференции:
+<a href="{{ link }}">{{ link }}</a>
+
+<br><br>
+Нам это нужно для более четкого планирования мероприятия.
+
+<br><br>
+Также к письму приаттачено приглашение на конференцию.
+Распечатайте его и покажите на стойке регистрации.
+
+<br><br><br>
+Программа конференции доступна
+<a href="http://kyivjs.org.ua/agenda.html">на сайте</a>
+
+<br><br><br>
+<strong>Отдельно спасибо спонсорам конференции:</strong>
+<ul>
+    <li>GlobalLogic</li>
+    <li>Ciklum</li>
+    <li>Cogniance</li>
+    <li>SysIQ</li>
+    <li>PROM.UA</li>
+    <li>Kitapps</li>
+    <li>Softheme</li>
+    <li>42coffeecups</li>
+    <li>Djangostars</li>
+    <li>Insollo</li>
+    <li>Pieoneers</li>
+</ul>
+{% endblock %}

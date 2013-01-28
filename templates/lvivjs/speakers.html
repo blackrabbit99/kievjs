@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% set page_title = "Home" %}
+
+
+{% macro gallery(images, size=280) -%}
+    {% for photo, title in images %}
+        <img src="{{ url_for("static", filename="images/photos") }}/{{ photo }}" class="start" alt="{{ title }}" />
+    {% endfor %}
+{%- endmacro %}
+
+
+{% block content %}
+<div class="row">
+    <div class="twelve columns">
+        <div class="typography">
+            <h2 class="subheader">
+                Кофнеренция по <strong class="black">front-end</strong> разработке</h2>
+
+            <div class="row">
+                <h3 class="three columns subheader big black">в 2012-м:</h3>
+                <h4 class="three columns subheader">12 партнеров</h4>
+                <h3 class="two columns subheader black"><strong>390+</strong> посетителей</h3>
+                <h3 class="black three columns subheader big"><strong>24</strong> докладчика</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="dark">
+    <div class="row top-padding bottom-padding">
+        <div class="columns">
+            <h3 class="subheader white">
+                Крупнейшее мероприятие по
+                front-end разработке на Украине.
+                На&nbsp;<strong>KyivJS&nbsp;2012</strong>
+                рассказали о Backbone.js,
+                Chaplin.js, Knockout.js. ClosureScript,
+                HTML5 Games dev и так далее.
+                <br /><br />Хочешь
+                рассказать о JavaScript осенью
+                2013-го &mdash; тебе
+                <a href="/" class="bold white">сюда</a>
+            </h3>
+        </div>
+    </div>
+</div>
+<div>
+    <div class="row top-margin bottom-padding">
+      <div class="four columns center">
+        <i class="foundicon-calendar"></i>
+      </div>
+      <div class="eight columns">
+        <p>
+          Эта конференция стала толчком для развития
+          других конференций по всей Украине. В ближайших
+          планах у нас организация конференций во Львове,
+          Одессе, Харькове, Днепропетровске.
+        </p>
+        <p>
+          Наша команда также принимает участие в организации
+          &laquo;профильных&raquo; топиков в IT-конференциях
+          без фокуса на определенной технологии.
+        </p>
+      </div>
+    </div>
+</div>
+<div id="media" class="video">
+    <div class="row">
+        <div class="columns tvelwe">
+            <h2 class="subheader white">Видео</h2>
+            <iframe width="863" height="485" src="http://www.youtube.com/embed/nsfpgtqq1IQ" frameborder="0" allowfullscreen></iframe>
+        </div>
+    </div>
+</div>
+
+<div class="gallery bottom-margin">
+    <div class="row">
+        <div class="columns tvelwe">
+            <h2 class="subheader white">Фотографии</h2>
+            <div id="galleria">
+            {% set photos = [
+                ("1.jpeg", "Егор Назаркин"),
+                ("2.jpeg", "Артем Захарченко"),
+                ("3.jpeg", "Паша Миллер"),
+                ("4.jpeg", "Юля Савлюк"),
+                ("5.jpeg", "Артем Тритьяк"),
+                ("6.jpeg", "Юлия Пучнина"),
+                ("7.jpeg", "Егор Львовский"),
+                ("8.jpg", "Владимир Агафонкин"),
+                ("9.jpg", "Выступление"),
+                ("10.jpg", "Регистрация"),
+                ("11.jpg", "Pre-party"),
+                ("12.jpg", "First meeting before conference")
+            ] %}
+            {{ gallery(photos, size=280) }}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
