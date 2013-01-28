@@ -1,57 +1,186 @@
-<html>
+<!DOCTYPE HTML>
+<html lang="ua" prefix="og: http://ogp.me/ns#">
 <head>
-    <title>Kyivjs: {{ page_title }}</title>
+  <meta charset="UTF-8"/>
+
+  <title>ЛьвівJS - {% block title %}Конференція Front-End розробників
+
+  {% endblock title %}</title>
+    <link rel="shortcut icon" href="/static/favicon.ico" />
     {% assets "css_all" %}
         <link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}" />
     {% endassets %}
+
+  <meta name="description" content="LvivJS - Перша конференція Front-End розробників у Львові" />
+  <meta name="keywords" content="Lviv JavaScript CoffeeScript Front-End Львів"/>
+    <meta property="og:title" content="LvivJS - Конференція Front-End розробників у Львові" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="http://lvivjs.org.ua/" />
+    <meta property="og:image" content="/static/img/logo_big.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:site_name" content="lvivjs.org.ua"/>
+    <meta property="og:description" content="LvivJS - конференція для Front-End розробників в рамках циклу конференцій CityJS. 30 березня 2013 року." />
+
+  <!--[if lt IE 9]>
+  <script src="js/html5shiv.js"></script>
+  <![endif]-->
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-37221828-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
 </head>
 <body>
-
-<div class="row">
-    <div class="five columns">
-        <div class="typography">
-            <div class="logo">
-                <div class="yellow-box"></div>
-                <h1 class="black subheader huge"><a class="black" href="/">Kyiv.JS</a></h1>
-            </div>
-        </div>
-    </div>
-    <div class="seven columns navigation">
-        <dl class="tabs">
-            <dd><a href="#simple1">Доклады</a></dd>
-            <dd><a href="/#media">Медиа</a></dd>
-            <dd class="hide-for-small"><a href="#simple3">Партнеры</a></dd>
-            <dd class="hide-for-small"><a href="#simple3">Организаторы</a></dd>
-        </dl>
-    </div>
-</div>
-
+    <div class="container">
+        <section id="content">
+            <header>
+                <div class="row">
+                    <div class="span2">
+                      <aside class="logo"><img src="/static/img/logo.png"/></aside>
+                    </div>
+                    <div class="span10">
+                      <a class="lang-switch" href="en/index.html" title="Switch to english"><img src="/static/img/eng-flag.png"/></a>
+                      <hgroup>
+              <h1>Конференція LvivJS</h1>
+              <h2>30 березня 2013 року</h2>
+                      </hgroup>
+            <p>LvivJS - конференція для Front-End розробників в рамках циклу конференцій CityJS. Слідкуйте за оновленнями, невдовзі буде відкрита реєстрація.</p>
+                      <aside class="registration hide"><a class="button" href="registration.html">registration&nbsp;&gt;&gt;</a></aside>
+                    </div>
+                </div>
 {% block content %}
+
+                <div class="row">
+                    <div class="span12">
+                      <nav>
+                        <div><a href="#topics" class="menu-item-wide active-narrow">Доповідачі</a></div>
+                        <div><span class="separator">&ndash;</span></div>
+            <div class="hide"><a href="#partners" class="menu-item-regular">Партнери</a></div>  <!-- Add active-regular class for active and hover -->
+                        <div class="hide"><span class="separator">&ndash;</span></div>
+                        <div><a href="#location" class="menu-item-regular">Місце</a></div>  <!-- Add active-regular class for active and hover -->
+                        <div><span class="separator">&ndash;</span></div>
+                        <div><a href="#organizers" class="menu-item-wide">Організатори</a></div>  <!-- Add active-wide class for active and hover -->
+                        <div><a href="{{ url_for(".registration") }}" class="menu-item-wide">Реєстрація</a></div>
+                      </nav>
+                    </div>
+                </div>
+            </header>
+            <section id="topics" class="content">
+                <div class="row">
+                    <div class="span6">
+                      <article class="people-info">
+                        <aside><img src="/static/img/presenters/Artem Trityak.jpg"/></aside>
+                        <h4><a target="_blank" href="http://github.com/artyomtrityak">Артем Тритяк</a></h4>
+            <p></p>
+                      </article>
+                      <article class="people-info">
+                        <aside><img src="/static/img/presenters/Max Klymyshyn.jpg"/></aside>
+            <h4><a target="_blank" href="https://twitter.com/maxmaxmaxmax">Максим Климишин</a></h4>
+                        <p></p>
+                      </article>
+                      <article class="people-info">
+              <aside><img src="/static/img/presenters/yehor_nazarkin.jpg"/></aside>
+              <h4><a target="_blank" href="https://twitter.com/nimnull">Єгор Назаркін</a></h4>
+              <p></p>
+                      </article>
+                    </div>
+                    <div class="span6">
+                      <article class="people-info">
+                        <aside><img src="/static/img/presenters/Volodymyr Agafonkin.jpg"/></aside>
+            <h4><a target="_blank" href="http://agafonkin.com/en/">Володимир Агафонкін</a></h4>
+                        <p></p>
+                      </article>
+                      <article class="people-info">
+                        <aside><img src="/static/img/presenters/Yuliya Puchnina.jpg"/></aside>
+                        <h4>Юлія Пучніна</h4>
+                        <p></p>
+                      </article>
+                      <article class="people-info">
+              <!--<aside><img src="/static/img/presenters/no_picture.png"/></aside>-->
+              <h4><a target="_blank" href="http://lvivski.com">Єгор Львівський</a></h4>
+              <p></p>
+                      </article>
+                    </div>
+        <div class="span12">
+          <p>Незабаром буде більше...</p>
+        </div>
+                </div>
+      </section>
+
 {% endblock content %}
 
-<footer>
-    <div class="row">
-        <div class="five columns">
-            <h4 class="subheader black">&copy; 2012-2013 <strong>CityConf</strong> Team</h4>
-            <p>IT-конференции в разных городах Украины:<br />
-                <a href="http://kyivjs.org.ua">Киев</a>,
-                <a href="http://kharkivjs.com">Харьков</a>,
-                <a href="http://lvivjs.org.ua">Львов</a>,
-                <a href="http://odessajs.org.ua">Одесса</a>,
-                <a href="http://dneprjs.org.ua">Днепропетровск</a></p>
-        </div>
-        <div class="five columns">
-            <h5 class="subheader">
-                Мы ищем докладчиков и спонсоров на конференцию
-                <storng>KyivJS 2013</strong>, которая пройдет
-                осенью 2013-го года
-            </h5>
-        </div>
+            <section id="partners" class="content hide"></section>
+            <section id="location" class="content">
+                <div class="row">
+                    <div class="span12">
+                        <p>Місце уточнюється</p>
+                    </div>
+                </div>
+            </section>
+            <section id="organizers" class="content">
+                <div class="row">
+                    <div class="span12">
+            <h3>Організатори</h3>
+            <div class="span6">
+              <article class="people-info">
+                <h4><a target="_blank" href="https://twitter.com/juljetta/">Юлія Сав'юк</a></h4>
+                <p>Будь-ласка ввімкніть JavaScript для доступу до цієї інформації</p>
+              </article>
+            </div>
+            <div class="span6">
+              <article class="people-info">
+                <h4><a target="_blank" href="https://twitter.com/maxmaxmaxmax/">Максим Климишин</a></h4>
+                <p>Будь-ласка ввімкніть JavaScript для доступу до цієї інформації</p>
+              </article>
+            </div>
+                        </div>
+          <div class="span12 team">
+            <h3>Команда</h3>
+            <ul>
+              <li>Єгор Назаркін</li>
+              <li>Кристина Іванчук</li>
+            </ul>
+          </div>
+                </div>
+            </section>
+            <footer>
+                <div class="row">
+                    <div class="span4">
+                      <aside>
+                        <p class="hide">email <a href="mailto:"></a></p>
+                        <p>Copyright © 2013</p>
+                      </aside>
+                    </div>
+          <div class="span4">
+            <h4>Наші друзі</h4>
+            <ul>
+              <li><a href="http://kyivjs.org.ua" target="_blank">KyivJS</a></li>
+              <li><a href="http://kharkivjs.com" target="_blank">KharkivJS</a></li>
+              <!--<li><a href="http://odessajs.org.ua" target="_blank">OdessaJS</a></li>-->
+            </ul>
+          </div>
+                    <div class="span4">
+                      <nav>
+                        <a href="#" class="facebook hide"></a>
+                        <a href="http://twitter.com/LvivJS" target="_blank" class="twitter"></a>
+                      </nav>
+                    </div>
+                </div>
+            </footer>
+        </section>
     </div>
-</footer>
 
 {% assets "js_all" %}
-<script type="text/javascript" src="{{ ASSET_URL }}"></script>
+    <script type="text/javascript" src="{{ ASSET_URL }}"></script>
 {% endassets %}
+
 </body>
 </html>

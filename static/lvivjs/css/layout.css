@@ -1,11 +1,11 @@
 @font-face {
 	font-family: "trixiecyr plain";
 	src: url("../fonts/TrixieCyr-Plain.otf");
-} 
+}
 @font-face {
 	font-family: "mrb";
 	src: url("../fonts/mrb.ttf");
-} 
+}
 html, body {
     position: relative;
     height: 100%;
@@ -98,7 +98,7 @@ h1, h2, h3, h4, h5, h6 {
 	border-image:url("../img/frame_100x100.png") 0 0 1 0 repeat;
     height: 40px;
 	margin: 20px 0 0;
-	
+
 }
 #content header nav div {
 	float: left;
@@ -315,4 +315,34 @@ footer .span4 aside {
 
 #topics .span12 {
     margin-top: 20px;
+}
+
+
+#content small.error {
+    color:#ff0000;
+}
+
+.reg {
+    padding-top:50px !important;
+    padding-left:5em;
+    clear:both;
+    padding-bottom:100px;
+}
+
+.button {
+    color: #446572;
+    font-family: "trixiecyr plain";
+    font-size: 22px;
+    line-height: 28px;
+}
+
+.flatpage {
+    clear:both;
+    margin-top:5em;
+    padding-bottom:10em;
+    margin-left:2em;
+}
+
+.clean {
+    clear:both;
 }

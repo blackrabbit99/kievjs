@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="row">
+<div class="row reg">
+    <h1>Registration</h1>
     <div class="five columns">
 
     <form id="reg-form" action="{{ url_for('.registration') }}" method="post">
@@ -22,22 +23,13 @@
           {% endif %}
         {%- endif -%}
       {% endfor -%}
-
+      <br />
+      <br />
         <button id="submit" type="submit" class="button success">Register</button>
         <br /><br />
 
       </fieldset>
     </form>
-    </div>
-    <div class="seven columns">
-        <div class="panel panel-form-side">
-          <h5>Регистрация на сайт</h5>
-          <p>Все поля обязательные для заполнения</p>
-
-          <p>Вам прийдет три имейла. Первый - о подтверждении регистрации, в течении одного-трех дней.</p>
-          <p>Второй &mdash; подтверждение посещения, за неделю до мероприятия.</p>
-          <p>Третий &mdash; подтверждение посещения, два дня до мероприятия.</p>
-        </div>
     </div>
 </div>
 

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{ page.title }}
+{% endblock title %}
+{% block content %}
+
+<div class="row flatpage clean">
+{{ page.content|safe }}
+</div>
+
+
+{% endblock content %}

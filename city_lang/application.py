@@ -35,6 +35,13 @@ def create_app(conf_module):
     except ImportError, e:
         print "No module assets_local: {}".format(e)
 
+    try:
+        getattr(
+            __import__("city_lang.assets_{}".format(CURRENT_SITE)),
+            "assets_{}".format(CURRENT_SITE)).setup_assets(app)
+    except Exception, e:
+        print "Can't use local assets: {}".format(e)
+
     with app.app_context():
         from city_lang.admin import bp as admin
         from city_lang.pages import bp as pages

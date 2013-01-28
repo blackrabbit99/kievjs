@@ -1,11 +1,11 @@
 DEBUG = True
 USE_X_SENDFILE = False
 
-MONGODB_DATABASE = 'lvivjs'
-DEFAULT_MAIL_SENDER = '<info@lviv.org.ua>'
+MONGODB_DATABASE = 'kyivjs'
+DEFAULT_MAIL_SENDER = '<info@kyivjs.org.ua>'
 
-CURRENT_SITE = 'lvivjs'
-CURRENT_SITE_NAME = 'LvivJS'
+CURRENT_SITE = 'kyivjs'
+CURRENT_SITE_NAME = 'KyivJS'
 
 SQLALCHEMY_DATABASE_URI = "mysql://root@localhost:3360/kharkivjs"
 BROKER_URL = 'mongodb://localhost:27017/celery'
