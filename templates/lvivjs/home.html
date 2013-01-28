@@ -1,52 +1,58 @@
-<html>
-<head>
-    <title>CityJS: {% block title %}
-        Registraion successfully confirmed in current campaign
-    {% endblock title %}</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for("static", filename='bootstrap/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="/api{{ url_for("static", filename='bootstrap/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for("static", filename='style.css') }}">
-    <link rel="stylesheet" type="text/css" href="/api{{ url_for("static", filename='style.css') }}">
-
-</head>
-<body>
-<div class="container">
-    <div class="row">
-        <div class="span12">
-
-            <h1>{% block section %}
-                CityJS Registration Confirmation
-            {% endblock section %}</h1>
-            <br>
-            <section>
-                {% with messages = get_flashed_messages(with_categories=true) %}
-                    {% if messages %}
-                    {% for category, message in messages %}
-                        <div class="alert {{ category }}">
-                            <button type="button" class="close" data-dismiss="{{ category }}">×</button>
-                            {{ message }}
-                        </div>
-                    {% endfor %}
-                    {% endif %}
-                {% endwith %}
-            </section>
-            <section>
-            {% block content %}
-              {% if not get_flashed_messages(with_categories=true) %}
-                <div class="alert alert-error">
-                    <button type="button" class="close">×</button>
-                    Looks like page was refreshed.
+{% block content %}
+                <div class="row">
+                    <div class="span12">
+                      <nav>
+                        <div><a href="#topics" class="menu-item-wide active-narrow">Доповідачі</a></div>
+                        <div><span class="separator">&ndash;</span></div>
+            <div class="hide"><a href="#partners" class="menu-item-regular">Партнери</a></div>  <!-- Add active-regular class for active and hover -->
+                        <div class="hide"><span class="separator">&ndash;</span></div>
+                        <div><a href="#location" class="menu-item-regular">Місце</a></div>  <!-- Add active-regular class for active and hover -->
+                        <div><span class="separator">&ndash;</span></div>
+                        <div><a href="#organizers" class="menu-item-wide">Організатори</a></div>  <!-- Add active-wide class for active and hover -->
+                        <div><a href="{{ url_for(".registration") }}" class="menu-item-wide">Реєстрація</a></div>
+                      </nav>
+                    </div>
                 </div>
-              {% endif %}
-            {% endblock content %}
-            </section>
-            <br>
-            <footer>
-                <hr />
-                <p>&copy; 2012 CityJS</p>
-            </footer>
+            </header>
+            <section id="topics" class="content">
+                <div class="row">
+                    <div class="span6">
+                      <article class="people-info">
+                        <aside><img src="/static/img/presenters/Artem Trityak.jpg"/></aside>
+                        <h4><a target="_blank" href="http://github.com/artyomtrityak">Артем Тритяк</a></h4>
+            <p></p>
+                      </article>
+                      <article class="people-info">
+                        <aside><img src="/static/img/presenters/Max Klymyshyn.jpg"/></aside>
+            <h4><a target="_blank" href="https://twitter.com/maxmaxmaxmax">Максим Климишин</a></h4>
+                        <p></p>
+                      </article>
+                      <article class="people-info">
+              <aside><img src="/static/img/presenters/yehor_nazarkin.jpg"/></aside>
+              <h4><a target="_blank" href="https://twitter.com/nimnull">Єгор Назаркін</a></h4>
+              <p></p>
+                      </article>
+                    </div>
+                    <div class="span6">
+                      <article class="people-info">
+                        <aside><img src="/static/img/presenters/Volodymyr Agafonkin.jpg"/></aside>
+            <h4><a target="_blank" href="http://agafonkin.com/en/">Володимир Агафонкін</a></h4>
+                        <p></p>
+                      </article>
+                      <article class="people-info">
+                        <aside><img src="/static/img/presenters/Yuliya Puchnina.jpg"/></aside>
+                        <h4>Юлія Пучніна</h4>
+                        <p></p>
+                      </article>
+                      <article class="people-info">
+              <!--<aside><img src="/static/img/presenters/no_picture.png"/></aside>-->
+              <h4><a target="_blank" href="http://lvivski.com">Єгор Львівський</a></h4>
+              <p></p>
+                      </article>
+                    </div>
+        <div class="span12">
+          <p>Незабаром буде більше...</p>
         </div>
-    </div>
-</div>
-</body>
-</html>
+                </div>
+      </section>
+{% endblock %}

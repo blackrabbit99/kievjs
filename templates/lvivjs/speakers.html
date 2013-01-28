@@ -1,101 +1,61 @@
 {% extends "base.html" %}
-{% set page_title = "Home" %}
-
-
-{% macro gallery(images, size=280) -%}
-    {% for photo, title in images %}
-        <img src="{{ url_for("static", filename="images/photos") }}/{{ photo }}" class="start" alt="{{ title }}" />
-    {% endfor %}
-{%- endmacro %}
-
+{% set page_title = "Конференція Front-End розробників" %}
 
 {% block content %}
-<div class="row">
-    <div class="twelve columns">
-        <div class="typography">
-            <h2 class="subheader">
-                Кофнеренция по <strong class="black">front-end</strong> разработке</h2>
-
-            <div class="row">
-                <h3 class="three columns subheader big black">в 2012-м:</h3>
-                <h4 class="three columns subheader">12 партнеров</h4>
-                <h3 class="two columns subheader black"><strong>390+</strong> посетителей</h3>
-                <h3 class="black three columns subheader big"><strong>24</strong> докладчика</h3>
-            </div>
+                <div class="row">
+                    <div class="span12">
+                      <nav>
+                        <div><a href="#topics" class="menu-item-wide active-narrow">Доповідачі</a></div>
+                        <div><span class="separator">&ndash;</span></div>
+            <div class="hide"><a href="#partners" class="menu-item-regular">Партнери</a></div>  <!-- Add active-regular class for active and hover -->
+                        <div class="hide"><span class="separator">&ndash;</span></div>
+                        <div><a href="#location" class="menu-item-regular">Місце</a></div>  <!-- Add active-regular class for active and hover -->
+                        <div><span class="separator">&ndash;</span></div>
+                        <div><a href="#organizers" class="menu-item-wide">Організатори</a></div>  <!-- Add active-wide class for active and hover -->
+                        <div><a href="{{ url_for(".registration") }}" class="menu-item-wide">Реєстрація</a></div>
+                      </nav>
+                    </div>
+                </div>
+            </header>
+            <section id="topics" class="content">
+                <div class="row">
+                    <div class="span6">
+                      <article class="people-info">
+                        <aside><img src="/static/img/presenters/Artem Trityak.jpg"/></aside>
+                        <h4><a target="_blank" href="http://github.com/artyomtrityak">Артем Тритяк</a></h4>
+            <p></p>
+                      </article>
+                      <article class="people-info">
+                        <aside><img src="/static/img/presenters/Max Klymyshyn.jpg"/></aside>
+            <h4><a target="_blank" href="https://twitter.com/maxmaxmaxmax">Максим Климишин</a></h4>
+                        <p></p>
+                      </article>
+                      <article class="people-info">
+              <aside><img src="/static/img/presenters/yehor_nazarkin.jpg"/></aside>
+              <h4><a target="_blank" href="https://twitter.com/nimnull">Єгор Назаркін</a></h4>
+              <p></p>
+                      </article>
+                    </div>
+                    <div class="span6">
+                      <article class="people-info">
+                        <aside><img src="/static/img/presenters/Volodymyr Agafonkin.jpg"/></aside>
+            <h4><a target="_blank" href="http://agafonkin.com/en/">Володимир Агафонкін</a></h4>
+                        <p></p>
+                      </article>
+                      <article class="people-info">
+                        <aside><img src="/static/img/presenters/Yuliya Puchnina.jpg"/></aside>
+                        <h4>Юлія Пучніна</h4>
+                        <p></p>
+                      </article>
+                      <article class="people-info">
+              <!--<aside><img src="/static/img/presenters/no_picture.png"/></aside>-->
+              <h4><a target="_blank" href="http://lvivski.com">Єгор Львівський</a></h4>
+              <p></p>
+                      </article>
+                    </div>
+        <div class="span12">
+          <p>Незабаром буде більше...</p>
         </div>
-    </div>
-</div>
-
-<div class="dark">
-    <div class="row top-padding bottom-padding">
-        <div class="columns">
-            <h3 class="subheader white">
-                Крупнейшее мероприятие по
-                front-end разработке на Украине.
-                На&nbsp;<strong>KyivJS&nbsp;2012</strong>
-                рассказали о Backbone.js,
-                Chaplin.js, Knockout.js. ClosureScript,
-                HTML5 Games dev и так далее.
-                <br /><br />Хочешь
-                рассказать о JavaScript осенью
-                2013-го &mdash; тебе
-                <a href="/" class="bold white">сюда</a>
-            </h3>
-        </div>
-    </div>
-</div>
-<div>
-    <div class="row top-margin bottom-padding">
-      <div class="four columns center">
-        <i class="foundicon-calendar"></i>
-      </div>
-      <div class="eight columns">
-        <p>
-          Эта конференция стала толчком для развития
-          других конференций по всей Украине. В ближайших
-          планах у нас организация конференций во Львове,
-          Одессе, Харькове, Днепропетровске.
-        </p>
-        <p>
-          Наша команда также принимает участие в организации
-          &laquo;профильных&raquo; топиков в IT-конференциях
-          без фокуса на определенной технологии.
-        </p>
-      </div>
-    </div>
-</div>
-<div id="media" class="video">
-    <div class="row">
-        <div class="columns tvelwe">
-            <h2 class="subheader white">Видео</h2>
-            <iframe width="863" height="485" src="http://www.youtube.com/embed/nsfpgtqq1IQ" frameborder="0" allowfullscreen></iframe>
-        </div>
-    </div>
-</div>
-
-<div class="gallery bottom-margin">
-    <div class="row">
-        <div class="columns tvelwe">
-            <h2 class="subheader white">Фотографии</h2>
-            <div id="galleria">
-            {% set photos = [
-                ("1.jpeg", "Егор Назаркин"),
-                ("2.jpeg", "Артем Захарченко"),
-                ("3.jpeg", "Паша Миллер"),
-                ("4.jpeg", "Юля Савлюк"),
-                ("5.jpeg", "Артем Тритьяк"),
-                ("6.jpeg", "Юлия Пучнина"),
-                ("7.jpeg", "Егор Львовский"),
-                ("8.jpg", "Владимир Агафонкин"),
-                ("9.jpg", "Выступление"),
-                ("10.jpg", "Регистрация"),
-                ("11.jpg", "Pre-party"),
-                ("12.jpg", "First meeting before conference")
-            ] %}
-            {{ gallery(photos, size=280) }}
-            </div>
-        </div>
-    </div>
-</div>
-
-{% endblock content %}
+                </div>
+      </section>
+{% endblock %}
