@@ -8,7 +8,7 @@ from flask.ext.mongoset import MongoSet
 # from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.uploads import UploadSet, configure_uploads, patch_request_class
 
-from .settings import CURRENT_SITE  # , BROKER_URL, CELERY_RESULT_BACKEND
+from .settings import CURRENT_SITE, DEFAULT_MAIL_SENDER, ADMINS
 
 # celery = Celery('city_lang', backend='mongodb', broker=BROKER_URL)
 
@@ -48,6 +48,16 @@ def create_app(conf_module):
 
         app.register_blueprint(admin)
         app.register_blueprint(pages)
+
+        if not app.debug:
+            import logging
+            from logging.handlers import SMTPHandler
+            mail_handler = SMTPHandler('127.0.0.1',
+                                       DEFAULT_MAIL_SENDER,
+                                       ADMINS,
+                                       '{} Failed'.format(CURRENT_SITE))
+            mail_handler.setLevel(logging.ERROR)
+            app.logger.addHandler(mail_handler)
 
         return app
 
