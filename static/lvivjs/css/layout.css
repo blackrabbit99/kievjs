@@ -62,10 +62,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 #content header .registration .button {
 	border: 1px solid #446572;
-	-moz-border-image:url("../img/frame_100x100_rounded.png") 1 1 1 1 stretch;
+/*	-moz-border-image:url("../img/frame_100x100_rounded.png") 1 1 1 1 stretch;
 	-webkit-border-image:url("../img/frame_100x100_rounded.png") 1 1 1 1 stretch;
 	-ms-border-image:url("../img/frame_100x100_rounded.png") 1 1 1 1 stretch;
-	border-image:url("../img/frame_100x100_rounded.png") 1 1 1 1 stretch;
+	border-image:url("../img/frame_100x100_rounded.png") 1 1 1 1 stretch;*/
 	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
 	-ms-border-radius: 10px;
