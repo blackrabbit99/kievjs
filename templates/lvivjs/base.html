@@ -47,13 +47,13 @@
                       <aside class="logo"><img src="/static/img/logo.png"/></aside>
                     </div>
                     <div class="span10">
-                      <a class="lang-switch" href="en/index.html" title="Switch to english"><img src="/static/img/eng-flag.png"/></a>
+                      <a class="lang-switch hide" href="en/index.html" title="Switch to english"><img src="/static/img/eng-flag.png"/></a>
                       <hgroup>
               <h1>Конференція LvivJS</h1>
               <h2>30 березня 2013 року</h2>
                       </hgroup>
-            <p>LvivJS - конференція для Front-End розробників в рамках циклу конференцій CityJS. Слідкуйте за оновленнями, невдовзі буде відкрита реєстрація.</p>
-                      <aside class="registration hide"><a class="button" href="registration.html">registration&nbsp;&gt;&gt;</a></aside>
+            <p>LvivJS - конференція для Front-End розробників в рамках циклу конференцій CityJS.</p>
+                      <aside class="registration hide"><a class="button" href="{{ url_for(".registration") }}">registration&nbsp;&gt;&gt;</a></aside>
                     </div>
                 </div>
 {% block content %}
@@ -63,12 +63,11 @@
                       <nav>
                         <div><a href="#topics" class="menu-item-wide active-narrow">Доповідачі</a></div>
                         <div><span class="separator">&ndash;</span></div>
-            <div class="hide"><a href="#partners" class="menu-item-regular">Партнери</a></div>  <!-- Add active-regular class for active and hover -->
+                        <div class="hide"><a href="#partners" class="menu-item-regular">Партнери</a></div>  <!-- Add active-regular class for active and hover -->
                         <div class="hide"><span class="separator">&ndash;</span></div>
                         <div><a href="#location" class="menu-item-regular">Місце</a></div>  <!-- Add active-regular class for active and hover -->
                         <div><span class="separator">&ndash;</span></div>
                         <div><a href="#organizers" class="menu-item-wide">Організатори</a></div>  <!-- Add active-wide class for active and hover -->
-                        <div><a href="{{ url_for(".registration") }}" class="menu-item-wide">Реєстрація</a></div>
                       </nav>
                     </div>
                 </div>
@@ -121,7 +120,9 @@
             <section id="location" class="content">
                 <div class="row">
                     <div class="span12">
-                        <p>Місце уточнюється</p>
+                        <h2>Готель «Дністер»</h2>
+                        <p>вул. Матейка, 6, м. Львів</p>
+                        <iframe width="640" height="480" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=%D0%BB%D1%8C%D0%B2%D1%96%D0%B2+%D0%BC%D0%B0%D1%82%D0%B5%D0%B9%D0%BA%D0%B0+6&amp;aq=&amp;sll=37.0625,-95.677068&amp;sspn=42.03917,78.662109&amp;t=m&amp;ie=UTF8&amp;hq=%D0%BB%D1%8C%D0%B2%D1%96%D0%B2+%D0%BC%D0%B0%D1%82%D0%B5%D0%B9%D0%BA%D0%B0+6&amp;hnear=&amp;radius=15000&amp;cid=10883782981072527486&amp;ll=49.837263,24.016671&amp;spn=0.013286,0.027466&amp;z=15&amp;iwloc=A&amp;output=embed"></iframe><br /><small><a href="https://maps.google.com/maps?f=q&amp;source=embed&amp;hl=en&amp;geocode=&amp;q=%D0%BB%D1%8C%D0%B2%D1%96%D0%B2+%D0%BC%D0%B0%D1%82%D0%B5%D0%B9%D0%BA%D0%B0+6&amp;aq=&amp;sll=37.0625,-95.677068&amp;sspn=42.03917,78.662109&amp;t=m&amp;ie=UTF8&amp;hq=%D0%BB%D1%8C%D0%B2%D1%96%D0%B2+%D0%BC%D0%B0%D1%82%D0%B5%D0%B9%D0%BA%D0%B0+6&amp;hnear=&amp;radius=15000&amp;cid=10883782981072527486&amp;ll=49.837263,24.016671&amp;spn=0.013286,0.027466&amp;z=15&amp;iwloc=A" style="color:#0000FF;text-align:left">View Larger Map</a></small>
                     </div>
                 </div>
             </section>
@@ -169,7 +170,7 @@
           </div>
                     <div class="span4">
                       <nav>
-                        <a href="#" class="facebook hide"></a>
+                        <a href="http://www.facebook.com/events/434910656581589/?fref=ts" class="facebook"></a>
                         <a href="http://twitter.com/LvivJS" target="_blank" class="twitter"></a>
                       </nav>
                     </div>
