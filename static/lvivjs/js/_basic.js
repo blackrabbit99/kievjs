@@ -499,4 +499,7 @@ if (!window.location.hash) {
 $('#organizers .span6 .people-info p').each(function(i, el) {
   showInfo($(el), organizers[i]);
 });
+$('#partners h2 .mailto').each(function() {
+  $(this).html('julia.saviyk@gmail.com');
+});
 })(window.jQuery);
