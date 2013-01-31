@@ -346,3 +346,7 @@ footer .span4 aside {
 .clean {
     clear:both;
 }
+
+#partners h1 {
+    margin: 20px;
+}
