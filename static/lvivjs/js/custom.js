@@ -43,7 +43,7 @@ if (!window.location.hash) {
 $('#organizers .span6 .people-info p').each(function(i, el) {
   showInfo($(el), organizers[i]);
 });
-$('#partners h2 .mailto').each(function() {
+$('#partners h4 .mailto').each(function() {
   var email = organizers[0].email;
   $(this).html(email).attr('href', 'mailto:'+email);
 });
