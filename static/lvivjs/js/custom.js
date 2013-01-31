@@ -45,6 +45,6 @@ $('#organizers .span6 .people-info p').each(function(i, el) {
 });
 $('#partners h4 .mailto').each(function() {
   var email = organizers[0].email;
-  $(this).html(email).attr('href', 'mailto:'+email);
+  $(this).html(email).attr('href', 'mailto:' + email);
 });
 })(window.jQuery);
