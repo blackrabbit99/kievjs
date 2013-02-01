@@ -5035,6 +5035,10 @@ h1, h2, h3, h4, h5, h6 {
 	font-size: 29px;
 	line-height: 32px;
 }
+#content header hgroup h1 a,
+#content header hgroup h2 a {
+	color: #e86e00;
+}
 #content header p {
 	margin-top: 10px;
 	width: 540px;
@@ -5046,10 +5050,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 #content header .registration .button {
 	border: 1px solid #446572;
-	-moz-border-image:url("../img/frame_100x100_rounded.png") 1 1 1 1 stretch;
+/*	-moz-border-image:url("../img/frame_100x100_rounded.png") 1 1 1 1 stretch;
 	-webkit-border-image:url("../img/frame_100x100_rounded.png") 1 1 1 1 stretch;
 	-ms-border-image:url("../img/frame_100x100_rounded.png") 1 1 1 1 stretch;
-	border-image:url("../img/frame_100x100_rounded.png") 1 1 1 1 stretch;
+	border-image:url("../img/frame_100x100_rounded.png") 1 1 1 1 stretch;*/
 	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
 	-ms-border-radius: 10px;
@@ -5218,23 +5222,26 @@ h1, h2, h3, h4, h5, h6 {
 #content footer a {
     color: #446572;
 }
-#content footer a.twitter,
-#content footer a.facebook {
+#content header a.twitter,
+#content header a.facebook {
 	display: block;
-	float: right;
     height: 41px;
 	margin: 8px 0 0 16px;
 	text-decoration: none;
 	width: 41px;
+    position: absolute;
+    top: 0;
 }
 #content a.facebook.hide {
     display: none;
 }
-#content footer a.twitter {
+#content header a.twitter {
     background-image: url("../img/twitter.png");
+    right: 0px;
 }
-#content footer a.facebook {
+#content header a.facebook {
     background-image: url("../img/facebook.png");
+    right: 50px;
 }
 
 footer .span4 aside {
@@ -5335,7 +5342,6 @@ footer .span4 aside {
     color: #e86e00;
     margin: 20px;
 }
-
 #partners h4 {
     clear: both;
 }
