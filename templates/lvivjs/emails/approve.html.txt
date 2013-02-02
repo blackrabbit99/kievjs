@@ -1,0 +1,9 @@
+Welcome to Lviv JS conference!
+
+Dear {{visitor.name}}, a conference will be on Saturday, 30 of March.
+We are looking forward to see you.
+
+We are on http://lvivjs.org.ua/
+
+--
+LvivJS org team.
