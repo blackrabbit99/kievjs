@@ -51,6 +51,10 @@ h1, h2, h3, h4, h5, h6 {
 	font-size: 29px;
 	line-height: 32px;
 }
+#content header hgroup h1 a,
+#content header hgroup h2 a {
+	color: #e86e00;
+}
 #content header p {
 	margin-top: 10px;
 	width: 540px;
@@ -234,23 +238,26 @@ h1, h2, h3, h4, h5, h6 {
 #content footer a {
     color: #446572;
 }
-#content footer a.twitter,
-#content footer a.facebook {
+#content header a.twitter,
+#content header a.facebook {
 	display: block;
-	float: right;
     height: 41px;
 	margin: 8px 0 0 16px;
 	text-decoration: none;
 	width: 41px;
+    position: absolute;
+    top: 0;
 }
 #content a.facebook.hide {
     display: none;
 }
-#content footer a.twitter {
+#content header a.twitter {
     background-image: url("../img/twitter.png");
+    right: 0px;
 }
-#content footer a.facebook {
+#content header a.facebook {
     background-image: url("../img/facebook.png");
+    right: 50px;
 }
 
 footer .span4 aside {
