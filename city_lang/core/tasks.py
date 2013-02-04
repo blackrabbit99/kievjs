@@ -10,7 +10,7 @@ mail = LocalProxy(lambda: current_app.extensions['mail'])
 
 # @celery.task
 def send_email(rcpt, template, context):
-    msg = Message("Welcome to Kharkiv JS Conference!",
+    msg = Message("Welcome to Lviv JS Conference!",
                   recipients=[rcpt])
     msg.body = render_template("{}.txt".format(template), **context)
     msg.html = render_template(template, **context)

@@ -1,0 +1,12 @@
+Hello, {{visitor.name}}
+
+We are sad to inform you. But there are tons of attendees today and according to
+your position/occupation provided with registration data you won't target with
+the LvivJS subject.
+
+Keep watching on upcoming events. You always have a chance to come once later.
+
+
+--
+LvivJS org team.
+http://lvivjs.org.ua/

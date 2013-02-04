@@ -2,7 +2,7 @@ DEBUG = False
 USE_X_SENDFILE = False
 
 MONGODB_DATABASE = 'lvivjs'
-DEFAULT_MAIL_SENDER = '<info@lviv.org.ua>'
+DEFAULT_MAIL_SENDER = '<info@lvivjs.org.ua>'
 
 CURRENT_SITE = 'lvivjs'
 CURRENT_SITE_NAME = 'LvivJS'
