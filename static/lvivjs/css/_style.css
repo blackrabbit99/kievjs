@@ -5045,7 +5045,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 #content header .registration {
     position: absolute;
-	top: 70px;
+	top: 80px;
 	right: 0;
 }
 #content header .registration .button {
