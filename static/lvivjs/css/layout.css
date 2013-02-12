@@ -357,7 +357,11 @@ footer .span4 aside {
 #partners h1 {
     color: #e86e00;
     margin: 20px;
+    text-align: center;
 }
 #partners h4 {
     clear: both;
+}
+#partners article img {
+    max-width: 460px;
 }

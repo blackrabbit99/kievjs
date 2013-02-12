@@ -56,7 +56,7 @@
                       </hgroup>
             <p>LvivJS - конференція для Front-End розробників в рамках циклу конференцій CityJS.</p>
             <p>Участь у конференції <b>безкоштовна</b>, реєстрація обов'язкова.</p>
-            {% block register %}<aside class="registration"><a class="button" href="{{ url_for(".registration") }}">Реєстрація&nbsp;&gt;&gt;</a></aside>{% endblock %}
+            {% block register %}{% endblock %}
                     </div>
                 </div>
 {% block content %}
@@ -121,13 +121,19 @@
 
             <section id="partners" class="content hide">
                 <h1>Golden Partners</h1>
-                <div class="span6">
+                <div class="span12">
                     <article>
                         <p><a href="http://lohika.com" target="_blank" class="company-name">Lohika</a></p>
                         <a href="http://lohika.com" class="logo-link" target="_blank"><img src="/static/img/sponsors/lohika.jpg"></a>
                     </article>
                 </div>
-                <div class="span6"></div>
+                <h1>Bronze Partners</h1>
+                <div class="span12">
+                    <article>
+                        <p><a href="http://djangostars.com" target="_blank" class="company-name">DjangoStars</a></p>
+                        <a href="http://djangostars.com" class="logo-link" target="_blank"><img src="/static/img/sponsors/djangostars.png"></a>
+                    </article>
+                </div>
                 <h4>З питань партнерства, будь ласка, пишіть на <a class="mailto" href="#">будь-ласка, ввімкніть JavaScript для доступу до цієї інформації</a></h4>
             </section>
             <section id="location" class="content">
