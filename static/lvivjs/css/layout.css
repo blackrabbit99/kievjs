@@ -79,6 +79,7 @@ h1, h2, h3, h4, h5, h6 {
 	display: block;
 	font-size: 25px;
 	height: 45px;
+    line-height:20px;
 	padding-top: 25px;
 	text-align: center;
 	width: 220px;
@@ -90,7 +91,7 @@ h1, h2, h3, h4, h5, h6 {
     display: block;
 	height: 70px;
 	position: absolute;
-	top: 5px;
+	top: 15px;
 	right: 5px;
 	width: 220px;
 }
