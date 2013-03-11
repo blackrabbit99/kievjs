@@ -102,8 +102,8 @@ def rules(language):
     rule_file = join(dirname(abspath(__file__)), 'rules.%s') % language
     for line in file(rule_file):
         pattern, search, replace = line.split()
-        yield lambda word: re.search(pattern, word) and \
-                re.sub(search, replace, word)
+        yield lambda word: (re.search(pattern, word) and
+                            re.sub(search, replace, word))
 
 
 def plural_name(noun, language='en'):
