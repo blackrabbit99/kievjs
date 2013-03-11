@@ -37,6 +37,19 @@ def organizers():
     return render_template('organizers.html', **{})
 
 
+@bp.route("/confirm/<user_id>/<confirm_id>/")
+def confirm(user_id, confirm_id):
+    visitor = Visitor.query.get(user_id)
+
+    for n, confirm in visitor.confirmations:
+        if confirm["cid"] == confirm_id:
+            confirm["confirmed"] = True
+            visitor.save_confirmation(confirm, index=n)
+            break
+
+    return redirect("/confirmed/")
+
+
 @bp.route("/registration/", methods=['GET', 'POST'])
 def registration():
     g.is_registerable = False
@@ -49,9 +62,10 @@ def registration():
         return redirect('/thank-you/')
 
     context = {
-        'form': form
+        'form': form,
+        'letters': Visitor.query.all()
     }
-    # import ipdb; ipdb.set_trace()
+
     return render_template('registration.html', **context)
 
 

@@ -1,11 +1,16 @@
 # encoding: utf-8
+import uuid
+import time
+
 import trafaret as t
 
-from city_lang.core.documents import Document, EmbeddedDocument
+from city_lang.core.documents import EmbeddedDocument
 from datetime import datetime
 from flask.ext.security import RoleMixin, UserMixin
 
+from ..core import tasks
 from . import mongo
+from city_lang.settings import DOMAIN
 
 
 @mongo.register
@@ -23,12 +28,78 @@ class Visitor(EmbeddedDocument):
         'position': t.String,
         'company': t.String,
         'created_at': t.Type(datetime),
-        t.Key('is_confirmed', default=False): t.Bool,
+        'confirms': t.List(
+            t.Dict({
+                "cid": t.String,
+                "sent": t.Bool,
+                "confirmed_at": t.Float,
+                "confirmed": t.Bool})),
         t.Key('is_approved', default=False): t.Bool,
         t.Key('is_declined', default=False): t.Bool,
+        t.Key('is_confirmed', default=False): t.Bool,
     })
-    required_fields = ['name', 'email', 'is_confirmed',
-                       'is_approved', 'is_declined']
+
+    required_fields = ['name', 'email',
+                       'is_approved', 'is_declined', 'confirms']
+
+    @property
+    def confirmations(self):
+        if not hasattr(self, "confirms"):
+            self.confirms = []
+
+        return zip(
+            range(1, len(self.confirms) + 1),
+            map(lambda o: {key: val for key, val in o.as_dict().items()
+                           if key != "id"}, self.confirms))
+
+    @classmethod
+    def confirmations_stats(cls):
+        confirms = {}
+        for visitor in cls.query.find({'confirms.confirmed': True}):
+            for n, confirm in visitor.confirmations:
+                if n not in confirms:
+                    confirms[n] = 0
+
+                if confirm["confirmed"] is True:
+                    confirms[n] += 1
+        return confirms
+
+    def save_confirmation(self, confirm, index=None, commit=True):
+        to_save = []
+
+        for n, c in self.confirmations:
+            if n == index:
+                to_save.append(confirm)
+            else:
+                to_save.append(c)
+
+        if index is None:
+            to_save.append(confirm)
+
+        self.confirms = to_save
+
+        if commit is True:
+            self.save()
+
+    def send_confirmation(self, letter, id=None):
+        if id is None:
+            id = str(uuid.uuid1())
+
+        tasks.send_email(
+            self.email,
+            letter.subject,
+            None, {
+                'visitor': self,
+                'id': id,
+                'link': "{}/confirm/{}/{}/".format(
+                    DOMAIN, self.id, id)},
+            template_text=letter.content)
+
+        self.save_confirmation({
+            "cid": id,
+            "sent": True,
+            "confirmed": False,
+            "confirmed_at": time.time()})
 
     def save_registered(self):
         if self.query.find_one({'email': self.email}) is None:
@@ -36,6 +107,15 @@ class Visitor(EmbeddedDocument):
             return self.save()
         else:
             return None
+
+
+@mongo.register
+class Letter(EmbeddedDocument):
+    structure = t.Dict({
+        "subject": t.String,
+        "content": t.String,
+        t.Key('content_html', default=None): t.String,
+    })
 
 
 @mongo.register
