@@ -30,3 +30,12 @@ class PageForm(Form):
     content = fields.TextAreaField(u'Content', [validators.Required()],
                                    description='Content text')
     login_required = fields.BooleanField(u'Requires login')
+
+
+class LetterForm(Form):
+    subject = fields.TextField(u'Subject', [validators.Required()],
+                               description=u'Confirmation subject')
+    content = fields.TextAreaField(u'Content', [validators.Required()],
+                                   description='Content text')
+    #content_html = fields.TextAreaField(u'HTML Content', [],
+    #                                    description='Content HTML')

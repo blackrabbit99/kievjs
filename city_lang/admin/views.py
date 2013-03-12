@@ -6,10 +6,11 @@ from flask.views import MethodView
 from flask.ext.login import login_required
 from flask.ext.uploads import UploadSet, UploadNotAllowed
 
-from ..admin.forms import SpeakerForm, SponsorForm, PageForm
+from ..admin.forms import SpeakerForm, SponsorForm, PageForm, LetterForm
 from ..core import http, tasks
 from ..core.utils import jsonify_status_code
-from ..pages.models import Speaker, Sponsor, User, Visitor, FlatPage
+from ..pages.models import Speaker, Sponsor, User, Visitor, FlatPage, Letter
+from .. import settings
 
 from . import bp
 
@@ -24,11 +25,24 @@ def index():
 @login_required
 def visitors():
     context = {
+        'letters': Letter.query.all(),
         'visitors': Visitor.query.all(),
         'approved': Visitor.query.find({'is_approved': True}).count(),
         'declined': Visitor.query.find({'is_declined': True}).count(),
+        'confirmed': Visitor.confirmations_stats(),
     }
     return render_template('admin/registrations.html', **context)
+
+
+@bp.route("/visitors/confirm/", methods=["GET"])
+@login_required
+def confirmation():
+    letter = Letter.query.get(request.values["id"])
+
+    for visitor in Visitor.query.all():
+        visitor.send_confirmation(letter)
+
+    return redirect("/admin/visitors/")
 
 
 @bp.route('/manipulate/<id>', methods=['PUT'])
@@ -39,13 +53,17 @@ def manipulate(id):
         if request.json['action'] == 'approve':
             visitor.update(is_confirmed=True, is_approved=True,
                            is_declined=False, with_reload=False)
-            tasks.send_email(visitor.email, 'emails/approve.html',
+            tasks.send_email(visitor.email,
+                             settings.APPROVE_PARTICIPIATION_SUBJECT,
+                             'emails/approve.html',
                              {'visitor': visitor})
             response = {'response': 'approved'}
         elif request.json['action'] == 'decline':
             visitor.update(is_approved=False, is_declined=True,
                            with_reload=False)
-            tasks.send_email(visitor.email, 'emails/decline.html',
+            tasks.send_email(visitor.email,
+                             settings.DECLINE_PARTICIPIATION_SUBJECT,
+                             'emails/decline.html',
                              {'visitor': visitor})
             response = {'response': 'declined'}
         else:
@@ -72,6 +90,7 @@ def action(id):
 def users():
     context = {
         'users': User.query.all(),
+        'letters': Letter.query.all()
     }
     return render_template('admin/users.html', **context)
 
@@ -84,6 +103,9 @@ class CRUDView(MethodView):
     object_template = None
     decorators = [login_required]
     upload_set = UploadSet('image')
+
+    def extra_context(self, origin):
+        return origin
 
     def get(self, id=None):
         if 'data' in request.args:
@@ -105,7 +127,8 @@ class CRUDView(MethodView):
             template = self.list_template
 
         context['form'] = self.form()
-        return render_template(template, **context)
+        return render_template(
+            template, **self.extra_context(context))
 
     def post(self, id=None):
         form = self.form(request.form)
@@ -132,7 +155,8 @@ class CRUDView(MethodView):
             'models': self.get_objects(),
             'form': form
         }
-        return render_template(self.list_template, **context)
+        return render_template(
+            self.list_template, **self.extra_context(context))
 
     def delete(self, id):
         self.model.query.remove({'_id': ObjectId(id)})
@@ -158,3 +182,9 @@ class PageView(CRUDView):
     model = FlatPage
     form = PageForm
     list_template = 'admin/pages.html'
+
+
+class LetterView(CRUDView):
+    model = Letter
+    form = LetterForm
+    list_template = 'admin/letters.html'
