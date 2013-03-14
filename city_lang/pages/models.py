@@ -22,18 +22,20 @@ class Event(EmbeddedDocument):
 
 @mongo.register
 class Visitor(EmbeddedDocument):
+    confirm_fields = {
+        "cid": t.String,
+        "sent": t.Bool,
+        "confirmed_at": t.Float,
+        "confirmed": t.Bool}
+
     structure = t.Dict({
         'name': t.String,
         'email': t.Email,
         'position': t.String,
         'company': t.String,
         'created_at': t.Type(datetime),
-        'confirms': t.List(
-            t.Dict({
-                "cid": t.String,
-                "sent": t.Bool,
-                "confirmed_at": t.Float,
-                "confirmed": t.Bool})),
+        'confirms': t.List(t.Dict(confirm_fields)),
+        'tshirt_size': t.String(allow_blank=False),
         t.Key('is_approved', default=False): t.Bool,
         t.Key('is_declined', default=False): t.Bool,
         t.Key('is_confirmed', default=False): t.Bool,
@@ -64,6 +66,9 @@ class Visitor(EmbeddedDocument):
                     confirms[n] += 1
         return confirms
 
+    def save(self, *args, **kwargs):
+        self.save_confirmation(None, commit=True)
+
     def save_confirmation(self, confirm, index=None, commit=True):
         to_save = []
 
@@ -73,13 +78,13 @@ class Visitor(EmbeddedDocument):
             else:
                 to_save.append(c)
 
-        if index is None:
+        if index is None and confirm is not None:
             to_save.append(confirm)
 
         self.confirms = to_save
 
         if commit is True:
-            self.save()
+            super(Visitor, self).save()
 
     def send_confirmation(self, letter, id=None):
         if id is None:

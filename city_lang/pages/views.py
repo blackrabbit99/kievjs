@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
-from flask import current_app, render_template, request, g, redirect
+from flask import current_app, render_template, request, \
+    g, redirect, session
 from flask.ext.security import current_user
 
 from city_lang.core import http
@@ -39,15 +40,32 @@ def organizers():
 
 @bp.route("/confirm/<user_id>/<confirm_id>/")
 def confirm(user_id, confirm_id):
-    visitor = Visitor.query.get(user_id)
+    visitor = Visitor.query.get_or_404(user_id)
 
     for n, confirm in visitor.confirmations:
         if confirm["cid"] == confirm_id:
             confirm["confirmed"] = True
             visitor.save_confirmation(confirm, index=n)
+
+            session["confirm_user_id"] = visitor.id
+
             break
 
     return redirect("/confirmed/")
+
+
+@bp.route("/update/", methods=["POST"])
+def update():
+    try:
+        user_id = session["confirm_user_id"]
+    except KeyError:
+        return redirect("/update-error/")
+
+    visitor = Visitor.query.get_or_404(user_id)
+    visitor["tshirt_size"] = request.form["tshirt_size"]
+    visitor.save()
+
+    return redirect("/updated/")
 
 
 @bp.route("/registration/", methods=['GET', 'POST'])
