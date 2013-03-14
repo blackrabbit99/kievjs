@@ -50,9 +50,9 @@ class Visitor(EmbeddedDocument):
             self.confirms = []
 
         return zip(
-            range(1, len(self.confirms) + 1),
-            map(lambda o: {key: val for key, val in o.as_dict().items()
-                           if key != "id"}, self.confirms))
+            range(1, len(self.confirms) + 1), self.confirms)
+            #map(lambda o: {key: val for key, val in o.as_dict().items()
+            #               if key != "id"}, self.confirms))
 
     @classmethod
     def confirmations_stats(cls):
