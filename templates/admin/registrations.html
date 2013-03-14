@@ -1,7 +1,7 @@
 {% extends 'admin/base.html' %}
 {% set page_title = "Visitors – {}".format(visitors.count()) %}
 
-{% from "_macro.html" import visit_state, visit_action %}
+{% from "_macro.html" import visit_state, visit_action, visit_confirm %}
 
 {% block content %}
   <div class="row">
@@ -39,7 +39,21 @@
           <td>{{ visitor.name }}</td>
           <td>{{ visitor.position }}</td>
           <td>{{ visitor.company }}</td>
+          <td>{{ visitor.tshirt_size }}</td>
           <td>{% if visitor.created_at %}{{ visitor.created_at.strftime("%b %d '%y") }}{% endif %}</td>
+          <td class="visitor-action">
+            <select name="id_{{ visitor.id }}" id="id_{{ visitor.id }}" style="font-size:12px; height:20px;">
+              <option value="">-- Select letter template --</option>
+              {% for letter in letters %}
+                <option value="{{ letter.id }}">{{ letter.subject }}
+                  {% if visitor.one_confirm(letter.id) %}
+                    : sent
+                    {% if visitor.one_confirm(letter.id).confirmed %}, confirmed{% endif %}
+                  {% endif %}</option>
+              {% endfor %}
+            </select>
+            {{ visit_confirm(visitor) }}
+          </td>
           <td class="visitor-state" data-source="{{ url_for('.state', id=visitor.id) }}">{{ visit_state(visitor) }}</td>
           <td class="visitor-action" data-source="{{ url_for('.action', id=visitor.id) }}">{{ visit_action(visitor) }}</td>
         </tr>
@@ -60,6 +74,9 @@
     declined: function($target) {
       var actionText = 'approve';
       $target.addClass('btn-success').text(actionText).data('action', actionText);
+    },
+    confirmed: function($target) {
+      return true;
     }
   };
 
@@ -74,19 +91,27 @@
             url = event.currentTarget.href;
 
         $target.addClass('disabled');
+        var data = $target.data();
+
+        if (data.action === "confirmation") {
+          data.letter = $("#id_" + data.visitor).val();
+        }
 
         $.ajax({
           url: url,
           type: 'PUT',
-          data: JSON.stringify($target.data()),
+          data: JSON.stringify(data),
           contentType: 'application/json',
           processData: false
         }).done(function(data, state, jqXhr) {
           $target.attr('class', 'btn btn-mini');
           try {
-            reactions[data.response]($target);
+            var resp = reactions[data.response]($target);
           } catch(err) {
             console.warn('shit happens', err);
+          }
+          if (resp) {
+            return;
           }
           // update state icon
           var $stateContainer = $target.closest('tr').find('.visitor-state');

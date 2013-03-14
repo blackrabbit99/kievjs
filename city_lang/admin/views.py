@@ -25,11 +25,12 @@ def index():
 @login_required
 def visitors():
     context = {
-        'letters': Letter.query.all(),
+        'letters': list(Letter.query.all()),
         'visitors': Visitor.query.all(),
         'approved': Visitor.query.find({'is_approved': True}).count(),
         'declined': Visitor.query.find({'is_declined': True}).count(),
         'confirmed': Visitor.confirmations_stats(),
+        'tshirt_matrix': Visitor.tshirt_matrix()
     }
     return render_template('admin/registrations.html', **context)
 
@@ -66,6 +67,10 @@ def manipulate(id):
                              'emails/decline.html',
                              {'visitor': visitor})
             response = {'response': 'declined'}
+        elif request.json['action'] == 'confirmation':
+            letter = Letter.query.get(request.json['letter'])
+            visitor.send_confirmation(letter)
+            response = {"response": "confirmed"}
         else:
             response = {}
     return jsonify_status_code(response)

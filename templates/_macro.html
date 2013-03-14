@@ -62,3 +62,10 @@
 
     <a class="btn btn-mini {{class_name}}" data-action="{{action_name}}" href="{{ url_for('.manipulate', id=visitor.id) }}">{{action_name}}</a>
 {% endmacro %}
+
+
+{# changes state controls depending on current visitor state #}
+{% macro visit_confirm(visitor) %}
+  {% set class_name, action_name = "btn-success", "confirmation" %}
+  <a class="btn btn-mini {{class_name}}" data-action="{{action_name}}" data-visitor="{{ visitor.id }}" href="{{ url_for('.manipulate', id=visitor.id) }}">{{action_name}}</a>
+{% endmacro %}

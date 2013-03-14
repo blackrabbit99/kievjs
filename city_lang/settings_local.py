@@ -1,4 +1,4 @@
-DEBUG = False
+DEBUG = True
 USE_X_SENDFILE = False
 
 MONGODB_DATABASE = 'lvivjs'

@@ -25,6 +25,7 @@ class Visitor(EmbeddedDocument):
     confirm_fields = {
         "cid": t.String,
         "sent": t.Bool,
+        "letter_id": t.String,
         "confirmed_at": t.Float,
         "confirmed": t.Bool}
 
@@ -66,6 +67,17 @@ class Visitor(EmbeddedDocument):
                     confirms[n] += 1
         return confirms
 
+    @classmethod
+    def tshirt_matrix(cls):
+        return {}
+
+    def one_confirm(self, letter_id):
+        for n, confirm in self.confirmations:
+            if confirm["letter_id"] == str(letter_id):
+                return confirm
+
+        return None
+
     def save(self, *args, **kwargs):
         self.save_confirmation(None, commit=True)
 
@@ -90,21 +102,30 @@ class Visitor(EmbeddedDocument):
         if id is None:
             id = str(uuid.uuid1())
 
+        for n, conf in self.confirmations:
+            if "letter_id" in conf and \
+                    conf["letter_id"] == str(letter.id):
+                return False
+
         tasks.send_email(
             self.email,
             letter.subject,
             None, {
                 'visitor': self,
                 'id': id,
+                'letter_id': letter.id,
                 'link': "{}/confirm/{}/{}/".format(
                     DOMAIN, self.id, id)},
             template_text=letter.content)
 
         self.save_confirmation({
             "cid": id,
+            "letter_id": str(letter.id),
             "sent": True,
             "confirmed": False,
             "confirmed_at": time.time()})
+
+        return True
 
     def save_registered(self):
         if self.query.find_one({'email': self.email}) is None:
