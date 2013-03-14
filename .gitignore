@@ -10,3 +10,4 @@ tools/testing/*
 uploads
 *.webassets-cache
 .venv
+env/
