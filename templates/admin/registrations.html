@@ -39,7 +39,7 @@
           <td>{{ visitor.name }}</td>
           <td>{{ visitor.position }}</td>
           <td>{{ visitor.company }}</td>
-          <td>{{ visitor.tshirt_size }}</td>
+          <td><strong>{{ visitor.tshirt_size }}</strong></td>
           <td>{% if visitor.created_at %}{{ visitor.created_at.strftime("%b %d '%y") }}{% endif %}</td>
           <td class="visitor-action">
             <select name="id_{{ visitor.id }}" id="id_{{ visitor.id }}" style="font-size:12px; height:20px;">
