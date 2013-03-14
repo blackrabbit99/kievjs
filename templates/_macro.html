@@ -41,7 +41,7 @@
   {% elif visitor.is_declined %}<a rel="tooltip" title="declined"><i class="icon-thumbs-down"></i></a>
   {% endif %}
   &nbsp;&nbsp;
-  {% for n, c in visitor.confirmations %}
+  {% for n, c in visitor.confirmations() %}
     {% if not c.confirmed %}<i class="confirmation icon-volume-up">{{ n }}</i>{% else %}
     <i class="icon-check">{{ n }}</i>{% endif %}&nbsp;
   {% endfor %}
