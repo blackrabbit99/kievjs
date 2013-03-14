@@ -14,7 +14,7 @@ CELERY_RESULT_BACKEND = 'mongodb'
 
 MAIL_FAIL_SILENTLY = False
 MAIL_SERVER = 'localhost'
-MAIL_PORT = 1025
+MAIL_PORT = 25
 
 ADMINS = ('klymyshyn@gmail.com', )
 

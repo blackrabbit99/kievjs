@@ -45,7 +45,6 @@ class Visitor(EmbeddedDocument):
     required_fields = ['name', 'email',
                        'is_approved', 'is_declined', 'confirms']
 
-    @property
     def confirmations(self):
         if not hasattr(self, "confirms"):
             self.confirms = []
@@ -59,7 +58,7 @@ class Visitor(EmbeddedDocument):
     def confirmations_stats(cls):
         confirms = {}
         for visitor in cls.query.find({'confirms.confirmed': True}):
-            for n, confirm in visitor.confirmations:
+            for n, confirm in visitor.confirmations():
                 if n not in confirms:
                     confirms[n] = 0
 
@@ -72,7 +71,7 @@ class Visitor(EmbeddedDocument):
         return {}
 
     def one_confirm(self, letter_id):
-        for n, confirm in self.confirmations:
+        for n, confirm in self.confirmations():
             if confirm["letter_id"] == str(letter_id):
                 return confirm
 
@@ -84,7 +83,7 @@ class Visitor(EmbeddedDocument):
     def save_confirmation(self, confirm, index=None, commit=True):
         to_save = []
 
-        for n, c in self.confirmations:
+        for n, c in self.confirmations():
             if n == index:
                 to_save.append(confirm)
             else:
@@ -102,7 +101,7 @@ class Visitor(EmbeddedDocument):
         if id is None:
             id = str(uuid.uuid1())
 
-        for n, conf in self.confirmations:
+        for n, conf in self.confirmations():
             if "letter_id" in conf and \
                     conf["letter_id"] == str(letter.id):
                 return False

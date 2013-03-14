@@ -42,7 +42,7 @@ def organizers():
 def confirm(user_id, confirm_id):
     visitor = Visitor.query.get_or_404(user_id)
 
-    for n, confirm in visitor.confirmations:
+    for n, confirm in visitor.confirmations():
         if confirm["cid"] == confirm_id:
             confirm["confirmed"] = True
             visitor.save_confirmation(confirm, index=n)
